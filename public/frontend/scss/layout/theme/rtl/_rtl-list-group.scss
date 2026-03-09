@@ -1,0 +1,26 @@
+[dir='rtl']{
+	.list-circle,
+	.list-angle-double,
+	.list-square,
+	.list-square-check{
+		li{
+			padding: 6px 15px 6px 5px;
+			&:before{
+				left: auto;
+				right: 0;
+			}
+		}
+	}
+	.list-angle-double{
+		li{
+			padding-left: 0;
+			padding-right: 25px;
+		}
+	}
+	.list-square-check{
+		li{
+			padding: 10px 60px 10px 15px;
+		}
+	}
+	
+}

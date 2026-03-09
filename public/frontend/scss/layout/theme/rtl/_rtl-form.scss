@@ -1,0 +1,81 @@
+[dir='rtl']{
+	
+		&:before {
+			left         : auto;
+			right         : 3px;
+		}
+
+		.toggle-checkbox:checked+& {
+			&:before {
+				left: auto;
+				right: 26px;
+			}
+		}
+	
+	.toggle-label {
+		margin-left: 0;
+		margin-right: 15px;
+	}
+
+	// Upload btn
+	.file-upload-wrapper {
+		
+		&:after {
+			left          : auto;
+			right          : 0;
+			border-radius : 5px 5px 10px 10px;
+		}
+
+		&:before {
+			right   : auto;
+			left   : 0;
+			border-radius : 0 0 5px 5px;
+		}
+		
+		input {
+			right   : 0;
+			left    : 0;
+		}
+	}
+
+	.ui-datepicker-header a {
+		&.ui-datepicker-prev {
+			left               : auto;
+			right               : 0;
+		}
+
+		&.ui-datepicker-next {
+			right              : auto;
+			left              : 0;
+		}
+	}
+	
+	// Nice Select
+	.nice-select {
+		border-top-right-radius   : 3px !important;
+		border-bottom-right-radius: 3px !important;
+	}
+	
+	.form-select{
+		.dropdown-menu {
+			ul li {
+				a {
+					img {
+						margin-right: 0;
+						margin-left: 5px;
+					}
+				}
+			}
+		}
+	}
+
+	.form-select.btn-group{
+		.dropdown-toggle{
+			.caret{
+				right: 0;
+				left: 5px;
+			}
+		}
+	}
+	 
+}

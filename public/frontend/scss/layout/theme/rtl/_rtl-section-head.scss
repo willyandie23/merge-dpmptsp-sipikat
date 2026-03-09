@@ -1,0 +1,46 @@
+[dir='rtl']{
+	//Section Head 1
+	.section-head{
+		&.style-1{
+			.sub-title{
+				&:before{
+					transform-origin:right;
+					-moz-transform-origin:right;
+					-webkit-transform-origin:right;
+					-ms-transform-origin:right;
+					-o-transform-origin:right;
+				}
+				&:after{
+					transform-origin:left;
+					-moz-transform-origin:left;
+					-webkit-transform-origin:left;
+					-ms-transform-origin:left;
+					-o-transform-origin:left;
+				}
+			}
+		}
+	}
+	
+	
+	// Section Head 2
+	.section-head{
+		&.style-2{
+			.sub-title{
+				&:before,
+				&:after{
+					margin-right: 0;
+					margin-left: 10px;
+				}
+				&:before{
+					margin-right: 0;
+					margin-left: 10px;
+				}
+				&:after{
+					margin-left: 0;
+					margin-right: 10px;
+				}
+			}
+		}
+	}
+	
+}

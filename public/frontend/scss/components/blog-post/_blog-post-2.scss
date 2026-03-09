@@ -1,0 +1,91 @@
+.dz-card{
+	&.style-2{
+		background: #fff;
+		
+		.dz-media{
+			z-index: 1;
+		}
+			
+		.dz-meta{
+			margin-bottom: 20px;
+			ul{
+				line-height: 1;
+				li{
+					background: var(--primary);
+					font-size: 15px;
+					position: relative;
+					font-weight: 300;
+					color: #fff;
+					border-radius: 15px;
+					padding: 7px 15px;
+					box-shadow: 0 5px 15px 0 var(--rgba-primary-3);
+					margin-left: 7px;
+					margin-right: 7px;
+					
+					@include respond('phone'){
+						margin-left: 2px;
+						margin-right: 2px;
+					}
+					&:first-child{
+						margin-left: 0;
+					}
+					&:last-child{
+						margin-right: 0;
+					}
+				}	
+			}	
+		}
+		.dz-info{
+			position:relative;	
+			border: 1px solid #cccccc;
+			padding: 35px;
+			text-align: center;
+			@include respond('phone'){
+				padding: 25px;
+			}
+		}
+		.dz-media + .dz-info{
+			padding: 35px;
+			@include respond('phone'){
+				padding: 25px;
+			}
+		}
+		.icon-btn{
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			width: 45px;
+			height: 45px;
+			padding: 0 0 0 4px;
+			text-align: center;
+			justify-content: center;
+		}
+		&.blog-half{
+			.dz-media {
+			    margin-right: 0;
+				margin-left: 0;
+			}
+			.dz-media + .dz-info {
+				margin: 0 0px 0;
+				padding: 30px;
+				text-align:left;
+				@include respond('phone'){
+					padding: 20px;
+				}
+			}
+		}
+		.btn-link{
+			position: relative;
+			font-weight: 600;
+			i{
+				font-size: 14px;
+			}
+		}
+		@include respond('tab-port'){
+			&.blog-top{
+				display: flex;
+				flex-direction: column-reverse;
+			}
+		}
+	}
+}

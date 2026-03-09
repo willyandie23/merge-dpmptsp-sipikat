@@ -1,0 +1,128 @@
+[dir='rtl']{
+	
+	//portfolio 1
+	.portfolio-area1{
+		&:after {
+			left: auto;
+			right: 0;
+		}
+	}
+	.dz-box.style-1{
+		.dz-info{
+			left: auto;
+			right: 0;
+		}
+		.sub-title{
+			writing-mode: tb-rl;
+			float: left;
+			right: auto;
+			left: 0;
+			
+		}
+		.port-info{
+			left:auto;
+			right:0;
+		}
+		.dz-meta{
+			ul{
+				li{
+					padding-left: 0;
+					padding-right: 15px;
+					&:after {
+						left: auto;
+						right: 0;
+					}
+				}
+			}
+		}
+		.view-btn{
+			left: auto;
+			right: 30px;
+		}
+	}
+
+	.portfolio-area2{
+	&:after,
+		&:after {
+			left: auto;
+			right: 0;
+		}
+		&:before {
+			right: auto;
+			left: 0;
+		}
+		.setResizeMargin{
+			padding-right: 0;
+			padding-left: 80px;
+		}
+		@include respond('wide-desktop'){
+			.setResizeMargin{
+				padding-right: 0;
+				padding-left: 40px;
+			}
+		}
+		@include respond('tab-land'){
+			.setResizeMargin {
+				padding-left: 0;
+				padding-right: 40px;
+			}	
+		}
+		@include respond('tab-port'){
+			.setResizeMargin {
+				padding-right: 30px;
+				padding-left: 30px;
+			}		
+		}
+		@include respond('phone'){
+			.setResizeMargin {
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+		}
+	}
+	.dz-box.style-2{
+		.dz-info{
+			left: auto;
+			right: 0;
+		}
+		.sub-title{
+			writing-mode: tb-lr;
+			float: left;
+			left: auto;
+			right: 0;
+		}
+		.port-info{
+			right: auto;
+			left: 200px;
+			
+			@include respond('tab-port'){
+				right: 0;
+				left: 30px;
+			}
+			@include respond('phone'){
+				right: auto;
+				left: 15px;
+			}
+		}
+		.dz-meta{
+			ul{
+				li{
+					padding-left: 0;
+					padding-right: 15px;
+					&:after {
+						left: auto;
+						right: 0;
+					}
+				}
+			}
+		}
+		.view-btn{
+			right: auto;
+			left: 30px;
+			@include respond('phone-land'){
+				right: auto;
+				left: 15px;
+			}
+		}
+	}
+}

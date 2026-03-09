@@ -1,0 +1,182 @@
+[dir='rtl']{
+	
+	
+     //default
+	footer{
+		.widget-logo ul{
+			li{
+				padding: 0 0px 15px 15px;	
+			}
+		}
+		
+		.footer-title{
+			.dz-separator{
+				left:auto;
+				right:0;
+			}
+		}
+		.widget-link{
+			li{
+				margin-left: 0;
+				margin-right: 20px;
+				@include respond('phone-land'){
+					margin-left: 7px;
+					margin-right: 8px;
+				}
+			}
+		}
+		.widget_services{
+			&.style-1{
+				ul{
+					li{
+						a{
+							padding: 5px 15px 5px 0;
+							&:before{
+								left: auto;
+								right: 0;
+							}
+						}
+					}
+				}
+			}
+		}
+		.wp-block-latest-posts li, 
+		.wp-block-categories-list li, 
+		.wp-block-archives-list li, 
+		.widget_categories ul li, 
+		.widget_archive ul li, 
+		.widget_meta ul li, 
+		.widget_pages ul li, 
+		.widget_recent_comments ul li, 
+		.widget_nav_menu li, 
+		.widget_recent_entries ul li, 
+		.widget_services ul li{
+			@include transitionMedium;
+			left: auto;
+			right: 0;
+			&:hover{
+				left:auto;
+				right:10px;
+			}
+		}
+	}
+
+	.widget_getintuch{
+		ul{
+			li{
+				padding-left: 0;
+				padding-right: 60px;
+				@include respond('tab-land'){	
+					padding-left: 0;
+					padding-right: 50px;
+				}
+				i{
+					left: auto;
+					right: 0;
+				}
+			}
+		}
+	}
+
+	// footer-link
+	.footer-link{
+		li{
+			padding: 0 20px 0 25px;
+			&:before{
+				left: auto;
+				right: 0;
+			}
+		}
+	}
+
+	// widget_time
+	.widget_time{
+		ul{
+			li{
+				label{
+					margin-right: 0;
+					margin-left: 3px;
+				}
+			}
+		}
+	}
+
+	// ft-clients //footer-1
+	.ft-clients-area{
+		&:before{
+			left: auto;
+			right: 0;
+		}
+	}
+	
+	.site-footer{
+		&.style-1{
+			.footer-bottom{
+				ul{
+					li{
+						&:last-child{
+							padding-right: 25px;
+							padding-left: 0;
+						}
+						&:first-child{
+							padding-right: 25px;
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	// ft subscribe
+	.ft-subscribe{
+		.form-control{
+			padding: 15px 30px 15px 60px;
+	
+		}
+		button{
+			right: auto;
+			left: 5px;
+		}
+	}
+
+	// Site Footer-2
+	
+	.site-footer{
+	&.style-2{
+		.footer-logo-head {
+			.icon-bx-wraper{
+				float: left;
+				@include respond('tab-land'){
+					float: unset;				
+				}
+			}
+		}
+		.footer-top {
+			@include respond('phone-land'){
+				.widget_categories.p-l50{
+					padding-right: 0;
+				}
+
+			}
+		}
+	}
+}
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+

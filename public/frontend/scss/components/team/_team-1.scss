@@ -1,0 +1,73 @@
+.dz-team{
+	// Style 1
+	&.style-1{
+		.dz-content{
+			z-index: -1;
+			margin: -80px 0px 0;
+			padding: 100px 20px 20px 20px;
+			border:1px solid #cccccc;
+		}
+		.dz-name{
+			margin-bottom: 5px;
+			a{
+				color: inherit;
+			}
+		}
+		.dz-position{
+			font-size: 15px;
+			font-weight: 400;
+		}
+		@include respond('phone'){
+		 
+		}
+		.dz-media{
+			position:relative;
+			overflow:hidden;
+			margin: 0 20px;
+				
+			.team-social{
+				position: absolute;
+				bottom: -100px;
+				@include transitionMedium;
+				display: block;
+				width: 100%;
+				left: 0;
+			
+				
+				li{
+					display: inline-block;
+					margin-bottom: 10px;
+					
+					a{
+						background: var(--primary);
+						width: 40px;
+						height: 40px;
+						line-height: 40px;
+						text-align: center;
+						border-radius: 40px;
+						@include transitionMedium;
+						display: block;
+						color: #fff;
+						
+						&:hover{
+							background:var(--primary-hover);
+						}
+					}	
+				}	
+			}	
+			
+		}
+		&:hover .dz-media{
+			.team-social{
+				bottom:15px;	
+			}
+		}
+	}
+}
+.swiper-wrapper{
+	@include respond('phone-land'){
+		.dz-team{
+			margin: 0;
+		}
+	}
+}

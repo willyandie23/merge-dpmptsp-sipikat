@@ -1,0 +1,26 @@
+[dir='rtl']{
+	
+	// FILTER BUTTONS CSS
+	.site-filters {
+		li {
+			a {
+				margin: 0 0 5px 5px ;
+			}
+		}
+		// Style 1
+		&.style-1{
+			.filters{
+				li{
+					&:first-child{
+						margin-right: 0;
+					}
+					&:last-child{
+						margin-left: 0;
+					}	
+				}
+			}
+		}
+	}
+
+	 
+}

@@ -1,0 +1,77 @@
+// Testimonial 1
+.testimonial-1 {
+	background-color: #f9f9f9;
+    padding: 30px;
+    margin: 40px 0 20px 0;
+    position: relative;
+	@include transitionMedium;
+	@include respond('phone-land'){
+		margin: 0px 0 20px 0;
+	}
+	.testimonial-info{
+		position: relative;
+	}
+	.testimonial-text{
+		margin-bottom: 25px;
+	}
+	.testimonial-pic{
+		border: 0;
+		width: 100%;
+		height: auto;
+		display: flex;
+		align-items: center;
+		padding: 15px;
+		margin-bottom: 25px;
+		box-shadow: 0 5px 35px 0 rgba(0, 0, 0, 0.1);
+		
+		.info{
+			padding-left:20px;
+			flex:1;
+		}
+		img{
+			height: 60px;
+			width: 60px;
+			min-width: 60px;
+		}
+	}
+	.star-rating{
+		@include transitionMedium;
+		li {
+			margin: 0 2px;
+			font-size: 16px;
+		}
+	}
+	.testimonial-review {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		line-height: 1;
+		
+		.review{
+			margin:0;
+			line-height: 1;
+		}
+	}
+	.testimonial-name{
+		margin-bottom: 5px;
+		line-height: 1.3;
+	}	
+}
+.swiper-wrapper{
+	.swiper-slide-next{
+		@include transitionMedium;
+		
+		.testimonial-1 {
+			margin-top: 0;
+			background: var(--primary);
+			color: #fff;
+			
+			.star-rating{
+				color: #fff !important;
+			}
+			.review{
+				color:#fff;
+			}
+		}
+	}
+}

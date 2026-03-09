@@ -1,0 +1,97 @@
+// Site Footer
+.site-footer{
+	&.style-2{
+		background-color: #fff;
+		.footer-logo-head {
+			border-bottom: 1px solid $border-color;
+			
+			.icon-bx-wraper{
+				float: right;
+			}
+			@include respond('tab-port'){
+				.icon-bx-wraper{
+					float: unset;
+					justify-content: center;
+				}
+				.footer-logo {
+					margin-bottom: 35px;
+					text-align: center;
+				}
+			}
+			@include respond('phone-land'){
+				.icon-bx-wraper{
+					.icon-bx{
+						line-height: 58px;
+						width: 60px;
+						height: 60px;
+						min-width: 60px;
+    
+						i{
+							font-size: 26px;
+						}
+					}
+					.title {
+						font-size: 18px;
+					}
+					p{
+						font-size: 16px;
+					}
+				}
+			}
+			@include respond('phone'){
+				padding-bottom: 10px;
+				
+				.footer-logo {
+					max-width: 200px;
+				}
+				.icon-bx-wraper {
+					justify-content: start;
+					margin-bottom: 20px;
+				}
+			}
+		}
+		.footer-top {
+			padding: 120px 0 70px;
+			.widget_about p {
+				margin-bottom: 40px;
+			}
+			@include respond('tab-land'){
+				padding: 80px 0 40px;
+			}
+			@include respond('phone-land'){
+				.widget_categories.p-l50{
+					padding-left: 0;
+				}
+				.widget_about p {
+					margin-bottom: 25px;
+				}
+
+			}
+			@include respond('phone'){
+				padding: 50px 0 20px;
+			}
+		}
+		.footer-bottom{
+			background-color:#eaf1f9;
+			padding: 20px 0;
+			
+			.copyright-text{
+				color: var(--secondary);
+			}
+			.footer-link{
+				li a{
+					color: var(--secondary);				
+				}
+			}
+			@include respond('tab-port'){
+				.text-start{
+					margin-bottom: 5px;
+				}
+				.text-start,
+				.text-end{
+					text-align: center!important;
+				}
+			}
+		}
+	}
+}

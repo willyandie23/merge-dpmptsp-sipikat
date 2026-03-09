@@ -1,0 +1,248 @@
+// site-header
+.site-header{
+	&.style-2{
+		.top-bar{
+			.dz-social-icon{
+				a{
+					color: $body-color;
+				}
+			}
+			.dz-topbar-right{
+				ul{
+					li{
+						position: relative;
+						padding-left: 10px;
+						padding-right: 20px;
+						color: $body-color;
+						
+						&:after{
+							content: "|";
+							position: absolute;
+							top: 0;
+							right: 0;
+							opacity: 0.3;
+						}
+						&:last-child{
+							padding-right: 0;
+							&:after{
+								content: none;
+							}
+						}
+					}
+				}
+			}
+		}
+		.main-bar{
+			box-shadow: unset;
+		}
+		.extra-cell{
+			display: flex;
+			align-items: center;
+			
+			& > a,
+			& > div{
+				margin-left:30px;
+				@include respond('wide-desktop'){
+					margin-left:15px;
+				}
+			}
+		}
+		.header-nav{
+			.nav{
+				& > li{ 
+					font-family:$font-family-title;
+					&> a{
+						font-weight:600;
+					}
+					@include respond('tab-port-min'){
+						&:last-child a:after{
+							content:none;
+						}
+						&:after{
+							content: "\f111";
+							font-family: "Font Awesome 5 Free";
+							font-weight: 900;
+							font-size: 7px;
+							color: var(--primary);
+							position: absolute;
+							right: -3px;
+							top: 50%;
+							transform: translateY(-50%);
+						}
+						&:last-child{
+							&:after{
+								content: none;
+							}
+						}
+						&> a{
+							padding: 42px 20px;
+							&:after{
+								content: none;
+							}
+						}
+					}
+					@media only screen and (min-width: 1681px){
+						&> a{
+							padding: 52px 20px;
+						}
+					}
+				}
+			}
+		}
+		
+		.header-nav .nav > li:hover > a,
+		.header-nav .nav > li.active > a{
+			color: var(--primary);
+		}
+		.logo-header {
+			height: 120px;
+			@include respond('wide-desktop'){
+				height: 100px;
+			}
+			@include respond('tab-port'){
+				height: 80px;
+			}
+		}
+		@include respond('tab-port'){
+			padding-top: 0;
+			position: relative;
+		}
+		.phone-no{
+			color:var(--primary);
+			font-size: 18px;
+			font-weight: 300;
+			letter-spacing: 3px;
+		    margin: 0;
+			font-family:$font-family-title;
+			@include respond('wide-desktop'){	
+				display:none;
+			}
+		}
+		.extra-nav {
+			height: 120px;
+			#quik-search-btn {
+				color: $headings-color;
+				border: 1px solid $headings-color;
+				background-color: $white;
+			}
+			@include respond('wide-desktop'){
+				height: 100px;
+				.search-link,
+				.login-btn{
+					display: none;
+				}
+			}
+			@include respond('tab-port'){
+				display: none;
+			}
+		}
+		.extra-nav-left{
+			display: flex;
+			align-items: center;
+			height: 120px;
+			float: left;
+			margin-right: 20px;
+			.extra-icon-box{
+				display: block;
+				@include respond('wide-desktop'){
+					width: 50px;
+					padding: 0;
+					span,
+					.title{
+						display: none;
+					}
+				}
+			}
+			@include respond('wide-desktop'){
+				height: 100px;
+			}
+			@include respond('tab-port'){
+				display: none;
+			}
+		}
+			
+		.is-fixed{
+			.logo-header,
+			.extra-nav,
+			.extra-nav-left{
+				height: 100px;
+			}
+			.header-nav{
+				.nav{
+					& > li{ 
+						@include respond('tab-port-min'){
+							&> a{
+								padding: 42px 20px;
+							}
+						}
+					}
+				}
+			}
+			.logo-header {
+				@include respond('tab-port'){
+					height: 80px;
+				}
+			}
+			.main-bar{
+				box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.05);
+			}
+		}
+	}
+	&.center{
+		.logo-header {
+			position: absolute;
+			transform: translate(-50%);
+			-moz-transform: translate(-50%);
+			-webkit-transform: translate(-50%);
+			-o-transform: translate(-50%);
+			position: absolute;
+			left: 50%;
+			text-align: center;
+			@include respond('tab-port'){	
+				position: unset;
+				transform:unset;
+				-moz-transform:unset;
+				-webkit-transform: unset;
+				-o-transform: unset;
+				position: unset;
+				left: auto;
+				text-align: left;
+			}
+		}
+		.header-nav .nav {
+			display: inline-block;
+			float: left;
+			width: 40%;
+			@include respond('tab-port'){
+				width: 100%;
+				float: none;
+			}
+			& > li{
+				display: inline-block;
+			}
+			&.navbar-left {
+				text-align: right;
+				margin-right:150px;
+				@include respond('wide-desktop'){
+					margin-right:120px;					
+				}
+				@include respond('tab-port'){
+					text-align: left;
+					margin-right:0;
+				}
+			}
+			&.navbar-right {
+				float: right;
+				margin-left:150px;
+				@include respond('wide-desktop'){
+					margin-left:120px;
+				}
+				@include respond('tab-port'){
+					float: none;
+					margin-left:0;
+				}
+				
+			}
+		}
+	}
+}

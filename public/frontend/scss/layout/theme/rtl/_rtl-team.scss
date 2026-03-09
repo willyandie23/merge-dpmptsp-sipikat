@@ -1,0 +1,30 @@
+[dir='rtl']{
+	
+	//Team 1//
+	
+	.dz-team{
+	// Style 1
+		&.style-1{
+			.dz-media{	
+				.team-social{
+					left: auto;
+					right: 0;	
+				}		
+			}
+		}
+	}
+	
+	//Team 2//
+	
+	.dz-team{
+	
+	// Style 2
+		&.style-2{
+			.team-social{
+				right: auto;
+				left: 10px;
+			}
+		}
+	}
+	
+}

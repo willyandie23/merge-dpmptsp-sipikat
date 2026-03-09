@@ -1,0 +1,79 @@
+[dir='rtl']{
+	
+	
+	// dz-bnr-inr}
+	.breadcrumb-row{
+		ul {
+			li {
+				margin-right: 0;
+				margin-left: 3px;
+			}
+		}
+	}
+
+	// dz-bnr-inr styles
+	.dz-bnr-inr{
+		// Style 1
+		&.style-1{
+			.breadcrumb-row{
+				ul{
+					li{
+						padding-left: 25px;
+						padding-right: 25px;
+						@include respond('phone-land'){
+							padding-left: 10px;
+							padding-right: 10px;
+						}
+						&::before{
+							left: auto;
+							right: 0;
+							@include respond('phone-land'){
+								left: auto;
+								right: -1px;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		// Style 2
+		&.style-2{
+			&:after{
+				left: auto;
+				right: 0;
+			}
+			.breadcrumb-row{
+				left: auto;
+				right: 50%;
+				transform: translateX(50%);
+			}
+		}
+		
+		// Style 3
+		&.style-3{
+			&:after{
+				left: auto;
+				right: 0;
+			}
+		}
+	}
+	.square-bx{
+		right: auto;
+		left: 25%;
+		transform: translate(-25%, 50%);
+		&:before{
+			left: auto;
+			right: 0;
+		}
+		&:after{
+			right: auto;
+			left: 0;
+		}
+		@include respond('tab-port'){
+			transform: translate(-25%, 40%);
+			
+		}
+	}
+	 
+}

@@ -1,0 +1,181 @@
+[dir='rtl']{
+	
+	//default
+	.dz-meta{
+		ul{
+			li{
+				margin-right:0;
+				margin-left:20px;	
+			}	
+		}	
+	}
+	.post-video .post-video-icon {
+		//left: auto;
+		//right: 50%;
+		//padding-left: 0;
+		//padding-right: 5px;
+		//
+		&:before{
+			left: auto;
+			right: 0;
+		}
+		&:after{
+			left: auto;
+			right: 0;
+		}
+	}
+
+	//Blog Post 1
+	.dz-card{
+		&.style-1{
+			.dz-meta{
+				ul{
+					li{
+						margin-left: 7px;
+						margin-right: 7px;
+						
+						&:first-child{
+							margin-left: 7px;
+							margin-right: 0;
+						}
+						&:last-child{
+							margin-left: 0;
+							margin-right: 7px;
+						}
+						@include respond('phone-land'){
+							margin-left: 2px;
+							margin-right: 2px;
+							&:first-child{
+								margin-left: 2px;
+								margin-right: 0;
+							}
+							&:last-child{
+								margin-left: 0;
+								margin-right: 2px;
+							}
+						}
+					}	
+				}	
+			}
+			.btn-link {
+				display: inline-block;
+			}
+			.icon-btn{
+				right: auto;
+				left: 0;
+				padding: 0 4px 0 0 ;
+			}
+			&.blog-half{
+				.dz-media {
+					margin-right: 0;
+					margin-left: 0;
+				}
+				.dz-media + .dz-info {
+					text-align:right;
+				}
+			}
+		}
+		&.style-2{
+			.dz-meta{
+				ul{
+					li{
+						&:first-child{
+							margin-left: 0;
+						}
+						&:last-child{
+							margin-right: 0;
+						}
+					}	
+				}	
+			}
+			.icon-btn{
+				right: auto;
+				left: 0;
+				padding: 0 4px 0 0;
+			}
+			&.blog-half{
+				.dz-media {
+					margin-right: 0;
+					margin-left: 0;
+				}
+				.dz-media + .dz-info {
+					text-align:right;
+				}
+			}
+			.btn-link{
+				i{
+					transform: rotate(180deg);
+				}
+			}
+		}
+	}
+	.post-swiper{
+		.prev-post-swiper-btn,
+		.next-post-swiper-btn{
+			i{
+				transform: rotate(180deg);
+			}
+		}
+		.prev-post-swiper-btn{
+			left:auto;
+			right:0;
+		}
+		.next-post-swiper-btn{
+			right:auto;
+			left:0;
+		}
+	}
+	.dz-card.blog-half.sticky{
+		.sticky-icon {
+			right: auto;
+			left: -1.563rem;
+			i{
+				right: auto;
+				left: 1.125rem;
+			}
+		}
+	}
+
+	//blog post 2
+	.dz-card{
+		&.style-2{
+			.dz-meta{
+				ul{
+					li{
+						&:first-child{
+							margin-left: 0;
+						}
+						&:last-child{
+							margin-right: 0;
+						}
+					}	
+				}	
+			}
+			.icon-btn{
+				right: auto;
+				left: 0;
+				padding: 0 4px 0 0;
+			}
+			&.blog-half{
+				.dz-media {
+					margin-right: 0;
+					margin-left: 0;
+				}
+				.dz-media + .dz-info {
+					text-align:right;
+				}
+			}
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+	
+}

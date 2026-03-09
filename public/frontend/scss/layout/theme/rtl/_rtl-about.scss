@@ -1,0 +1,74 @@
+[dir='rtl']{
+	
+	// about 1
+	.about-bx1{
+		.dz-media{
+			float: left;
+		}
+		.year-exp{
+			right: auto;
+			left: 20px;
+			border-left: 10px solid var(--primary);
+			border-right: 0px solid var(--primary);
+			&:after{
+				left: auto;
+				right: 30px;
+			}
+			.text {
+				margin-left: auto;
+				margin-right: 20px;
+				@include respond('phone'){
+					margin-left: auto;
+					margin-right: 10px;
+				}
+			}
+		}
+		.section-head{
+			.sub-title i{
+				transform-origin: right;
+				-moz-transform-origin: right;
+				-webkit-transform-origin: right;
+				-ms-transform-origin: right;
+				-o-transform-origin: right;
+			}
+		}
+	}
+	.about-text-bx {
+		padding-left: 0;
+		padding-right: 40px;
+		&:after{
+			left: auto;
+			right: 0;
+		}
+	}
+	.about-video-box{
+		&:after{
+			left:auto;
+			right:0;
+		}
+	}
+	
+	// about 2
+	.about-bx2{
+		.year-exp{
+			left: auto;
+			right: 0;
+			padding: 30px 1px 1px 40px;
+			.year{
+				margin-right: 0;
+				margin-left: 20px;
+			}
+		}
+		@include respond('phone'){
+			.year-exp{
+				padding: 15px 1px 1px 30px;
+				.year{
+					margin-right: 0;
+					margin-left: 15px;
+				}
+			}
+		}
+	}
+
+
+}

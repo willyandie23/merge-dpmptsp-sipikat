@@ -1,0 +1,52 @@
+[dir='rtl']{
+	
+	// Default
+	// TESTIMONIALS
+	.quote-left{
+		&:before {
+			left: auto;
+			right: 0;
+		}
+	}
+	.quote-right{
+		&:before {
+			right: auto;
+			left: 0;
+		}
+	}
+		
+	// Testimonial 1
+	.testimonial-1 {
+		.testimonial-pic{
+			.info{
+				padding-left:0;
+				padding-right:20px;
+			}
+		}	
+	}
+	
+	// Testimonial 2
+	.testimonial-2{
+		.testimonial-pic{
+			margin-right: 0;
+			margin-left: 20px;
+			&:after{
+				left: auto;
+				right: -18px;
+				padding: 10px 12px 0 0;
+			}
+		}
+		@include respond('phone-land'){
+			.testimonial-pic{
+				margin-right: 0;
+				margin-left: 15px;
+				&:after {
+					left: auto;
+					right: -20px;
+				}
+			}
+		}
+	}
+	
+	
+}

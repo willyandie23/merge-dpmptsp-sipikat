@@ -1,0 +1,23 @@
+[dir='rtl']{
+	
+	// button
+		.btn{
+			&:after{
+				left: auto;
+				right: -45%;
+			}
+			&:hover:after{
+				left: auto;
+				right: 130%;
+			}
+		}
+	.ft-subscribe{
+		.dzSubscribe{
+			.btn{
+				i{
+					transform: rotate(180deg);
+				}
+			}
+		}
+	}
+}

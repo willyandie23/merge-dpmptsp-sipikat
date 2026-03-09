@@ -1,0 +1,162 @@
+[dir='rtl']{
+	
+	.dz-img-overlay1,
+	.dz-img-overlay2,
+	.dz-img-overlay3,
+	.dz-img-overlay4,
+	.dz-img-overlay5,
+	.dz-img-overlay6,
+	.dz-img-overlay7,
+	.dz-img-overlay8,
+	.dz-img-overlay9,
+	.dz-img-overlay11,
+	.dz-img-overlay12{
+		
+		&:before,
+		&:after{
+			left: auto;
+			right: 0;
+		}
+	}
+	// DLAB BOX
+	.dz-box{
+		&:hover{
+			.dz-img-overlay3:before {
+				left: auto;
+				right: 0;
+			}
+			.dz-img-overlay4:before {
+				left: auto;
+				right: 0;
+			}
+		}
+	}
+	// EFFECT 3 
+	.dz-img-overlay3{
+		&:before {
+			left: auto;
+			right: 50%;
+		}
+		&:hover:before{
+			left: auto;
+			right: 0;
+		}
+	}
+	// EFFECT 4
+	.dz-img-overlay4{
+		&:before{
+			left: 0;
+			right: 50%;
+		}
+		&:hover:before{
+			left: auto;
+			right: 0;
+		}
+	}
+	// EFFECT 5
+	.dz-img-overlay5{
+		&:before {
+			left: auto;
+			right: 0;
+		}
+	}
+	// EFFECT 6
+	.dz-img-overlay6{
+		&:before {
+			left: auto;
+			right: 0;
+		}
+	}
+	// EFFECT 7
+	.dz-img-overlay7{
+		&:after {
+			left: 0;
+			right: auto;
+		}
+	}
+	// EFFECT 8
+	.dz-img-overlay8{
+		&:after {
+			left: 0;
+			right: auto;
+		}
+	}
+	// EFFECT 9
+	.dz-img-overlay9:before,
+	.dz-img-overlay9:after{
+		&:before,
+		&:after{
+			left: 0;
+			right: auto;
+		}
+	}
+	/*  */
+	.overlay-black-light,
+	.overlay-black-middle,
+	.overlay-black-dark,
+	.overlay-gradient-light,
+	.overlay-gradient-middle,
+	.overlay-gradient-dark,
+	.overlay-white-light,
+	.overlay-white-middle,
+	.overlay-white-dark,
+	.overlay-primary-light,
+	.overlay-primary-middle,
+	.overlay-primary-dark,
+	.overlay-primary {
+		
+		&:before {
+			left: auto;
+			right: 0;
+		}
+	}
+	// OVERLAY BOX
+	.overlay-bx {
+		left: auto;
+		right: 0;
+		
+		.align-b{
+			left: auto;
+			right: 0;
+		}
+		.align-m {
+			left: auto;
+			right: 50%;
+		}
+	}
+	.overlay-icon{
+		left: auto;
+		right: 50%;
+	}
+	
+	.img-overlay-gradients{
+		&:before{
+			left: auto;
+			right: 0;
+		}
+	}
+	.overlay-shine{
+		.dz-media{
+			&:before {
+				left: auto;
+				right: -85%;
+				background: -webkit-linear-gradient(right, rgba(255,255,255,0) 0%, rgba(255,255,255,.3) 100%);
+				background: linear-gradient(to left, rgba(255,255,255,0) 0%, rgba(255,255,255,.3) 100%);
+			}
+		}
+	}
+
+	@-webkit-keyframes shine {
+		100% {
+			left: auto;
+			right: 125%;
+		}
+	}
+	@keyframes shine {
+		100% {
+			left: auto;
+			right: 125%;
+		}
+	}
+	
+}

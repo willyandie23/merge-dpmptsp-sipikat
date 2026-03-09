@@ -1,0 +1,296 @@
+[dir='rtl']{
+	
+	//index-1
+	/* Silder One */
+	.silder-one{
+		.dz-slide-item{
+			.slider-img{
+				right: auto;
+				left: 0;
+				filter: drop-shadow(-115px 45px 0px var(--primary));
+				@include respond('phone-land'){
+					filter: none;					
+				}
+			}	
+		}
+		.silder-content{
+			padding-left: 0;
+			padding-right: 80px;
+			@include respond('wide-desktop'){
+				padding-left: 0;
+				padding-right: 40px;
+			}
+		}
+		
+		.swiper-pagination-bullets{
+			left:auto;
+			right:80px;
+			@include respond('wide-desktop'){
+				left:auto;
+				right:40px;
+			}
+		}
+		@include respond('phone'){
+			.silder-content {
+				left: auto;
+				right: 15px;
+			}
+		}
+	}
+	.swiper-container .swiper-pagination-bullets{
+		
+		.swiper-pagination-bullet{
+			&:first-child{
+				margin-left: auto;
+				margin-right: 0;
+			}
+			&:last-child{
+				margin-right: auto;
+				margin-left: 0;
+			}
+			&:after{
+				left:auto;
+				right:0;
+			}
+		}
+	}
+	// Services
+	.service-area{
+		&:after{
+			left:auto;
+			right:0;	
+		}
+	}
+
+	// Features Wraper
+	.features-wraper-1{
+		& > div:not(:last-child){
+			.icon-bx-wraper{
+					&:after{
+					right: auto;
+					left: -50%;
+				}
+			}
+		}
+	}
+		
+	.section-head-bx .text-end,
+	.section-head-bx .section-head{
+		@include respond('tab-port'){
+			text-align: center !important;
+		}
+	}
+	
+	.section-title{
+		&.style-1{
+			&:after{
+				left: auto;
+				right: 50%;
+				transform: translate(-50%, 50%);
+				-webkit-transform: translate(-50%, 50%);
+				-moz-transform: translate(-50%, 50%);
+				-o-transform: translate(-50%, 50%);
+				-ms-transform: translate(-50%, 50%);
+			}
+		}
+		&.style-2{
+			&:after{
+				right: 0;
+				left: 100px;
+				writing-mode: tb-lr;
+			}
+		}
+		
+		@include respond ('tab-land'){
+			&.style-2{
+				&:after{
+					right: 0;
+					left: 0;
+				}
+			}
+		}
+	}
+
+	
+
+	/* Support and Buy Button */
+	.theme-btn{
+		left: auto;
+		right: 10px;
+		
+		&:focus,
+		&:active,
+		&:hover{
+			span{
+				padding-left:0;
+				padding-right:10px;
+			}
+		}
+	}
+	
+	
+	// Index-2 //
+	
+	// counter-area1
+	.counter-area1{
+		.counter-inner{
+			background-position: left bottom, right top;
+		}
+		&.half-bg{
+			&:after{
+				left: auto;
+				right: 0;
+			}
+		}
+	}
+	
+	/* Silder One */
+	.silder-two{
+		.dz-slide-item{
+			background-position: 35% center;
+			
+			&:after{
+				left: auto;
+				right: 0;
+			}
+			
+			@include respond('tab-port'){
+				.btn.m-r30{
+					margin-right: 0;
+					margin-left: 10px;
+				}
+			}
+			.slider-img{
+				right: auto;
+				left: 0;
+			}
+		}
+		.silder-content{
+			padding-left: 0;
+			padding-right: 80px;
+			@include respond('wide-desktop'){
+				padding-left: 0;
+				padding-right: 40px;
+			}
+			.inner-content{
+				padding-right: 0;
+				padding-left: 100px;
+				@include respond('tab-land'){
+					padding-left: 0;
+				}
+			}
+		}
+		
+		.swiper-pagination-bullets{
+			left:auto;
+			right:80px;
+			@include respond('wide-desktop'){
+				left:auto;
+				right:40px;
+			}
+			@include respond('phone-land'){
+				left: auto;
+				right: 20px;
+			}
+		}
+		@include respond('phone'){
+			.silder-content {
+				left: auto;
+				right: 15px;
+			}
+		}
+	}
+
+	.blog-area1{
+		@include respond('tab-port-min'){
+			[class*="col-"]{
+				&:first-child{
+					.dz-card{
+						.dz-info{
+							border-radius: 0 var(--border-radius-base) 0 0;
+						}
+						&.blog-top{
+							.dz-media{
+								border-radius: 0 var(--border-radius-base) 0 0;
+							}
+						}
+					}
+				}
+				&:last-child{
+					.dz-card{
+						.dz-media{
+							border-radius: 0 0 0 var(--border-radius-base);
+						}
+						&.blog-top{
+							.dz-info{
+								border-radius: 0 0 0 var(--border-radius-base);				
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+		
+	// Comming Soon 
+	
+	.dz-coming-soon {
+		padding-left:0;
+		padding-right:90px;
+		
+		@include respond('phone'){
+			padding-left: 0;
+			padding-right: 50px;
+		}
+	}
+	.countdown{
+		.date{
+			padding-right: 0;
+			padding-left: 30px;
+			@include respond('tab-land'){
+				padding-right: 0;
+				padding-left: 20px;
+			}
+			@include respond('tab-land'){
+				padding-right: 0;
+				padding-left: 10px;
+			}
+			@include respond('phone'){
+				padding-right: 5px;
+				padding-left: 5px;	
+			}
+		}
+	}
+	.sidenav-menu{
+		left: auto;
+		right: 0;
+		border-left: 1px solid rgba(0,0,0,0.2);
+		
+		.dz-social-icon{
+			 li a{
+				writing-mode: vertical-lr;
+			}
+		}
+	}
+	
+	// Error Page //
+	.error-page{
+		.error-head {
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+	
+	// Under Construction //
+	.under-construct{
+		&:after{
+			left:auto;
+			right:0;
+		}
+	}
+	
+	.lg-outer{
+		direction: ltr;
+	}
+	
+}

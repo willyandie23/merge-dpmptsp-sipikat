@@ -1,0 +1,15 @@
+[dir='rtl']{
+	
+	.pagination{
+		li{
+			.prev,
+			.next{
+				border-color: transparent;
+				font-size: 18px;
+				transform: rotate(180deg);
+			}
+			
+		}				
+	}
+
+}

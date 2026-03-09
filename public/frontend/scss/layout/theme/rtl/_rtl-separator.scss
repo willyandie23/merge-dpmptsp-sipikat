@@ -1,0 +1,47 @@
+[dir='rtl']{
+	
+	.dz-separator {
+		&.style-skew {
+			margin-left: 1px;
+			margin-right: 1px;
+			
+			&[class*="style-"]{
+				&:after,
+				&:before {
+					left: auto;
+					right: 20px;
+				}
+				&:before {
+					right: auto;
+					left: 20px;
+				}
+			}
+		}
+		&.bnr-title{
+			&:before {
+				right: auto;
+				left: -80px;
+			}
+			&:after {
+				right: auto;
+				left: -90px;
+			}
+			i {
+				right: auto;
+				left: -50px;
+			}
+		}
+	}
+	.dz-separator{
+		&.style-1{
+			&:before,
+			&:after {
+				left:auto;
+				right:0;
+			}
+		}
+	}	
+	
+	
+	
+}
