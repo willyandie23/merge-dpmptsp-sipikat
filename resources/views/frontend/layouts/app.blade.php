@@ -46,6 +46,12 @@
         .page-wraper {
             overflow-y: hidden;
         }
+
+        .sub-menu li.active > a {
+            color: var(--primary) !important;
+            font-weight: 600;
+        }
+
     </style>
 
     @stack('css')
