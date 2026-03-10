@@ -1,10 +1,10 @@
 <!-- Footer -->
-<footer class="site-footer style-1" id="footer" style="background-image:url(images/background/pattern3.png)">
+<footer class="site-footer style-1" id="footer" style="background-image:url({{ asset('frontend/images/background/pattern3.png') }})">
     <div class="footer-top">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6 col-lg-3 aos-item" data-aos="fade-up" data-aos-duration="1000"
-                    data-aos-delay="800">
+                    data-aos-delay="400">
                     <div class="widget">
                         <div class="widget-title">
                             <h4 class="title text-primary">DPMPTSP KABUPATEN KATINGAN</h4>

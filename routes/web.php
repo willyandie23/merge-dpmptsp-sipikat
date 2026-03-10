@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 # Publication
 Route::get('/', [MainController::class, 'index'])->name('home.index');
 Route::get('/berita', [NewsController::class, 'index'])->name('news.index');
+Route::get('/berita/{id}', [NewsController::class, 'show'])->name('news.show');
 Route::get('/galeri', [GalleryController::class, 'index'])->name('gallery.index');
 Route::get('/video', [VideoController::class, 'index'])->name('video.index');
 
