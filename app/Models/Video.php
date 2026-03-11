@@ -9,6 +9,8 @@ class Video extends Model
 {
     use HasFactory;
 
+    protected $table = 'videos';
+
     protected $fillable = [
         'title',
         'description',
@@ -19,4 +21,9 @@ class Video extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', 1);
+    }
 }

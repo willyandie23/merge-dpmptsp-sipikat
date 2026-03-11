@@ -9,6 +9,8 @@ class Gallery extends Model
 {
     use HasFactory;
 
+    protected $table = 'gallery';
+
     protected $fillable = [
         'title',
         'description',
@@ -19,4 +21,9 @@ class Gallery extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', 1);
+    }
 }
