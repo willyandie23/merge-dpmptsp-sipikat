@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\PeluangInvestasi;
+use App\Models\Populasi;
+use App\Traits\ModelLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Populasi;
-use App\Models\PeluangInvestasi;
 
 class Kecamatan extends Model
 {
-    use HasFactory;
+    use HasFactory, ModelLog;
 
     protected $fillable = [
         'name',

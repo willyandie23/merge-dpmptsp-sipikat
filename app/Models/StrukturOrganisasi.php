@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Bidang;
+use App\Traits\ModelLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Bidang;
 
 class StrukturOrganisasi extends Model
 {

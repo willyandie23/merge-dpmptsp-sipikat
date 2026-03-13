@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ProdukDomestik;
 use App\Models\PeluangInvestasi;
+use App\Traits\ModelLog;
 
 class Sektor extends Model
 {
-    use HasFactory;
+    use HasFactory, ModelLog;
 
     protected $fillable = [
         'name',

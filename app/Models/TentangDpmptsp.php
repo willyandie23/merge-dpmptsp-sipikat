@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\ModelLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TentangDpmptsp extends Model
 {
-    use HasFactory;
+    use HasFactory, ModelLog;
 
     protected $table = 'tentang_dpmptsp';
 
