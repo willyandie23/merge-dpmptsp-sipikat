@@ -6,3 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+Route::get('/documentation', function () {
+    return view('vendor.l5-swagger.index', ['documentation' => 'default']);
+})->name('l5-swagger.default');

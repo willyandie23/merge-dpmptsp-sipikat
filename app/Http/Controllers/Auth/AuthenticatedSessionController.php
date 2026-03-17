@@ -24,30 +24,24 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        try {
-            $request->authenticate();
+        $request->authenticate();
 
-            $request->session()->regenerate();
+        $request->session()->regenerate();
 
-            $user = $request->user();
+        $user = $request->user();
 
-            $tokenResult = $user->createToken('Personal Access Token');
-            $accessToken = $tokenResult->accessToken;
-
-            // Simpan token di session
-            session(['api_token' => $accessToken]);
-
+        // Cek role pakai Spatie Permission
+        if ($user->hasAnyRole(['admin', 'superadmin'])) {
+            // Admin / Superadmin → ke backend
             return redirect()
-                ->intended(route('dashboard', absolute: false))
-                ->with('status', 'Welcome back! You have successfully logged in.');
-            
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return redirect()
-                ->back()
-                ->withErrors(['email' => 'Invalid credentials'])
-                ->withInput()
-                ->with('status', 'Login failed. Please check your credentials.');
+                ->intended(route('backend.index'))  // intended biar aman kalau user akses /backend dulu
+                ->with('status', 'Selamat datang kembali di Panel Admin, ' . $user->name . '!');
         }
+
+        // User biasa (tanpa role admin) → ke dashboard default atau home
+        return redirect()
+            ->intended(route('dashboard'))
+            ->with('status', 'Selamat datang kembali!');
     }
 
     /**
