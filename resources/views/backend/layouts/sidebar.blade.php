@@ -60,10 +60,26 @@
                         <span>Konten Utama</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="">Berita / News</a></li>
-                        <li><a href="">Galeri</a></li>
-                        <li><a href="">Video</a></li>
-                        <li><a href="">Komoditas Unggulan</a></li>
+                        <li>
+                            <a href="{{ route('backend.news.index') }}" class="waves-effect">
+                                <span>Berita</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('backend.gallery.index') }}" class="waves-effect">
+                                <span>Galeri</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('backend.video.index') }}" class="waves-effect">
+                                <span>Video</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('backend.komoditas-unggulan.index') }}" class="waves-effect">
+                                <span>Komoditas Unggulan</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

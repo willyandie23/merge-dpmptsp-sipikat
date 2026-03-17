@@ -29,6 +29,7 @@ export default defineConfig({
                     'resources/scss/bootstrap.scss',
                     'resources/scss/icons.scss',
                     'resources/scss/app.scss',
+                    'resources/js/ckeditor.js',
                 ],
                 refresh: true
             }

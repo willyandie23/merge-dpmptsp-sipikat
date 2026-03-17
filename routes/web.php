@@ -16,7 +16,10 @@ use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\BannerDashboardController;
 use App\Http\Controllers\Backend\BannerIntegritasController;
 use App\Http\Controllers\Backend\BannerFaqController;
-
+use App\Http\Controllers\Backend\AdminNewsController;
+use App\Http\Controllers\Backend\AdminGalleryController;
+use App\Http\Controllers\Backend\AdminVideoController;
+use App\Http\Controllers\Backend\KomoditasUnggulanController;
 
 
 use Illuminate\Support\Facades\Route;
@@ -73,6 +76,14 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('backend')->group(f
         ->parameters(['banner-integritas' => 'banner_integritas']);
     Route::resource('banner-faq', BannerFaqController::class)
         ->names('backend.banner-faq');
+    Route::resource('news', AdminNewsController::class)
+        ->names('backend.news');
+    Route::resource('gallery', AdminGalleryController::class)
+        ->names('backend.gallery');
+    Route::resource('video', AdminVideoController::class)
+        ->names('backend.video');
+    Route::resource('komoditas-unggulan', KomoditasUnggulanController::class)
+        ->names('backend.komoditas-unggulan');
 });
 
 require __DIR__ . '/auth.php';

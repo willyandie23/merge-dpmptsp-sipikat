@@ -34,6 +34,8 @@
     @include('backend/layouts.vendor-scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    @vite(['resources/js/ckeditor.js'])
+
     @stack('script')
 </body>
 
