@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\ModelLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Gallery extends Model
 {
-    use HasFactory;
+    use HasFactory, ModelLog;
+
+    protected $table = 'gallery';
 
     protected $fillable = [
         'title',
@@ -19,4 +22,9 @@ class Gallery extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', 1);
+    }
 }

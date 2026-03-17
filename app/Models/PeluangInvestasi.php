@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Kecamatan;
 use App\Models\Sektor;
+use App\Traits\ModelLog;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class PeluangInvestasi extends Model
 {
-    use HasFactory;
+    use HasFactory, ModelLog;
 
     protected $table = 'peluang_investasi';
 

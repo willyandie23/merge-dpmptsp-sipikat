@@ -1,45 +1,38 @@
 <!-- Footer -->
-<footer class="site-footer style-1" id="footer" style="background-image:url(images/background/pattern3.png)">
+<footer class="site-footer style-1" id="footer" style="background-image:url({{ asset('frontend/images/background/pattern3.png') }})">
     <div class="footer-top">
         <div class="container">
-            {{-- <div class="row footer-logo-head spno">
-                <div class="col-md-6 aos-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-                    <div class="footer-logo">
-                        <img src="{{ asset('frontend/images/logo.png') }}" alt="">
-                    </div>
-                </div>
-                <div class="col-md-6 text-md-end aos-item" data-aos="fade-up" data-aos-duration="1000"
-                    data-aos-delay="400">
-                    <ul class="social-list style-1">
-                        <li><a href="javascript:void(0);"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="javascript:void(0);"><i class="fab fa-instagram"></i></a></li>
-                        <li><a href="javascript:void(0);"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="javascript:void(0);"><i class="fab fa-youtube"></i></a></li>
-                    </ul>
-                </div>
-            </div> --}}
             <div class="row justify-content-center">
-                
                 <div class="col-md-6 col-lg-3 aos-item" data-aos="fade-up" data-aos-duration="1000"
-                    data-aos-delay="800">
-                    <div class="widget widget_categories">
+                    data-aos-delay="400">
+                    <div class="widget">
                         <div class="widget-title">
-                            <h4 class="title">Test</h4>
-                            <div class="dz-separator style-1 text-primary mb-0"></div>
+                            <h4 class="title text-primary">DPMPTSP KABUPATEN KATINGAN</h4>
                         </div>
-                        <ul class="list-2">
-                            {{-- <li class="cat-item"><a href="index.html">Home</a></li>
-                            <li class="cat-item"><a href="about-us.html">About Us</a></li>
-                            <li class="cat-item"><a href="portfolio.html">Portfolio</a></li>
-                            <li class="cat-item"><a href="services.html">Services</a></li>
-                            <li class="cat-item"><a href="team.html">Team</a></li>
-                            <li class="cat-item"><a href="blog-grid-no-sidebar.html">News</a></li>
-                            <li class="cat-item"><a href="about-us.html">FAQ</a></li>
-                            <li class="cat-item"><a href="about-us.html">History</a></li>
-                            <li class="cat-item"><a href="contact-us.html">Support</a></li>
-                            <li class="cat-item"><a href="about-us.html">Company</a></li>
-                            <li class="cat-item"><a href="contact-us.html">Contact Us</a></li> --}}
-                        </ul>
+                        <div class="text-muted text-justify" style="text-align: justify;">
+                            Jl. Garuda No II, Kasongan Lama, Katingan Hilir, Kasongan Lama, Kabupaten Katingan, Kalimantan Tengah 74411
+                        </div>
+                        <div class="text-start mt-4">
+                            <ul class="social-list style-1">
+                                {{-- Internet/Website --}}
+                                {{-- <li><a href="javascript:void(0);"><i class="fas fa-globe"></i></a></li> --}}
+                                
+                                {{-- Facebook --}}
+                                <li><a href="javascript:void(0);"><i class="fab fa-facebook-f"></i></a></li>
+                                
+                                {{-- Instagram --}}
+                                <li><a href="javascript:void(0);"><i class="fab fa-instagram"></i></a></li>
+                                
+                                {{-- X (Twitter) --}}
+                                <li><a href="javascript:void(0);"><i class="fab fa-twitter"></i></a></li>
+                                
+                                {{-- YouTube --}}
+                                <li><a href="javascript:void(0);"><i class="fab fa-youtube"></i></a></li>
+                                
+                                {{-- TikTok --}}
+                                <li><a href="javascript:void(0);"><i class="fab fa-tiktok"></i></a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3 aos-item" data-aos="fade-up" data-aos-duration="1000"
@@ -77,17 +70,29 @@
                             <h4 class="title">Kontak Kami</h4>
                             <div class="dz-separator style-1 text-primary mb-0"></div>
                         </div>
-                        <ul>
-                            <li><i class="flaticon-telephone"></i>
-                                <h5>Phone Number</h5> +01 123 456 7890
+
+                        {{-- Tombol WhatsApp --}}
+                        <a href="https://wa.me/6281234567890" target="_blank"
+                            class="btn d-flex align-items-center justify-content-center gap-2 mt-3"
+                            style="background-color: #25D366; color: #fff; border-radius: 8px; padding: 10px 16px; text-decoration: none; font-weight: 600;">
+                            <i class="fab fa-whatsapp" style="font-size: 1.4rem;"></i>
+                            Chat Via WhatsApp
+                        </a>
+
+                        {{-- Statistik Pengunjung --}}
+                        <ul class="list-unstyled mt-4" style="line-height: 2.2;">
+                            <li class="d-flex align-items-center gap-2">
+                                <i class="fas fa-calendar-day text-primary"></i>
+                                <span>Pengunjung Hari Ini</span>
+                                <span class="ms-auto fw-bold">10.543</span>
                             </li>
-                            <li><i class="flaticon-email"></i>
-                                <h5>Email Address</h5>info@supports.com
-                            </li>
-                            <li><i class="flaticon-maps-and-location"></i>
-                                <h5>Office Address</h5>15 Miranda House, New York
+                            <li class="d-flex align-items-center gap-2">
+                                <i class="fas fa-users text-primary"></i>
+                                <span>Total Pengunjung</span>
+                                <span class="ms-auto fw-bold">5.214</span>
                             </li>
                         </ul>
+
                     </div>
                 </div>
             </div>
