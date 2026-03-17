@@ -44,8 +44,12 @@
                                 Banner Dashboard
                             </a>
                         </li>
-                        <li><a href="">Banner Integritas</a></li>
-                        <li><a href="">Banner FAQ</a></li>
+                        <li>
+                            <a href="{{ route('backend.banner-integritas.index') }}" class="waves-effect">
+                                <span>Banner Integritas</span>
+                            </a>
+                        </li>
+                        <li><a href="{{ route('backend.banner-faq.index') }}">Banner FAQ</a></li>
                     </ul>
                 </li>
 

@@ -14,6 +14,11 @@ use App\Http\Controllers\Frontend\publication\VideoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\BannerDashboardController;
+use App\Http\Controllers\Backend\BannerIntegritasController;
+use App\Http\Controllers\Backend\BannerFaqController;
+
+
+
 use Illuminate\Support\Facades\Route;
 
 // Halaman depan (frontend publik)
@@ -63,7 +68,11 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('backend')->group(f
 
     Route::resource('banner-dashboard', BannerDashboardController::class)
         ->names('backend.banner-dashboard');
-
+    Route::resource('banner-integritas', BannerIntegritasController::class)
+        ->names('backend.banner-integritas')
+        ->parameters(['banner-integritas' => 'banner_integritas']);
+    Route::resource('banner-faq', BannerFaqController::class)
+        ->names('backend.banner-faq');
 });
 
 require __DIR__ . '/auth.php';
