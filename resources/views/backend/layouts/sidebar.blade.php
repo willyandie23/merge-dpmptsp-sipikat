@@ -92,20 +92,12 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="">Data Peluang Investasi</a>
                         </li>
-                        <li><a href="">Data Kecamatan</a></li>
-                        <li><a href="">Sektor Usaha</a></li>
-                    </ul>
-                </li>
-
-                <!-- Data Ekonomi & Statistik -->
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="mdi mdi-chart-bar"></i>
-                        <span>Data Ekonomi</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="">Data Populasi</a></li>
-                        <li><a href="">Produk Domestik</a></li>
+                        <li>
+                            <a href="{{ route('backend.kecamatan.index') }}">
+                                Data Kecamatan
+                            </a>
+                        </li>
+                        <li><a href="{{ route('backend.sektor.index') }}">Sektor Usaha</a></li>
                         <li><a href="">Pertumbuhan Ekonomi</a></li>
                     </ul>
                 </li>

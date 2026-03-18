@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Kecamatan;
-use App\Models\Sektor;
 use App\Traits\ModelLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,17 +16,17 @@ class PeluangInvestasi extends Model
         'title',
         'image',
         'description',
-        'id_kecamatan',
-        'id_sektor',
+        'kecamatan_id',     // <--- diubah dari id_kecamatan
+        'sektor_id',        // <--- diubah dari id_sektor
     ];
 
     public function kecamatan()
     {
-        return $this->belongsTo(Kecamatan::class, 'id_kecamatan');
+        return $this->belongsTo(Kecamatan::class);
     }
 
     public function sektor()
     {
-        return $this->belongsTo(Sektor::class, 'id_sektor');
+        return $this->belongsTo(Sektor::class);
     }
 }

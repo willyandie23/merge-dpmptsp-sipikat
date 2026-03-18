@@ -10,10 +10,9 @@ class Populasi extends Model
 {
     use HasFactory, ModelLog;
 
-    protected $fillable = [
-        'year',
-        'amount',
-    ];
+    protected $table = 'populasi';
+
+    protected $fillable = ['year', 'amount', 'kecamatan_id'];
 
     protected $casts = [
         'year' => 'integer',
@@ -22,6 +21,6 @@ class Populasi extends Model
 
     public function kecamatan()
     {
-        return $this->hasMany(Kecamatan::class, 'id_populasi');
+        return $this->belongsTo(Kecamatan::class);
     }
 }

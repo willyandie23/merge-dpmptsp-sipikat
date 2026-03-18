@@ -20,7 +20,8 @@ use App\Http\Controllers\Backend\AdminNewsController;
 use App\Http\Controllers\Backend\AdminGalleryController;
 use App\Http\Controllers\Backend\AdminVideoController;
 use App\Http\Controllers\Backend\KomoditasUnggulanController;
-
+use App\Http\Controllers\Backend\KecamatanController;
+use App\Http\Controllers\Backend\SektorController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -84,6 +85,12 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('backend')->group(f
         ->names('backend.video');
     Route::resource('komoditas-unggulan', KomoditasUnggulanController::class)
         ->names('backend.komoditas-unggulan');
+    Route::resource('kecamatan', KecamatanController::class)
+        ->names('backend.kecamatan')
+        ->parameters(['kecamatan' => 'kecamatan']);
+    Route::resource('sektor', SektorController::class)
+        ->names('backend.sektor')
+        ->parameters(['sektor' => 'sektor']);
 });
 
 require __DIR__ . '/auth.php';
