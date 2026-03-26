@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 
-@section('title', 'Manajemen Sektor')
+@section('title', 'Manajemen Peluang Investasi')
 
 @push('css')
     <style>
@@ -80,17 +80,16 @@
         }
     </style>
 @endpush
-
 @section('content')
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0 font-size-18">Manajemen Sektor Usaha</h4>
+                    <h4 class="mb-0 font-size-18">Manajemen Peluang Investasi</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Sektor</li>
+                            <li class="breadcrumb-item active">Peluang Investasi</li>
                         </ol>
                     </div>
                 </div>
@@ -102,9 +101,9 @@
         <div class="col-12">
             <div class="card card-modern">
                 <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
-                    <h4 class="card-title mb-0">Daftar Sektor</h4>
-                    <a href="{{ route('backend.sektor.create') }}" class="btn btn-light btn-add">
-                        <i class="mdi mdi-plus me-1"></i> Tambah Sektor Baru
+                    <h4 class="card-title mb-0">Daftar Peluang Investasi</h4>
+                    <a href="{{ route('backend.peluang-investasi.create') }}" class="btn btn-light btn-add">
+                        <i class="mdi mdi-plus me-1"></i> Tambah Peluang Investasi
                     </a>
                 </div>
 
@@ -114,40 +113,42 @@
                             <thead class="table-light">
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Sektor</th>
+                                    <th>Gambar</th>
+                                    <th>Judul</th>
                                     <th>Kecamatan</th>
-                                    <th>Produk Domestik Terbaru</th>
-                                    <th>Tahun</th>
-                                    <th>Total PDRB (Rp)</th>
+                                    <th>Sektor</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($sektors as $sektor)
+                                @forelse ($peluangs as $peluang)
                                     <tr>
-                                        <td>{{ $loop->iteration + ($sektors->currentPage() - 1) * $sektors->perPage() }}</td>
-                                        <td>{{ $sektor->name }}</td>
-                                        <td>{{ $sektor->kecamatan->name ?? '-' }}</td>
+                                        <td>{{ $loop->iteration + ($peluangs->currentPage() - 1) * $peluangs->perPage() }}</td>
                                         <td>
-                                            @php $latest = $sektor->produkDomestik->sortByDesc('year')->first(); @endphp
-                                            @if($latest) Rp {{ number_format($latest->amount, 2) }} @else - @endif
+                                            @if($peluang->image)
+                                                <img src="{{ Storage::url($peluang->image) }}" class="img-thumbnail-modern"
+                                                    width="80" alt="{{ $peluang->title }}">
+                                            @else
+                                                -
+                                            @endif
                                         </td>
-                                        <td>{{ $latest->year ?? '-' }}</td>
-                                        <td>Rp {{ number_format($sektor->produkDomestik->sum('amount'), 2) }}</td>
-                                        <td>
-                                            <a href="{{ route('backend.sektor.edit', $sektor) }}"
+                                        <td>{{ $peluang->title }}</td>
+                                        <td>{{ $peluang->kecamatan->name ?? '-' }}</td>
+                                        <td>{{ $peluang->sektor->name ?? '-' }}</td>
+                                        <td class="aksi-column">
+                                            <a href="{{ route('backend.peluang-investasi.edit', $peluang) }}"
                                                 class="btn btn-sm btn-warning">
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
-                                            <button type="button" class="btn btn-sm btn-danger delete-sektor"
-                                                data-id="{{ $sektor->id }}" data-name="{{ $sektor->name }}">
+                                            <button type="button" class="btn btn-sm btn-danger delete-peluang"
+                                                data-id="{{ $peluang->id }}" data-title="{{ $peluang->title }}">
                                                 <i class="mdi mdi-delete"></i>
                                             </button>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="7" class="text-center py-5">Belum ada data sektor</td>
+                                        <td colspan="6" class="text-center py-5">Belum ada data peluang investasi</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -155,7 +156,7 @@
                     </div>
 
                     <div class="mt-4 d-flex justify-content-center">
-                        {{ $sektors->links() }}
+                        {{ $peluangs->links() }}
                     </div>
                 </div>
             </div>
@@ -165,14 +166,14 @@
 
 @push('script')
     <script>
-        document.querySelectorAll('.delete-sektor').forEach(btn => {
+        document.querySelectorAll('.delete-peluang').forEach(btn => {
             btn.addEventListener('click', function () {
                 const id = this.dataset.id;
-                const name = this.dataset.name;
+                const title = this.dataset.title;
 
                 Swal.fire({
                     title: 'Yakin hapus?',
-                    text: `Sektor "${name}" akan dihapus!`,
+                    text: `Peluang "${title}" akan dihapus permanen!`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
@@ -182,7 +183,7 @@
                     if (result.isConfirmed) {
                         const form = document.createElement('form');
                         form.method = 'POST';
-                        form.action = `{{ route('backend.sektor.destroy', ':id') }}`.replace(':id', id);
+                        form.action = `{{ route('backend.peluang-investasi.destroy', ':id') }}`.replace(':id', id);
                         form.innerHTML = '@csrf @method("DELETE")';
                         document.body.appendChild(form);
                         form.submit();

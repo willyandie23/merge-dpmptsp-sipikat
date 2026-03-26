@@ -90,7 +90,10 @@
                         <span>Peluang Investasi</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="">Data Peluang Investasi</a>
+                        <li>
+                            <a href="{{ route('backend.peluang-investasi.index') }}" class="waves-effect">
+                                <span>Data Peluang Investasi</span>
+                            </a>
                         </li>
                         <li>
                             <a href="{{ route('backend.kecamatan.index') }}">
@@ -98,7 +101,7 @@
                             </a>
                         </li>
                         <li><a href="{{ route('backend.sektor.index') }}">Sektor Usaha</a></li>
-                        <li><a href="">Pertumbuhan Ekonomi</a></li>
+                        <li><a href="{{ route('backend.pertumbuhan-ekonomi.index') }}">Pertumbuhan Ekonomi</a></li>
                     </ul>
                 </li>
 
@@ -109,8 +112,8 @@
                         <span>Statistik Layanan</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="">Hasil Survey</a></li>
-                        <li><a href="">Perizinan Terbit</a></li>
+                        <li><a href="{{ route('backend.survey.index') }}">Hasil Survey</a></li>
+                        <li><a href="{{ route('backend.perizinan-terbit.index') }}">Perizinan Terbit</a></li>
                     </ul>
                 </li>
 

@@ -22,6 +22,10 @@ use App\Http\Controllers\Backend\AdminVideoController;
 use App\Http\Controllers\Backend\KomoditasUnggulanController;
 use App\Http\Controllers\Backend\KecamatanController;
 use App\Http\Controllers\Backend\SektorController;
+use App\Http\Controllers\Backend\PeluangInvestasiController;
+use App\Http\Controllers\Backend\PertumbuhanEkonomiController;
+use App\Http\Controllers\Backend\SurveyController;
+use App\Http\Controllers\Backend\PerizinanTerbitController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -91,6 +95,24 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('backend')->group(f
     Route::resource('sektor', SektorController::class)
         ->names('backend.sektor')
         ->parameters(['sektor' => 'sektor']);
+    Route::resource('peluang-investasi', PeluangInvestasiController::class)
+        ->names('backend.peluang-investasi')
+        ->parameters(['peluang-investasi' => 'peluang_investasi'])
+        ->except(['show']);
+    Route::get(
+        'peluang-investasi/get-sektors',
+        [PeluangInvestasiController::class, 'getSektorsByKecamatan']
+    )
+        ->name('backend.peluang-investasi.getSektorsByKecamatan');
+    Route::resource('pertumbuhan-ekonomi', PertumbuhanEkonomiController::class)
+        ->names('backend.pertumbuhan-ekonomi')
+        ->parameters(['pertumbuhan-ekonomi' => 'pertumbuhan_ekonomi']);
+    Route::resource('survey', SurveyController::class)
+        ->names('backend.survey')
+        ->parameters(['survey' => 'survey']);
+    Route::resource('perizinan-terbit', PerizinanTerbitController::class)
+        ->names('backend.perizinan-terbit')
+        ->parameters(['perizinan-terbit' => 'perizinan_terbit']);
 });
 
 require __DIR__ . '/auth.php';

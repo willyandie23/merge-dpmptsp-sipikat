@@ -12,10 +12,7 @@ class ProdukDomestik extends Model
 
     protected $table = 'produk_domestik';
 
-    protected $fillable = [
-        'year',
-        'amount',
-    ];
+    protected $fillable = ['sektor_id', 'year', 'amount'];
 
     protected $casts = [
         'year' => 'integer',
@@ -24,6 +21,6 @@ class ProdukDomestik extends Model
 
     public function sektor()
     {
-        return $this->hasMany(Sektor::class, 'id_produk');
+        return $this->belongsTo(Sektor::class);   // ← Perbaikan di sini
     }
 }

@@ -1,0 +1,139 @@
+@extends('backend.layouts.master')
+
+@section('title', 'Edit Pertumbuhan Ekonomi')
+
+@push('css')
+    <style>
+        /* CSS persis dari index Banner Dashboard */
+        .main-content {
+            padding-top: 100px !important;
+        }
+
+        .page-content {
+            margin-top: -4rem !important;
+        }
+
+        .page-title-box {
+            background: linear-gradient(135deg, #556ee6 0%, #364574 100%) !important;
+            color: white !important;
+            padding: 1.8rem 1.5rem !important;
+            border-radius: 10px;
+        }
+
+        .page-title-box h4,
+        .page-title-box .breadcrumb {
+            color: white !important;
+        }
+
+        .card-header-modern {
+            background: linear-gradient(135deg, #556ee6 0%, #364574 100%) !important;
+            color: white !important;
+            border-bottom: none;
+            padding: 1.4rem 1.5rem !important;
+        }
+
+        .card-header-modern h4 {
+            color: white !important;
+            margin: 0 !important;
+        }
+
+        .btn-add-banner {
+            padding: 0.6rem 1.5rem !important;
+            font-size: 1rem !important;
+            min-width: 180px;
+            box-shadow: 0 4px 12px rgba(85, 110, 230, 0.35) !important;
+            transition: all 0.3s ease;
+        }
+
+        .btn-add-banner:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(85, 110, 230, 0.45) !important;
+        }
+
+        .card-modern {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1) !important;
+            margin-bottom: 2rem !important;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(85, 110, 230, 0.06) !important;
+        }
+
+        .img-thumbnail-modern {
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .img-thumbnail-modern:hover {
+            transform: scale(1.1);
+        }
+
+        .aksi-column {
+            text-align: center !important;
+        }
+
+        .btn-group {
+            display: inline-flex;
+            justify-content: center;
+        }
+    </style>
+@endpush
+
+@section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 font-size-18">Edit Pertumbuhan Ekonomi Tahun {{ $pertumbuhan_ekonomi->year }}</h4>
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a
+                                    href="{{ route('backend.pertumbuhan-ekonomi.index') }}">Pertumbuhan Ekonomi</a></li>
+                            <li class="breadcrumb-item active">Edit</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-lg-8">
+            <div class="card card-modern">
+                <div class="card-header card-header-modern">
+                    <h4 class="card-title mb-0">Form Edit Pertumbuhan Ekonomi</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form action="{{ route('backend.pertumbuhan-ekonomi.update', $pertumbuhan_ekonomi) }}" method="POST">
+                        @csrf @method('PUT')
+
+                        <div class="mb-4">
+                            <label class="form-label">Tahun <span class="text-danger">*</span></label>
+                            <input type="number" name="year" class="form-control @error('year') is-invalid @enderror"
+                                value="{{ old('year', $pertumbuhan_ekonomi->year) }}" min="2000" max="2100" required>
+                            @error('year') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Pertumbuhan Ekonomi (%) <span class="text-danger">*</span></label>
+                            <input type="number" name="amount" step="0.01"
+                                class="form-control @error('amount') is-invalid @enderror"
+                                value="{{ old('amount', $pertumbuhan_ekonomi->amount) }}" min="0" max="100" required>
+                            @error('amount') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3">
+                            <a href="{{ route('backend.pertumbuhan-ekonomi.index') }}" class="btn btn-light">Batal</a>
+                            <button type="submit" class="btn btn-gradient text-white">
+                                <i class="mdi mdi-content-save me-1"></i> Update Data
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
