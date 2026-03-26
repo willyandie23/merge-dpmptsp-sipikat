@@ -124,8 +124,8 @@
                         <span>Struktur Organisasi</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="">Data Bidang</a></li>
-                        <li><a href="">Pegawai & Pejabat</a></li>
+                        <li><a href="{{ route('backend.bidang.index') }}">Data Bidang</a></li>
+                        <li><a href="{{ route('backend.struktur-organisasi.index') }}">Pegawai & Pejabat</a></li>
                     </ul>
                 </li>
 
