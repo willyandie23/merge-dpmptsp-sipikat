@@ -28,6 +28,9 @@ use App\Http\Controllers\Backend\SurveyController;
 use App\Http\Controllers\Backend\PerizinanTerbitController;
 use App\Http\Controllers\Backend\BidangController;
 use App\Http\Controllers\Backend\StrukturOrganisasiController;
+use App\Http\Controllers\Backend\TentangDpmptspController;
+use App\Http\Controllers\Backend\AdminFaqController;
+use App\Http\Controllers\Backend\MekanismePengaduanController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -114,6 +117,14 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('backend')->group(f
         ->except(['show']);   // ← Tambahkan baris ini
     Route::get('/struktur-organisasi/check-pejabat', [StrukturOrganisasiController::class, 'checkPejabat'])
         ->name('backend.struktur-organisasi.check-pejabat');
+    Route::resource('tentang-dpmptsp', TentangDpmptspController::class)
+        ->names('backend.tentang-dpmptsp');
+    Route::resource('faq', AdminFaqController::class)
+        ->names('backend.faq');
+    Route::resource('mekanisme-pengaduan', MekanismePengaduanController::class)
+    ->names('backend.mekanisme-pengaduan')
+    ->parameters(['mekanisme-pengaduan' => 'mekanisme_pengaduan']);
 });
+
 
 require __DIR__ . '/auth.php';

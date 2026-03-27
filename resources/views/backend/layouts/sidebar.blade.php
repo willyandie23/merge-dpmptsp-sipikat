@@ -5,28 +5,25 @@
 
         <div class="user-wid text-center py-4">
             <div class="user-img">
-                <img src="{{ URL::Asset('build/images/users/avatar-2.jpg') }}" alt=""
+                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}" alt=""
                     class="avatar-md mx-auto rounded-circle">
             </div>
 
             <div class="mt-3">
-
                 <a href="#" class="text-body fw-medium font-size-16">Patrick Becker</a>
                 <p class="text-muted mt-1 mb-0 font-size-13">UI/UX Designer</p>
-
             </div>
         </div>
 
-        <!--- Sidemenu -->
-        <!--- Sidemenu -->
+        <!-- Sidemenu -->
         <div id="sidebar-menu">
-            <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
+
                 <li class="menu-title">Menu Utama</li>
 
                 <!-- Dashboard -->
                 <li>
-                    <a href="" class="waves-effect">
+                    <a href="{{ route('backend.index') }}" class="waves-effect">
                         <i class="mdi mdi-airplay"></i>
                         <span>Dashboard</span>
                     </a>
@@ -39,16 +36,8 @@
                         <span>Banner</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{ route('backend.banner-dashboard.index') }}">
-                                Banner Dashboard
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('backend.banner-integritas.index') }}" class="waves-effect">
-                                <span>Banner Integritas</span>
-                            </a>
-                        </li>
+                        <li><a href="{{ route('backend.banner-dashboard.index') }}">Banner Dashboard</a></li>
+                        <li><a href="{{ route('backend.banner-integritas.index') }}">Banner Integritas</a></li>
                         <li><a href="{{ route('backend.banner-faq.index') }}">Banner FAQ</a></li>
                     </ul>
                 </li>
@@ -60,26 +49,10 @@
                         <span>Konten Utama</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{ route('backend.news.index') }}" class="waves-effect">
-                                <span>Berita</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('backend.gallery.index') }}" class="waves-effect">
-                                <span>Galeri</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('backend.video.index') }}" class="waves-effect">
-                                <span>Video</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('backend.komoditas-unggulan.index') }}" class="waves-effect">
-                                <span>Komoditas Unggulan</span>
-                            </a>
-                        </li>
+                        <li><a href="{{ route('backend.news.index') }}">Berita</a></li>
+                        <li><a href="{{ route('backend.gallery.index') }}">Galeri</a></li>
+                        <li><a href="{{ route('backend.video.index') }}">Video</a></li>
+                        <li><a href="{{ route('backend.komoditas-unggulan.index') }}">Komoditas Unggulan</a></li>
                     </ul>
                 </li>
 
@@ -90,16 +63,8 @@
                         <span>Peluang Investasi</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{ route('backend.peluang-investasi.index') }}" class="waves-effect">
-                                <span>Data Peluang Investasi</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('backend.kecamatan.index') }}">
-                                Data Kecamatan
-                            </a>
-                        </li>
+                        <li><a href="{{ route('backend.peluang-investasi.index') }}">Data Peluang Investasi</a></li>
+                        <li><a href="{{ route('backend.kecamatan.index') }}">Data Kecamatan</a></li>
                         <li><a href="{{ route('backend.sektor.index') }}">Sektor Usaha</a></li>
                         <li><a href="{{ route('backend.pertumbuhan-ekonomi.index') }}">Pertumbuhan Ekonomi</a></li>
                     </ul>
@@ -131,7 +96,7 @@
 
                 <!-- Tentang DPMTSP -->
                 <li>
-                    <a href="" class="waves-effect">
+                    <a href="{{ route('backend.tentang-dpmptsp.index') }}" class="waves-effect">
                         <i class="mdi mdi-information-outline"></i>
                         <span>Tentang DPMTSP</span>
                     </a>
@@ -139,7 +104,7 @@
 
                 <!-- FAQ -->
                 <li>
-                    <a href="" class="waves-effect">
+                    <a href="{{ route('backend.faq.index') }}" class="waves-effect">
                         <i class="mdi mdi-help-circle-outline"></i>
                         <span>FAQ</span>
                     </a>
@@ -147,25 +112,72 @@
 
                 <!-- Mekanisme Pengaduan -->
                 <li>
-                    <a href="" class="waves-effect">
+                    <a href="{{ route('backend.mekanisme-pengaduan.index') }}" class="waves-effect">
                         <i class="mdi mdi-message-alert-outline"></i>
                         <span>Mekanisme Pengaduan</span>
                     </a>
                 </li>
 
-                <!-- Menu Tambahan (opsional, bisa di-expand nanti) -->
-                <li class="menu-title">Pengaturan</li>
-                <li>
-                    <a href="javascript: void(0);" class="waves-effect">
-                        <i class="mdi mdi-cog-outline"></i>
-                        <span>Pengaturan Sistem</span>
-                    </a>
-                </li>
+                {{-- ==================== MENU KHUSUS SUPER ADMIN ==================== --}}
+                @if (auth()->user()->hasRole('superadmin'))
+                    <li class="menu-title">Super Admin</li>
+
+                    <!-- Manajemen Pengguna -->
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="mdi mdi-account-multiple"></i>
+                            <span>Pengguna</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="#">Daftar Pengguna</a></li>
+                            <li><a href="#">Tambah Pengguna</a></li>
+                            <li><a href="#">Role & Permission</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- App Log -->
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="mdi mdi-history"></i>
+                            <span>App Log</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="#">Activity Log</a></li>
+                            <li><a href="#">Login Log</a></li>
+                            <li><a href="#">System Log</a></li>
+                        </ul>
+                    </li>
+                @endif
 
             </ul>
         </div>
-        <!-- Sidebar -->
-        <!-- Sidebar -->
     </div>
 </div>
-<!-- Left Sidebar End -->
+<!-- ========== Left Sidebar End ========== -->
+
+<!-- Script untuk memperbaiki Active Menu + Collapse -->
+@push('script')
+    <script>
+        $(document).ready(function () {
+            var currentUrl = window.location.href.toLowerCase();
+
+            $('#side-menu a').each(function () {
+                var linkHref = $(this).attr('href');
+
+                if (linkHref && linkHref !== '#' && linkHref !== 'javascript: void(0);') {
+                    if (currentUrl.includes(linkHref.toLowerCase()) ||
+                        window.location.pathname === linkHref) {
+
+                        $(this).addClass('active');
+                        $(this).parents('ul.sub-menu').addClass('in').attr('aria-expanded', 'true');
+                        $(this).closest('li').addClass('mm-active');
+                        $(this).parents('li.has-arrow').addClass('mm-active');
+                    }
+                }
+            });
+
+            // Inisialisasi MetisMenu
+            $('#side-menu').metisMenu();
+        });
+    </script>
+@endpush
