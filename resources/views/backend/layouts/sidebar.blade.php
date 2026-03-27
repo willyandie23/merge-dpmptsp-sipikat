@@ -124,28 +124,18 @@
 
                     <!-- Manajemen Pengguna -->
                     <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <a href="{{ route('backend.users.index') }}" class="waves-effect">
                             <i class="mdi mdi-account-multiple"></i>
                             <span>Pengguna</span>
                         </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="#">Daftar Pengguna</a></li>
-                            <li><a href="#">Tambah Pengguna</a></li>
-                            <li><a href="#">Role & Permission</a></li>
-                        </ul>
                     </li>
 
                     <!-- App Log -->
                     <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <a href="{{ route('backend.app-logs.index') }}" class="waves-effect">
                             <i class="mdi mdi-history"></i>
                             <span>App Log</span>
                         </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="#">Activity Log</a></li>
-                            <li><a href="#">Login Log</a></li>
-                            <li><a href="#">System Log</a></li>
-                        </ul>
                     </li>
                 @endif
 

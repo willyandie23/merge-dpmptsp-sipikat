@@ -122,8 +122,31 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('backend')->group(f
     Route::resource('faq', AdminFaqController::class)
         ->names('backend.faq');
     Route::resource('mekanisme-pengaduan', MekanismePengaduanController::class)
-    ->names('backend.mekanisme-pengaduan')
-    ->parameters(['mekanisme-pengaduan' => 'mekanisme_pengaduan']);
+        ->names('backend.mekanisme-pengaduan')
+        ->parameters(['mekanisme-pengaduan' => 'mekanisme_pengaduan']);
+    Route::resource('layanan-utama', \App\Http\Controllers\Backend\LayananUtamaController::class)
+        ->names('backend.layanan-utama')
+        ->parameters(['layanan-utama' => 'layanan_utama']);
+    Route::resource('layanan-perizinan', \App\Http\Controllers\Backend\LayananPerizinanController::class)
+    ->names('backend.layanan-perizinan')
+    ->parameters(['layanan-perizinan' => 'layanan_perizinan']);
+});
+
+Route::middleware(['auth', 'role:superadmin'])->prefix('backend')->group(function () {
+
+    // Manajemen Pengguna
+    Route::resource('users', \App\Http\Controllers\Backend\UserController::class)
+        ->names('backend.users')
+        ->parameters(['users' => 'user']);
+    Route::get('app-logs', [\App\Http\Controllers\Backend\AppLogController::class, 'index'])
+        ->name('backend.app-logs.index');
+
+    Route::get('app-logs/{app_log}', [\App\Http\Controllers\Backend\AppLogController::class, 'show'])
+        ->name('backend.app-logs.show');
+
+    // App Log (nanti kita buat kalau sudah selesai users)
+    // Route::resource('app-logs', AppLogController::class)->names('backend.app-logs');
+
 });
 
 
