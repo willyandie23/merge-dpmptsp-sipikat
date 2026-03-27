@@ -131,7 +131,7 @@
 
                 <!-- Tentang DPMTSP -->
                 <li>
-                    <a href="" class="waves-effect">
+                    <a href="{{ route('backend.tentang-dpmptsp.index') }}" class="waves-effect">
                         <i class="mdi mdi-information-outline"></i>
                         <span>Tentang DPMTSP</span>
                     </a>
@@ -139,7 +139,7 @@
 
                 <!-- FAQ -->
                 <li>
-                    <a href="" class="waves-effect">
+                    <a href="{{ route('backend.faq.index') }}" class="waves-effect">
                         <i class="mdi mdi-help-circle-outline"></i>
                         <span>FAQ</span>
                     </a>
@@ -147,7 +147,7 @@
 
                 <!-- Mekanisme Pengaduan -->
                 <li>
-                    <a href="" class="waves-effect">
+                    <a href="{{ route('backend.mekanisme-pengaduan.index') }}" class="waves-effect">
                         <i class="mdi mdi-message-alert-outline"></i>
                         <span>Mekanisme Pengaduan</span>
                     </a>

@@ -3,11 +3,18 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 window.ClassicEditor = ClassicEditor;
 
-// Auto-init CKEditor di semua textarea dengan id="editor"
+// Inisialisasi otomatis hanya untuk textarea dengan class "ckeditor"
 document.addEventListener("DOMContentLoaded", () => {
-    const editorElement = document.querySelector("#editor");
-    if (editorElement) {
-        ClassicEditor.create(editorElement, {
+    document.querySelectorAll("textarea.ckeditor").forEach((element) => {
+        // Skip kalau sudah diinisialisasi
+        if (
+            element.nextElementSibling &&
+            element.nextElementSibling.classList.contains("ck-editor")
+        ) {
+            return;
+        }
+
+        ClassicEditor.create(element, {
             toolbar: [
                 "heading",
                 "|",
@@ -21,9 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 "undo",
                 "redo",
             ],
-            height: 450,
+            height: 350,
         }).catch((error) => {
             console.error("CKEditor error:", error);
         });
-    }
+    });
 });
