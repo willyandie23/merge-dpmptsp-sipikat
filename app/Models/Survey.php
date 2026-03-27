@@ -10,6 +10,8 @@ class Survey extends Model
 {
     use HasFactory, ModelLog;
 
+    protected $table = 'survey';
+
     protected $fillable = [
         'year',
         'month',

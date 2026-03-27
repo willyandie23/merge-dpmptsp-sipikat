@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Bidang;
 use App\Traits\ModelLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class StrukturOrganisasi extends Model
 {
-    use HasFactory;
+    use HasFactory, ModelLog;
 
     protected $table = 'struktur_organisasi';
 

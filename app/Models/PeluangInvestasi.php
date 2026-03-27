@@ -16,17 +16,17 @@ class PeluangInvestasi extends Model
         'title',
         'image',
         'description',
-        'kecamatan_id',     // <--- diubah dari id_kecamatan
-        'sektor_id',        // <--- diubah dari id_sektor
+        'id_kecamatan',     // ← harus sesuai tabel
+        'id_sektor',        // ← harus sesuai tabel
     ];
 
     public function kecamatan()
     {
-        return $this->belongsTo(Kecamatan::class);
+        return $this->belongsTo(Kecamatan::class, 'id_kecamatan'); // ← tambahkan foreign key
     }
 
     public function sektor()
     {
-        return $this->belongsTo(Sektor::class);
+        return $this->belongsTo(Sektor::class, 'id_sektor');       // ← tambahkan foreign key
     }
 }

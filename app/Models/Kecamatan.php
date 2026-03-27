@@ -23,10 +23,9 @@ class Kecamatan extends Model
         return $this->hasMany(Populasi::class);   // ← hasMany (bukan belongsTo lagi)
     }
 
-    // Relasi Many-to-Many dengan Sektor (INI YANG BARU)
     public function sektors()
     {
-        return $this->belongsToMany(Sektor::class, 'kecamatan_sektor');
+        return $this->hasMany(Sektor::class);
     }
 
     // Relasi Peluang Investasi
