@@ -18,19 +18,19 @@
                                 {{-- <li><a href="javascript:void(0);"><i class="fas fa-globe"></i></a></li> --}}
                                 
                                 {{-- Facebook --}}
-                                <li><a href="javascript:void(0);"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="https://www.facebook.com/share/1GbJiNx3dh/?mibextid=wwXIfr" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
                                 
                                 {{-- Instagram --}}
-                                <li><a href="javascript:void(0);"><i class="fab fa-instagram"></i></a></li>
+                                <li><a href="https://www.instagram.com/dpmptsp.katingankab?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="fab fa-instagram"></i></a></li>
                                 
                                 {{-- X (Twitter) --}}
-                                <li><a href="javascript:void(0);"><i class="fab fa-twitter"></i></a></li>
+                                {{-- <li><a href="javascript:void(0);"><i class="fab fa-twitter"></i></a></li> --}}
                                 
                                 {{-- YouTube --}}
-                                <li><a href="javascript:void(0);"><i class="fab fa-youtube"></i></a></li>
+                                <li><a href="https://youtube.com/@dpmptspkatinganbidangp2ip2m?si=dnGVTtoqH5DXFjQg" target="_blank"><i class="fab fa-youtube"></i></a></li>
                                 
                                 {{-- TikTok --}}
-                                <li><a href="javascript:void(0);"><i class="fab fa-tiktok"></i></a></li>
+                                {{-- <li><a href="javascript:void(0);"><i class="fab fa-tiktok"></i></a></li> --}}
                             </ul>
                         </div>
                     </div>
@@ -43,10 +43,10 @@
                             <div class="dz-separator style-1 text-primary mb-0"></div>
                         </div>
                         <ul class="list-1">
-                            <li class="cat-item"><a href="#">Portal Katingan</a></li>
-                            <li class="cat-item"><a href="#">OSS</a></li>
-                            <li class="cat-item"><a href="#">KBLI</a></li>
-                            <li class="cat-item"><a href="#">PIR</a></li>
+                            <li class="cat-item"><a href="https://portal.katingankab.go.id/" target="_blank">Portal Katingan</a></li>
+                            <li class="cat-item"><a href="https://oss.go.id/id" target="_blank">OSS</a></li>
+                            <li class="cat-item"><a href="https://oss.go.id/id/kbli" target="_blank">KBLI</a></li>
+                            <li class="cat-item"><a href="https://regionalinvestment.bkpm.go.id/" target="_blank">PIR</a></li>
                         </ul>
                     </div>
                 </div>
@@ -58,8 +58,8 @@
                             <div class="dz-separator style-1 text-primary mb-0"></div>
                         </div>
                         <ul class="list-1">
-                            <li class="cat-item"><a href="#">Informasi Wisata</a></li>
-                            <li class="cat-item"><a href="#">Konsultasi Investasi</a></li>
+                            <li class="cat-item"><a href="https://singkah.katingankab.go.id/" target="_blank">Informasi Wisata</a></li>
+                            <li class="cat-item"><a href="https://mpppenyanghinjesimpei.katingankab.go.id/" target="_blank">Konsultasi Investasi</a></li>
                         </ul>
                     </div>
                 </div>
@@ -84,12 +84,12 @@
                             <li class="d-flex align-items-center gap-2">
                                 <i class="fas fa-calendar-day text-primary"></i>
                                 <span>Pengunjung Hari Ini</span>
-                                <span class="ms-auto fw-bold">10.543</span>
+                                <span class="ms-auto fw-bold">{{ $daily ?? 0 }}</span>
                             </li>
                             <li class="d-flex align-items-center gap-2">
                                 <i class="fas fa-users text-primary"></i>
                                 <span>Total Pengunjung</span>
-                                <span class="ms-auto fw-bold">5.214</span>
+                                <span class="ms-auto fw-bold">{{ $total ?? 0 }}</span>
                             </li>
                         </ul>
 

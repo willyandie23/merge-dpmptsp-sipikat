@@ -39,13 +39,16 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="sub-menu-down"><a href="javascript:void(0);">Mal Pelayanan Publik</a>
+                        <li class="sub-menu">
+                            <a href="https://mpppenyanghinjesimpei.katingankab.go.id/">Mal Pelayanan Publik</a>
+                        </li>
+                        {{-- <li class="sub-menu-down"><a href="javascript:void(0);">Mal Pelayanan Publik</a>
                             <ul class="sub-menu">
                                 <li><a href="#">Tentang Mal Pelayanan Publik</a></li>
                                 <li><a href="#">Tenan & Layanan</a></li>
                                 <li><a href="#">Standar Layanan</a></li>
                             </ul>
-                        </li>
+                        </li> --}}
                         <li class="sub-menu-down {{ request()->routeIs('com_sat_sur.index', 'licensing_process.index', 'complaint.index', 'faq.index') ? 'active' : '' }}">
                             <a href="javascript:void(0);">Interaksi Masyarakat</a>
                             <ul class="sub-menu">
