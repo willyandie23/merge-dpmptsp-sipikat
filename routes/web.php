@@ -25,13 +25,7 @@ use App\Http\Controllers\Backend\SektorController;
 
 use Illuminate\Support\Facades\Route;
 
-// Halaman depan (frontend publik)
-Route::get('/', [MainController::class, 'index'])->name('home.index');
-
-// Dashboard Breeze default (untuk user biasa/non-admin)
-
 # == FRONTEND ROUTES ==
-
 # Dashboard
 Route::get('/', [MainController::class, 'index'])->name('home.index');
 
@@ -53,11 +47,6 @@ Route::get('/galeri', [GalleryController::class, 'index'])->name('gallery.index'
 Route::get('/video', [VideoController::class, 'index'])->name('video.index');
 
 
-# == BACKEND ROUTES ==
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 // Profile routes (untuk semua user yang login)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -65,7 +54,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Area Admin / Backend (hanya admin & superadmin)
+
+# == BACKEND ROUTES ==
 Route::middleware(['auth', 'role:admin|superadmin'])->prefix('backend')->group(function () {
     // Dashboard utama admin
     Route::get('/', [DashboardController::class, 'index'])->name('backend.index');

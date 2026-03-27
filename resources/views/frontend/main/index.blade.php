@@ -1,722 +1,369 @@
 @extends('frontend.layouts.app')
 
 @push('css')
-    <style>
-        html, body {
-            overflow-x: hidden;
-        }
-    </style>
+	<style>
+		html, body {
+			overflow-x: hidden;
+		}
+
+		/* Banner Overlay */
+		.banner-overlay {
+			position: relative;
+		}
+		.banner-overlay::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%);
+			z-index: 1;
+		}
+		.banner-overlay .silder-content {
+			position: relative;
+			z-index: 2;
+		}
+
+		.video-section {
+			margin-bottom: 0 !important;
+		}
+		/* Video Section - FIXED No Overflow */
+		.video-section .video-inner {
+			height: 280px !important;
+			aspect-ratio: 16/9;
+			max-width: 100%;
+		}
+		.video-section .video-block-two {
+			overflow: hidden;
+		}
+		
+		/* Title Styling */
+		.video-content .top-shape {
+			font-size: 14px;
+			font-weight: 600;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			position: relative;
+			display: block;
+		}
+		.video-content .top-shape::after {
+			content: '';
+			position: absolute;
+			bottom: -8px;
+			left: 0;
+			width: 30px;
+			height: 3px;
+			background: #007bff;
+		}
+		.video-content .title {
+			font-size: 36px;
+			font-weight: 700;
+			line-height: 1.2;
+			margin-bottom: 20px !important;
+		}
+
+		/* Spacing */
+		.silder-one + .page-section {
+			margin-top: 60px;
+		}
+		.video-section .col-lg-7 .video-block-two {
+			max-width: 480px;
+			margin: 0 auto;
+		}
+
+		.video-section .video-inner iframe {
+			width: 100% !important;
+			max-width: 100% !important;
+		}
+
+		/* ── Layanan Utama Cards ── */
+		.layanan-section {
+			margin-top: 0 !important;
+		}
+		.layanan-card {
+			border-radius: 8px;
+			overflow: hidden;
+			box-shadow: 0 2px 12px rgba(0,0,0,.08);
+			background: #fff;
+			transition: transform .2s, box-shadow .2s;
+		}
+		.layanan-card:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 6px 20px rgba(0,0,0,.13);
+		}
+		.layanan-card-header {
+			height: 100px;
+			display: flex;
+		}
+		.layanan-card-thumb {
+			width: 40%;
+			flex-shrink: 0;
+			overflow: hidden;
+			background: #d9d9d9;
+		}
+		.layanan-card-thumb img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+		}
+		.layanan-card-title {
+			width: 60%;
+			background: var(--primary);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0 12px;
+		}
+		.layanan-card-body {
+			min-height: 80px;
+			padding: 14px;
+		}
+
+		/* ── Layanan Perizinan Cards ── */
+		.layanan-service-card {
+			border: 1px solid #eee;
+			border-radius: 10px;
+			text-decoration: none;
+			color: inherit;
+			display: block;
+			transition: transform .2s, box-shadow .2s;
+			background: #fff;
+		}
+		.layanan-service-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 8px 24px rgba(0,0,0,.12) !important;
+			color: inherit;
+			text-decoration: none;
+		}
+		.layanan-service-icon {
+			width: 90px;
+			height: 90px;
+			background: var(--primary);
+			border-radius: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 0 auto 14px;
+			transition: background .2s;
+		}
+		.layanan-service-card:hover .layanan-service-icon {
+			background: var(--primary-hover, var(--primary));
+			filter: brightness(1.1);
+		}
+
+		/* Responsive */
+		@media (max-width: 991px) {
+			.video-section .video-inner { height: 240px !important; }
+			.video-content .title { font-size: 28px !important; }
+		}
+		@media (max-width: 768px) {
+			.video-section .video-inner { height: 220px !important; }
+			.silder-one + .page-section { margin-top: 40px; }
+			.video-content .title { font-size: 24px !important; }
+		}
+	</style>
 @endpush
 
 @section('content')
-    <div class="page-content bg-white">
+	<div class="page-content bg-white">
 		<!-- Slider -->
 		<div class="silder-one">
 			<div class="swiper-container main-silder-swiper">
 				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-						<div class="dz-slide-item" style="background-image:url({{ asset('frontend/images/main-slider/slider-bg1.png') }});">
-							<div class="silder-content" data-swiper-parallax="-40%">
-								<div class="inner-content">
-									<h6 class="sub-title">We Are Best Architecture Of This Year</h6>
-									<h1 class="title">Design Your <span class="text-primary">Dream House</span> With Us</h1>
-									<p class="m-b30">Duis feugiat est tincidunt ligula maximus convallis. Aenean ultricies, mi non vestibulum auctor, erat tortor porttitor ipsum, nec dictum tortor sem eget nunc. Etiam sed facilisis erat. </p>
-									<a href="about-us.html" class="btn shadow-primary btn-primary">Browse Project</a>
+					@forelse($banners as $banner)
+						<div class="swiper-slide">
+							<div class="dz-slide-item banner-overlay" style="background-image:url({{ asset($banner->image) }});">
+								<div class="silder-content" data-swiper-parallax="-40%">
+									<div class="inner-content">
+										<h1 class="title text-primary">{!! $banner->title !!}</h1>
+										<p class="text-light">{!! $banner->description !!}</p>
+									</div>
 								</div>
 							</div>
-							<div class="slider-img" data-swiper-parallax-y="-40%" data-swiper-parallax-x="20%" data-swiper-parallax-opacity="0">
-								<img src="images/main-slider/pic1.jpg" alt=""/> 
-							</div>
 						</div>
-					</div>
-					<div class="swiper-slide">
-						<div class="dz-slide-item" style="background-image:url(images/main-slider/slider-bg1.png);">
-							<div class="silder-content" data-swiper-parallax="-40%">
-								<div class="inner-content">
-									<h6 class="sub-title">We Create Your Dream Ideas</h6>
-									<h1 class="title">Interior   <span class="text-primary">Design</span> For Solutions  </h1>
-									<p class="m-b30">Duis feugiat est tincidunt ligula maximus convallis. Aenean ultricies, mi non vestibulum auctor, erat tortor porttitor ipsum, nec dictum tortor sem eget nunc. Etiam sed facilisis erat. </p>
-									<a href="about-us.html" class="btn shadow-primary btn-primary">Browse Project</a>
+					@empty
+						<div class="swiper-slide">
+							<div class="dz-slide-item" style="background-image:url({{ asset('frontend/images/main-slider/slider-bg1.png') }});">
+								<div class="silder-content" data-swiper-parallax="-40%">
+									<div class="inner-content">
+										<h1 class="title">Design Your <span class="text-primary">Dream House</span> With Us</h1>
+										<p class="m-b30">Welcome to our website</p>
+									</div>
 								</div>
 							</div>
-							<div class="slider-img" data-swiper-parallax-y="-40%" data-swiper-parallax-x="20%" data-swiper-parallax-opacity="0">
-								<img src="images/main-slider/pic2.jpg" alt=""/> 
-							</div>
 						</div>
-					</div>
-					<div class="swiper-slide">
-						<div class="dz-slide-item" style="background-image:url(images/main-slider/slider-bg1.png);">
-							<div class="silder-content" data-swiper-parallax="-40%">
-								<div class="inner-content">
-									<h6 class="sub-title">We Are Best Architecture Of This Year</h6>
-									<h1 class="title">Experience <span class="text-primary">Design</span> With Comfort </h1>
-									<p class="m-b30">Duis feugiat est tincidunt ligula maximus convallis. Aenean ultricies, mi non vestibulum auctor, erat tortor porttitor ipsum, nec dictum tortor sem eget nunc. Etiam sed facilisis erat. </p>
-									<a href="about-us.html" class="btn shadow-primary btn-primary">Browse Project</a>
-								</div>
-							</div>
-							<div class="slider-img" data-swiper-parallax-y="-40%" data-swiper-parallax-x="20%" data-swiper-parallax-opacity="0">
-								<img src="images/main-slider/pic3.jpg" alt=""/> 
-							</div>
-						</div>
-					</div>
+					@endforelse
 				</div>
 				<div class="slider-one-pagination">
-					<!-- Add Navigation -->
 					<div class="swiper-pagination"></div>
 				</div>
 			</div>
 		</div>
-		
-		<!-- Clients Logo -->
-		<div class="clients-section-1  pb-0">
+
+		<!-- Video Section FIXED - Title Beside Video -->
+		<section class="page-section pt-150 pb-40 video-section">
 			<div class="container">
-				<div class="swiper-container clients-swiper">
-					<div class="swiper-wrapper">
-						<div class="swiper-slide">
-							<div class="clients-logo aos-item" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="100">
-								<img class="logo-main" src="images/logo/logo-gray1.png" alt="">
-								<img class="logo-hover" src="images/logo/logo-brown1.png" alt="">
-							</div>
-						</div>	
-						<div class="swiper-slide">
-							<div class="clients-logo aos-item" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="200">
-								<img class="logo-main" src="images/logo/logo-gray2.png" alt="">
-								<img class="logo-hover" src="images/logo/logo-brown2.png" alt="">
-							</div>
-						</div>
-						<div class="swiper-slide">
-							<div class="clients-logo aos-item" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="300">
-								<img class="logo-main" src="images/logo/logo-gray3.png" alt="">
-								<img class="logo-hover" src="images/logo/logo-brown3.png" alt="">
-							</div>
-						</div>	
-						<div class="swiper-slide">
-							<div class="clients-logo aos-item" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="400">
-								<img class="logo-main" src="images/logo/logo-gray4.png" alt="">
-								<img class="logo-hover" src="images/logo/logo-brown4.png" alt="">
-							</div>
-						</div>
-						<div class="swiper-slide">
-							<div class="clients-logo aos-item" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="500">
-								<img class="logo-main" src="images/logo/logo-gray5.png" alt="">
-								<img class="logo-hover" src="images/logo/logo-brown5.png" alt="">
-							</div>
-						</div>
-						<div class="swiper-slide">
-							<div class="clients-logo aos-item" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="600">
-								<img class="logo-main" src="images/logo/logo-gray6.png" alt="">
-								<img class="logo-hover" src="images/logo/logo-brown6.png" alt="">
-							</div>
+				<div class="row align-items-center">
+					<!-- Title Column -->
+					<div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+						<div class="video-content">
+							<span class="top-shape text-primary mb-3">Video Profil</span>
+							<h2 class="title mb-3">Profil Investasi <br><span class="text-primary">Kabupaten Katingan</span></h2>
+							<p class="text-muted mb-4">Jelajahi peluang investasi menarik dan infrastruktur unggulan di Kabupaten Katingan melalui video profil resmi ini.</p>
+							<a href="https://www.youtube.com/watch?v=88TCC3krtKg" class="btn btn-primary" target="_blank">
+								<i class="fa fa-play me-2"></i>Lihat di YouTube
+							</a>
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
-		<!-- About Us -->
-		<section class="content-inner-2">
-			<div class="container">
-				<div class="row align-items-center about-bx1">
-					<div class="col-lg-6 m-lg-b30">
-						<div class="dz-media">
-							<img src="images/about/about1.jpg" alt="" class="aos-item" data-aos="fade-down" data-aos-duration="800" data-aos-delay="400">
-							<div class="year-exp aos-item" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">
-								<h2 class="year text-primary">25</h2>
-								<h4 class="text">Years Of<br/>Experience</h4>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-6 aos-item" data-aos="fade-in" data-aos-duration="1500" data-aos-delay="800">
-						<div class="section-head style-1">
-							<h6 class="text-primary sub-title">Welcome To ArchCode</h6>
-							<h2 class="title">We Can Create More Than You Expect</h2>
-						</div>
-						<p>Nullam nec rutrum eros. Maecenas maximus augue eget libero dictum, vitae tempus erat pretium. Fusce fermentum lacus ut nunc dignissim hendrerit. Quisque sit amet dignissim orci, eget laoreet eros. </p>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="about-text-bx">
-									<h4>Construction</h4>
-									<p>Curabitur vel auctor nibh. Curabitur egestas posuere mi, sed pulvinar ligula.</p>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="about-text-bx">
-									<h4>Architecture</h4>
-									<p>Curabitur vel auctor nibh. Curabitur egestas posuere mi, sed pulvinar ligula.</p>
-								</div>
-							</div>
-						</div>
-						<a href="about-us.html" class="btn shadow-primary btn-primary">Learn More</a>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- About Us -->
-		<!-- Our Features -->
-		<section class="content-inner pt-5">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-3 col-sm-6 aos-item" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
-						<div class="icon-bx-wraper style-6 m-b30" data-name="789">
-							<h2 class="counter text-primary">789</h2>
-							<h4 class="title">Squre Area<br/>Complex</h4>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6 aos-item" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
-						<div class="icon-bx-wraper style-6 m-b30" data-name="158">
-							<h2 class="counter text-primary">158</h2>
-							<h4 class="title">Happy<br/>Clients</h4>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6 aos-item" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">
-						<div class="icon-bx-wraper style-6 m-b30" data-name="874">
-							<h2 class="counter text-primary">874</h2>
-							<h4 class="title">Completed<br/>Projects</h4>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6 aos-item" data-aos="fade-up" data-aos-duration="800" data-aos-delay="800">
-						<div class="icon-bx-wraper style-6 m-b30" data-name="987">
-							<h2 class="counter text-primary">987</h2>
-							<h4 class="title">Cup Of<br/>Coffee</h4>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		
-		<!-- Our Features -->
-		<section class="content-inner-2 bg-gray service-area" style="background-image:url(images/background/pattern3.png)">
-			<div class="container">
-				<div class="row m-b70 m-md-b10">
-					<div class="col-lg-4 col-md-12 aos-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-						<div class="section-head style-1">
-							<h6 class="text-primary sub-title">Popular Services</h6>
-							<h2 class="title">We Provide Best Features To Build Dream</h2>
-						</div>
-					</div>
-					<div class="col-lg-8 col-md-12">
-						<div class="row">
-							<div class="col-lg-6 col-sm-6 aos-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-								<div class="icon-bx-wraper style-2 left m-b50">
-									<div class="icon-bx-sm bg-primary icon-bx text-white">
-										<i class="flaticon-blueprint-1"></i> 
-									</div>
-									<div class="icon-content">
-										<h4 class="title m-b10">Floor Plan Design</h4>
-										<p>Nunc convallis sagittis dui eu dictum. Cras sodales id ipsum ac aliquam.</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-sm-6 aos-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
-								<div class="icon-bx-wraper style-2 left m-b50">
-									<div class="icon-bx-sm bg-primary icon-bx text-white">
-										<i class="flaticon-furniture"></i> 
-									</div>
-									<div class="icon-content">
-										<h4 class="title m-b10">Furniture Work</h4>
-										<p>Nunc convallis sagittis dui eu dictum. Cras sodales id ipsum ac aliquam.</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-sm-6 aos-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
-								<div class="icon-bx-wraper style-2 left m-b50">
-									<div class="icon-bx-sm bg-primary icon-bx text-white">
-										<i class="flaticon-crane"></i> 
-									</div>
-									<div class="icon-content">
-										<h4 class="title m-b10">Construction Work</h4>
-										<p>Nunc convallis sagittis dui eu dictum. Cras sodales id ipsum ac aliquam.</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-sm-6 aos-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="800">
-								<div class="icon-bx-wraper style-2 left m-b50">
-									<div class="icon-bx-sm bg-primary icon-bx text-white">
-										<i class="flaticon-home"></i> 
-									</div>
-									<div class="icon-content">
-										<h4 class="title m-b10">Architecture</h4>
-										<p>Nunc convallis sagittis dui eu dictum. Cras sodales id ipsum ac aliquam.</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-sm-6 aos-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1000">
-								<div class="icon-bx-wraper style-2 left m-b50">
-									<div class="icon-bx-sm bg-primary icon-bx text-white">
-										<i class="flaticon-interior-design-1"></i> 
-									</div>
-									<div class="icon-content">
-										<h4 class="title m-b10">Interior Designing</h4>
-										<p>Nunc convallis sagittis dui eu dictum. Cras sodales id ipsum ac aliquam.</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6 col-sm-6 aos-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1200">
-								<div class="icon-bx-wraper style-2 left m-b50">
-									<div class="icon-bx-sm bg-primary icon-bx text-white">
-										<i class="flaticon-support"></i> 
-									</div>
-									<div class="icon-content">
-										<h4 class="title m-b10">24X7 Support</h4>
-										<p>Nunc convallis sagittis dui eu dictum. Cras sodales id ipsum ac aliquam.</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="video-bx content-media style-1">
-							<img src="images/pic1.jpg" alt="">
-							<div class="video-btn aos-item" data-aos="zoom-in" data-aos-duration="1500" data-aos-delay="200">
-								<a href="https://www.youtube.com/watch?v=b95ZyCes95A" class="popup-youtube"><i class="fa fa-play"></i></a>
+					
+					<!-- Video Column FIXED -->
+					<div class="col-lg-7 col-md-6">
+						<div class="video-block style-2 video-block-two">
+							<div class="video-inner position-relative rounded shadow-lg overflow-hidden">
+								<iframe 
+									class="w-100 h-100 position-absolute top-0 start-0"
+									style="height: 300px; width: 100%; z-index: 1;"
+									src="https://www.youtube.com/embed/88TCC3krtKg?rel=0&modestbranding=1"
+									title="Profil Investasi Kabupaten Katingan"
+									frameborder="0" 
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+									allowfullscreen>
+								</iframe>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-		<!-- Testimonials -->
-		<section class="content-inner section-title style-1">
+
+		{{-- LAYANAN UTAMA SECTION --}}
+		<section class="page-section pt-60 pb-60 layanan-section">
 			<div class="container">
-				<div class="row ">
-					<div class="col-md-12">
-						<div class="section-head style-1 text-center">
-							<h6 class="text-primary sub-title">Testimonial</h6>
-							<h2 class="title">See What Our Clients Says</h2>
-						</div>
-					</div>
+
+				{{-- Heading Layanan Utama --}}
+				<div class="mb-4">
+					<h3 class="fw-bold" style="font-size:22px; border-left: 4px solid var(--primary); padding-left: 12px;">
+						Layanan Utama
+					</h3>
 				</div>
-				<div class="row">
-					<div class="col-lg-12 m-b20">
-						<div class="swiper-container testimonial-swiper1">
-							<div class="swiper-wrapper">
-								<div class="swiper-slide aos-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-									<div class="testimonial-1">
-										<div class="testimonial-pic">
-											<img src="images/testimonials/pic1.jpg" alt="">
-											<div class="info">
-												<h5 class="testimonial-name">John</h5> 
-												<span class="testimonial-position text-primary">Designer</span> 
-											</div>
-										</div>
-										<div class="testimonial-info">
-											<div class="testimonial-text">
-												<p>Suspendisse sem est, eleifend id vulputate sit amet, rhoncus mollis justo. Cras iaculis justo ac dictum vestibulum. Cras id arcu turpis. Nulla ligula velit, condimentum ut orci eget, semper efficitur odio. applale Dgafgad</p>
-											</div>
-											<div class="testimonial-review">
-												<ul class="star-rating text-primary">
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-												</ul>
-												<h4 class="review">Awesome</h4>
-											</div>
-										</div>
-									</div>
+
+				<div class="row g-4">
+
+					{{-- Card 1: Mal Pelayanan Publik --}}
+					<div class="col-lg-4 col-md-6">
+						<a href="#" class="layanan-card d-block text-decoration-none text-dark">
+							<div class="layanan-card-header">
+								<div class="layanan-card-thumb">
+									<img src="{{ asset('frontend/images/layanan/mal-pelayanan.jpg') }}"
+										alt="Mal Pelayanan Publik">
 								</div>
-								<div class="swiper-slide aos-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
-									<div class="testimonial-1">
-										<div class="testimonial-pic">
-											<img src="images/testimonials/pic2.jpg" alt="">
-											<div class="info">
-												<h5 class="testimonial-name">Caroline</h5> 
-												<span class="testimonial-position text-primary">CEO Founder</span> 
-											</div>
-										</div>
-										<div class="testimonial-info">
-											<div class="testimonial-text">
-												<p>Suspendisse sem est, eleifend id vulputate sit amet, rhoncus mollis justo. Cras iaculis justo ac dictum vestibulum. Cras id arcu turpis. Nulla ligula velit, condimentum ut orci eget, semper efficitur odio.</p>
-											</div>
-											<div class="testimonial-review">
-												<ul class="star-rating text-primary">
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-												</ul>
-												<h4 class="review">Best Qulity</h4>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="swiper-slide aos-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
-									<div class="testimonial-1">
-										<div class="testimonial-pic">
-											<img src="images/testimonials/pic3.jpg" alt="">
-											<div class="info">
-												<h5 class="testimonial-name">Kimberly</h5> 
-												<span class="testimonial-position text-primary">Web Developer</span> 
-											</div>
-										</div>
-										<div class="testimonial-info">
-											<div class="testimonial-text">
-												<p>Suspendisse sem est, eleifend id vulputate sit amet, rhoncus mollis justo. Cras iaculis justo ac dictum vestibulum. Cras id arcu turpis. Nulla ligula velit, condimentum ut orci eget, semper efficitur odio.</p>
-											</div>
-											<div class="testimonial-review">
-												<ul class="star-rating text-primary">
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-												</ul>
-												<h4 class="review">Use Fully</h4>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="swiper-slide aos-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-									<div class="testimonial-1">
-										<div class="testimonial-pic">
-											<img src="images/testimonials/pic1.jpg" alt="">
-											<div class="info">
-												<h5 class="testimonial-name">Ginger Plantq</h5> 
-												<span class="testimonial-position text-primary">CEO Founder</span> 
-											</div>
-										</div>
-										<div class="testimonial-info">
-											<div class="testimonial-text">
-												<p>Suspendisse sem est, eleifend id vulputate sit amet, rhoncus mollis justo. Cras iaculis justo ac dictum vestibulum. Cras id arcu turpis. Nulla ligula velit, condimentum ut orci eget, semper efficitur odio.</p>
-											</div>
-											<div class="testimonial-review">
-												<ul class="star-rating text-primary">
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-												</ul>
-												<h4 class="review">Grateful</h4>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="swiper-slide aos-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
-									<div class="testimonial-1">
-										<div class="testimonial-pic">
-											<img src="images/testimonials/pic2.jpg" alt="">
-											<div class="info">
-												<h5 class="testimonial-name">Fay Daway</h5> 
-												<span class="testimonial-position text-primary">Designer</span> 
-											</div>
-										</div>
-										<div class="testimonial-info">
-											<div class="testimonial-text">
-												<p>Suspendisse sem est, eleifend id vulputate sit amet, rhoncus mollis justo. Cras iaculis justo ac dictum vestibulum. Cras id arcu turpis. Nulla ligula velit, condimentum ut orci eget, semper efficitur odio.</p>
-											</div>
-											<div class="testimonial-review">
-												<ul class="star-rating text-primary">
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-												</ul>
-												<h4 class="review">Awesome</h4>
-											</div>
-										</div>
-									</div>
+								<div class="layanan-card-title">
+									<span class="text-white fw-semibold text-center" style="font-size:15px;">
+										Mal Pelayanan Publik
+									</span>
 								</div>
 							</div>
-							<!-- Add Navigation -->
-							<div class="swiper-pagination1 text-center"></div>
-						</div>
+							<div class="layanan-card-body">
+								<p class="text-muted mb-0" style="font-size:13.5px;">
+									Layanan perizinan terpadu. Ajukan izin usaha, cek status, dan dapatkan informasi persyaratan dalam satu platform.
+								</p>
+							</div>
+						</a>
 					</div>
-				</div>
-			</div>
-		</section>		
-		<!-- Our Portfolio -->
-		<section class="content-inner-2 bg-gray portfolio-area1"  style="background-image:url(images/background/pattern3.png)">
-			<div class="container">
-				<div class="row align-items-center section-head-bx">
-					<div class="col-md-8">
-						<div class="section-head style-1">
-							<h6 class="text-primary sub-title">Our Portfolio</h6>
-							<h2 class="title">See Our Latest Work</h2>
-						</div>
-					</div>
-					<div class="col-md-4 text-end">
-						<div class="portfolio-pagination d-inline-block mb-5">
-							<div class="btn-prev swiper-button-prev2"><i class="las la-arrow-left"></i></div>
-							<div class="btn-next swiper-button-next2"><i class="las la-arrow-right"></i></div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="container-fluid">
-				<div class="swiper-container swiper-portfolio lightgallery aos-item" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="400">
-					<div class="swiper-wrapper">
-						<div class="swiper-slide">
-							<div class="dz-box overlay style-1">
-								<div class="dz-media">
-									<img src="images/work/pic-1.jpg" alt="">
+
+					{{-- Card 2: Komoditas Unggulan --}}
+					<div class="col-lg-4 col-md-6">
+						<a href="#" class="layanan-card d-block text-decoration-none text-dark">
+							<div class="layanan-card-header">
+								<div class="layanan-card-thumb">
+									<img src="{{ asset('frontend/images/layanan/komoditas.jpg') }}"
+										alt="Komoditas Unggulan">
 								</div>
-								<div class="dz-info">
-									<span data-exthumbimage="images/work/pic-1.jpg" data-src="images/work/pic-1.jpg" class="view-btn lightimg" title="INTERIOR DESIGN"></span>
-									<h6 class="sub-title">INTERIOR DESIGN</h6>
-									<div class="port-info">
-										<div class="dz-meta">
-											<ul>
-												<li class="post-date">7 March 2024</li>
-												<li class="post-user">By <a href="javascript:void(0);">John Doe</a></li>
-											</ul>
-										</div>
-										<h2 class="title m-b15"><a href="portfolio-details.html">Modern House Interior <span>New York</span></a></h2>
-									</div>
+								<div class="layanan-card-title">
+									<span class="text-white fw-semibold text-center" style="font-size:15px;">
+										Komoditas Unggulan
+									</span>
 								</div>
 							</div>
-						</div>	
-						<div class="swiper-slide">
-							<div class="dz-box overlay style-1">
-								<div class="dz-media">
-									<img src="images/work/pic-2.jpg" alt="">
-								</div>
-								<div class="dz-info">
-									<span data-exthumbimage="images/work/pic-2.jpg" data-src="images/work/pic-2.jpg" class="view-btn lightimg" title="ARCHITECTURAL"></span>
-									<h6 class="sub-title">ARCHITECTURAL</h6>
-									<div class="port-info">
-										<div class="dz-meta">
-											<ul>
-												<li class="post-date">23 Feb 2024</li>
-												<li class="post-user">By <a href="javascript:void(0);">John Doe</a></li>
-											</ul>
-										</div>
-										<h2 class="title m-b15"><a href="portfolio-details.html">Sample Hotel Art, <span>India</span></a></h2>
-									</div>
-								</div>
+							<div class="layanan-card-body">
+								<p class="text-muted mb-0" style="font-size:13.5px;">
+									Kenali komoditas utama Katingan—dari pertanian, perkebunan, hingga hasil hutan. Data lengkap untuk pelaku usaha dan investor.
+								</p>
 							</div>
-						</div>
-						<div class="swiper-slide">
-							<div class="dz-box overlay style-1">
-								<div class="dz-media">
-									<img src="images/work/pic-3.jpg" alt="">
-								</div>
-								<div class="dz-info">
-									<span data-exthumbimage="images/work/pic-3.jpg" data-src="images/work/pic-3.jpg" class="view-btn lightimg" title="INTERIOR DESIGN"></span>
-									<h6 class="sub-title">CONSTRUCTION</h6>
-									<div class="port-info">
-										<div class="dz-meta">
-											<ul>
-												<li class="post-date">24 June 2024</li>
-												<li class="post-user">By <a href="javascript:void(0);">John Doe</a></li>
-											</ul>
-										</div>
-										<h2 class="title m-b15"><a href="portfolio-details.html">Modern Family House,  <span>Italy</span></a></h2>
-									</div>
-								</div>
-							</div>
-						</div>	
+						</a>
 					</div>
-				</div>	
-			</div>	
-		</section>
-		<!-- Team -->
-		<section class="content-inner section-title">
-			<div class="container">
-				<div class="section-head style-1 text-center">
-					<h6 class="text-primary sub-title">Our Team</h6>
-					<h2 class="title">Our Creative Expertise</h2>
-				</div>
-				<div class="row">
-					<div class="col-lg-12 m-b30">
-						<div class="swiper-container team-swiper">
-							<div class="swiper-wrapper">
-								<div class="swiper-slide">
-									<div class="dz-team style-1 text-center m-b30 overlay-shine aos-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
-										<div class="dz-media">
-											<a href="javascript:void(0);"><img src="images/team/pic1.jpg" alt=""></a>
-											<ul class="team-social">
-												<li><a href="javascript:void(0);"><i class="fab fa-facebook-f"></i></a></li>
-												<li><a href="javascript:void(0);"><i class="fab fa-instagram"></i></a></li>
-												<li><a href="javascript:void(0);"><i class="fab fa-twitter"></i></a></li>
-											</ul>
-										</div>
-										<div class="dz-content">
-											<h5 class="dz-name"><a href="javascript:void(0);">Andrey Carol</a></h5>
-											<h6 class="dz-position text-primary">Director</h6>
-										</div>
-									</div>
-								</div>	
-								<div class="swiper-slide">
-									<div class="dz-team style-1 text-center m-b30 overlay-shine aos-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
-										<div class="dz-media">
-											<a href="javascript:void(0);"><img src="images/team/pic2.jpg" alt=""></a>
-											<ul class="team-social">
-												<li><a href="javascript:void(0);"><i class="fab fa-facebook-f"></i></a></li>
-												<li><a href="javascript:void(0);"><i class="fab fa-instagram"></i></a></li>
-												<li><a href="javascript:void(0);"><i class="fab fa-twitter"></i></a></li>
-											</ul>
-										</div>
-										<div class="dz-content">
-											<h5 class="dz-name"><a href="javascript:void(0);">Rebecca Ruth</a></h5>
-											<h6 class="dz-position text-primary">Director</h6>
-										</div>
-									</div>
+
+					{{-- Card 3: Potensi Investasi --}}
+					<div class="col-lg-4 col-md-6">
+						<a href="#" class="layanan-card d-block text-decoration-none text-dark">
+							<div class="layanan-card-header">
+								<div class="layanan-card-thumb">
+									<img src="{{ asset('frontend/images/layanan/investasi.jpg') }}"
+										alt="Potensi Investasi">
 								</div>
-								<div class="swiper-slide">
-									<div class="dz-team style-1 text-center m-b30 overlay-shine aos-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="600">
-										<div class="dz-media">
-											<a href="javascript:void(0);"><img src="images/team/pic3.jpg" alt=""></a>
-											<ul class="team-social">
-												<li><a href="javascript:void(0);"><i class="fab fa-facebook-f"></i></a></li>
-												<li><a href="javascript:void(0);"><i class="fab fa-instagram"></i></a></li>
-												<li><a href="javascript:void(0);"><i class="fab fa-twitter"></i></a></li>
-											</ul>
-										</div>
-										<div class="dz-content">
-											<h5 class="dz-name"><a href="javascript:void(0);">Austin Doe</a></h5>
-											<h6 class="dz-position text-primary">Director</h6>
-										</div>
-									</div>
-								</div>	
-								<div class="swiper-slide">
-									<div class="dz-team style-1 text-center m-b30 overlay-shine aos-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="800">
-										<div class="dz-media">
-											<a href="javascript:void(0);"><img src="images/team/pic4.jpg" alt=""></a>
-											<ul class="team-social">
-												<li><a href="javascript:void(0);"><i class="fab fa-facebook-f"></i></a></li>
-												<li><a href="javascript:void(0);"><i class="fab fa-instagram"></i></a></li>
-												<li><a href="javascript:void(0);"><i class="fab fa-twitter"></i></a></li>
-											</ul>
-										</div>
-										<div class="dz-content">
-											<h5 class="dz-name"><a href="javascript:void(0);">Lala Rose</a></h5>
-											<h6 class="dz-position text-primary">Director</h6>
-										</div>
-									</div>
-								</div>
-								<div class="swiper-slide">
-									<div class="dz-team style-1 text-center m-b30 overlay-shine aos-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
-										<div class="dz-media">
-											<a href="javascript:void(0);"><img src="images/team/pic2.jpg" alt=""></a>
-											<ul class="team-social">
-												<li><a href="javascript:void(0);"><i class="fab fa-facebook-f"></i></a></li>
-												<li><a href="javascript:void(0);"><i class="fab fa-instagram"></i></a></li>
-												<li><a href="javascript:void(0);"><i class="fab fa-twitter"></i></a></li>
-											</ul>
-										</div>
-										<div class="dz-content">
-											<h5 class="dz-name"><a href="javascript:void(0);">Andrey Carol</a></h5>
-											<h6 class="dz-position text-primary">Director</h6>
-										</div>
-									</div>
+								<div class="layanan-card-title">
+									<span class="text-white fw-semibold text-center" style="font-size:15px;">
+										Potensi Investasi
+									</span>
 								</div>
 							</div>
-							<div class="swiper-pagination2 text-center"></div>
-						</div>
+							<div class="layanan-card-body">
+								<p class="text-muted mb-0" style="font-size:13.5px;">
+									Peluang investasi yang siap ditawarkan. Profil proyek, data teknis, dan prospek pengembangan daerah.
+								</p>
+							</div>
+						</a>
 					</div>
+
 				</div>
+
+
+				{{-- LAYANAN PERIZINAN USAHA --}}
+				<div class="mt-5 mb-4">
+					<h3 class="fw-bold" style="font-size:22px; border-left: 4px solid var(--primary); padding-left: 12px;">
+						Layanan Perizinan Usaha
+					</h3>
+				</div>
+
+				<div class="row g-4">
+
+					{{-- Card: Perizinan Online --}}
+					<div class="col-lg-4 col-md-4 col-6">
+						<a href="#" class="layanan-service-card text-center p-4 shadow-sm">
+							<div class="layanan-service-icon">
+								{{-- Dokumen / formulir online --}}
+								<i class="fa fa-book text-white" style="font-size:34px;"></i>
+							</div>
+							<p class="fw-semibold mb-0" style="font-size:14px;">Perizinan Online</p>
+						</a>
+					</div>
+
+					{{-- Card: Pengaduan --}}
+					<div class="col-lg-4 col-md-4 col-6">
+						<a href="#" class="layanan-service-card text-center p-4 shadow-sm">
+							<div class="layanan-service-icon">
+								{{-- Lonceng / laporan --}}
+								<i class="fa fa-bell text-white" style="font-size:34px;"></i>
+							</div>
+							<p class="fw-semibold mb-0" style="font-size:14px;">Pengaduan</p>
+						</a>
+					</div>
+
+					{{-- Card: Chat --}}
+					<div class="col-lg-4 col-md-4 col-6">
+						<a href="#" class="layanan-service-card text-center p-4 shadow-sm">
+							<div class="layanan-service-icon">
+								{{-- Gelembung chat --}}
+								<i class="fa fa-comments text-white" style="font-size:34px;"></i>
+							</div>
+							<p class="fw-semibold mb-0" style="font-size:14px;">Chat</p>
+						</a>
+					</div>
+
+				</div>
+
 			</div>
 		</section>
-		<!-- Content Box -->
-		<section class="bg-gray" style="background-image:url(images/background/pattern3.png)">
-			<div class="">
-				<div class="row spno">
-					<div class="col-lg-4 aos-item" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="200">
-						<img src="images/pic2.jpg" class="img-cover" alt=""/>
-					</div>
-					<div class="col-lg-4 aos-item" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="400">
-						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d227748.3825624477!2d75.65046970649679!3d26.88544791796718!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396c4adf4c57e281%3A0xce1c63a0cf22e09!2sJaipur%2C+Rajasthan!5e0!3m2!1sen!2sin!4v1500819483219" class="align-self-stretch radius-sm" style="border:0; width:100%; min-height:300px; height:100%" allowfullscreen></iframe>
-					</div>
-					<div class="col-lg-4 align-self-center aos-item" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="600">
-						<div class="newsletter-bx">
-							<div class="section-head style-1">
-								<h6 class="text-primary sub-title">Newsletter</h6>
-								<h2 class="title">Stay Updated With Our Newsletter</h2>
-							</div>
-							<div class="dzSubscribeMsg"></div>
-							<form action="script/mailchamp.php" class="dzSubscribe" method="post">
-								<div class="form-group mb-3">
-									<input type="text" name="dzName" required class="form-control" placeholder="Your Name">
-								</div>
-								<div class="form-group m-b30">
-									<input type="email" name="dzEmail" required class="form-control" placeholder="Your Email Address">
-								</div>
-								<div class="form-group">
-									<button name="submit" type="submit" value="Submit" class="btn btn-primary">Submit Now</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- Blog -->
-		<section class="content-inner-1">
-			<div class="container">
-				<div class="section-head style-1 text-center">
-					<h6 class="text-primary sub-title">Our Blog</h6>
-					<h2 class="title">Latest News Feed</h2>
-				</div> 
-				<div class="blog-area">
-					<div class="swiper-container blog-swiper">
-						<div class="swiper-wrapper">
-							<div class="swiper-slide">
-								<div class="dz-card blog-grid style-1 aos-item" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="200">
-									<div class="dz-media">
-										<a href="blog-details.html"><img src="images/blog/blog-grid/pic1.jpg" alt=""></a>
-									</div>
-									<div class="dz-info text-center">
-										<div class="dz-meta">
-											<ul>
-												<li class="post-date">14 Feb 2024</li>
-											</ul>
-										</div>
-										<h5 class="dz-title"><a href="blog-details.html">Construction Any Good? 5 Ways You Can Be Certain.</a></h5>
-										<div class="dz-post-text text">
-											<p>You can align your image to the left, right, or center with a caption, link and alt text New Journey to the.</p>
-										</div>
-										<a href="blog-details.html" class="btn-link">Read More</a>
-									</div>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="dz-card blog-grid style-1 aos-item" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="500">
-									<div class="dz-media">
-										<a href="blog-details.html"><img src="images/blog/blog-grid/pic2.jpg" alt=""></a>
-									</div>
-									<div class="dz-info text-center">
-										<div class="dz-meta">
-											<ul>
-												<li class="post-date">25 March 2024</li>
-											</ul>
-										</div>
-										<h5 class="dz-title"><a href="blog-details.html">Why You Cannot Learn Construction Well.</a></h5>
-										<div class="dz-post-text text">
-											<p>You can align your image to the left, right, or center with a caption, link and alt text New Journey to the.</p>
-										</div>
-										<a href="blog-details.html" class="btn-link">Read More</a>
-									</div>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="dz-card blog-grid style-1 aos-item" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="800">
-									<div class="dz-media">
-										<a href="blog-details.html"><img src="images/blog/blog-grid/pic3.jpg" alt=""></a>
-									</div>
-									<div class="dz-info text-center">
-										<div class="dz-meta">
-											<ul>
-												<li class="post-date">7 March 2024</li>
-											</ul>
-										</div>
-										<h5 class="dz-title"><a href="blog-details.html">Ten Things You Didn’t Know About Construction.</a></h5>
-										<div class="dz-post-text text">
-											<p>You can align your image to the left, right, or center with a caption, link and alt text New Journey to the.</p>
-										</div>
-										<a href="blog-details.html" class="btn-link">Read More</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+
 	</div>
 @endsection
 
