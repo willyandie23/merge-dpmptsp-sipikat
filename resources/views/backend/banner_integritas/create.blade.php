@@ -192,12 +192,19 @@
                         </div>
 
                         <div class="mb-4">
-                            <div class="form-check form-switch form-switch-lg">
-                                <input type="checkbox" name="is_active" id="is_active" class="form-check-input" value="1" {{ old('is_active', 1) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">Aktifkan banner ini di halaman
-                                    integritas</label>
-                            </div>
-                        </div>
+    <div class="form-check form-switch form-switch-lg">
+        <!-- Hidden input ini yang penting -->
+        <input type="hidden" name="is_active" value="0">
+
+        <input type="checkbox" name="is_active" id="is_active"
+               class="form-check-input" value="1"
+               {{ old('is_active', 1) ? 'checked' : '' }}>
+
+        <label class="form-check-label" for="is_active">
+            Aktifkan banner ini di halaman integritas
+        </label>
+    </div>
+</div>
 
                         <div class="d-flex justify-content-end gap-3">
                             <a href="{{ route('backend.banner-integritas.index') }}" class="btn btn-light waves-effect">

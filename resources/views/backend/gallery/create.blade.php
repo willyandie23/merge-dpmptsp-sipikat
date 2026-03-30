@@ -192,12 +192,20 @@
                             <img id="preview-img" class="img-preview" src="#" alt="Preview">
                         </div>
 
-                        <div class="mb-4">
-                            <div class="form-check form-switch form-switch-lg">
-                                <input type="checkbox" name="is_active" id="is_active" class="form-check-input" value="1" {{ old('is_active', 1) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">Aktifkan foto ini di halaman galeri</label>
-                            </div>
-                        </div>
+                       <div class="mb-4">
+    <div class="form-check form-switch form-switch-lg">
+        <!-- INI YANG WAJIB DITAMBAHKAN -->
+        <input type="hidden" name="is_active" value="0">
+
+        <input type="checkbox" name="is_active" id="is_active"
+               class="form-check-input" value="1"
+               {{ old('is_active', 1) ? 'checked' : '' }}>
+
+        <label class="form-check-label" for="is_active">
+            Aktifkan foto ini di halaman galeri
+        </label>
+    </div>
+</div>
 
                         <div class="d-flex justify-content-end gap-3">
                             <a href="{{ route('backend.gallery.index') }}" class="btn btn-light waves-effect">

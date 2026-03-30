@@ -25,8 +25,10 @@ class AdminVideoController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'url' => 'required|url|max:500',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
         ]);
+
+        $validated['is_active'] = $request->boolean('is_active', false);
 
         Video::create($validated);
 
@@ -45,8 +47,10 @@ class AdminVideoController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'url' => 'required|url|max:500',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
         ]);
+
+        $validated['is_active'] = $request->boolean('is_active', false);
 
         $video->update($validated);
 

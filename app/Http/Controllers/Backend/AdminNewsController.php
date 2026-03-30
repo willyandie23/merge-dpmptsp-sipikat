@@ -27,8 +27,11 @@ class AdminNewsController extends Controller
             'author' => 'nullable|string|max:100',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'description' => 'required|string',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
         ]);
+
+        // Pakai ini agar selalu mengirim 0 atau 1
+        $validated['is_active'] = $request->boolean('is_active', false);
 
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('news', 'public');
@@ -52,8 +55,10 @@ class AdminNewsController extends Controller
             'author' => 'nullable|string|max:100',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'description' => 'required|string',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
         ]);
+
+        $validated['is_active'] = $request->boolean('is_active', false);
 
         if ($request->hasFile('image')) {
             if ($news->image) {

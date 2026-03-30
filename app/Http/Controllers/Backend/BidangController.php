@@ -61,17 +61,21 @@ class BidangController extends Controller
 
     public function destroy(Bidang $bidang)
     {
-        // Cek apakah masih ada struktur organisasi di bidang ini
-        if ($bidang->strukturOrganisasi()->count() > 0) {
+        try {
+            // Hapus semua struktur organisasi yang terkait dengan bidang ini
+            $bidang->strukturOrganisasi()->delete();
+
+            // Baru hapus bidangnya
+            $bidang->delete();
+
             return redirect()
                 ->route('backend.bidang.index')
-                ->with('error', 'Bidang tidak dapat dihapus karena masih memiliki data struktur organisasi.');
+                ->with('success', 'Bidang beserta semua struktur organisasinya berhasil dihapus.');
+
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('backend.bidang.index')
+                ->with('error', 'Terjadi kesalahan saat menghapus bidang: ' . $e->getMessage());
         }
-
-        $bidang->delete();
-
-        return redirect()
-            ->route('backend.bidang.index')
-            ->with('success', 'Bidang berhasil dihapus.');
     }
 }

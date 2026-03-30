@@ -204,20 +204,32 @@
                             <img id="preview-img" class="img-preview" src="#" alt="Preview">
                         </div>
 
-                        <div class="mb-4">
-                            <label for="description" class="form-label">Isi Berita <span
-                                    class="text-danger">*</span></label>
-                            <textarea name="description" id="editor"
-                                class="form-control @error('description') is-invalid @enderror">{{ old('description', $news->description) }}</textarea>
-                            @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
+                       <div class="mb-4">
+    <label for="description" class="form-label">Isi Berita <span class="text-danger">*</span></label>
+    <textarea name="description"
+              class="form-control ckeditor @error('description') is-invalid @enderror"
+              rows="10">
+        {{ old('description', $news->description ?? '') }}
+    </textarea>
+    @error('description')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
 
-                        <div class="mb-4">
-                            <div class="form-check form-switch form-switch-lg">
-                                <input name="is_active" type="checkbox" class="form-check-input" id="is_active" value="1" {{ old('is_active', $news->is_active ? 1 : 0) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">Aktifkan berita ini di halaman depan</label>
-                            </div>
-                        </div>
+                       <div class="mb-4">
+    <div class="form-check form-switch form-switch-lg">
+        <!-- Hidden ini WAJIB -->
+        <input type="hidden" name="is_active" value="0">
+
+        <input name="is_active" type="checkbox" class="form-check-input" id="is_active"
+               value="1"
+               {{ old('is_active', $news->is_active ? 1 : 0) ? 'checked' : '' }}>
+
+        <label class="form-check-label" for="is_active">
+            Aktifkan berita ini di halaman depan
+        </label>
+    </div>
+</div>
 
                         <div class="d-flex justify-content-end gap-3">
                             <a href="{{ route('backend.news.index') }}" class="btn btn-light waves-effect">

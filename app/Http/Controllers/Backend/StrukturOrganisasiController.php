@@ -81,6 +81,24 @@ class StrukturOrganisasiController extends Controller
             'id_bidang' => 'required|exists:bidang,id',
         ]);
 
+        // Pastikan is_pejabat selalu terdefinisi (0 atau 1)
+        $validated['is_pejabat'] = $request->boolean('is_pejabat', false);
+
+        // VALIDASI KHUSUS: Jika ingin dijadikan pejabat utama
+        if ($validated['is_pejabat']) {
+            $alreadyHasPejabat = StrukturOrganisasi::where('id_bidang', $validated['id_bidang'])
+                ->where('is_pejabat', 1)
+                ->where('id', '!=', $struktur_organisasi->id)   // kecuali data ini sendiri
+                ->exists();
+
+            if ($alreadyHasPejabat) {
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->with('error', 'Bidang ini sudah memiliki Pejabat Utama. Tidak diperbolehkan memiliki lebih dari satu Pejabat Utama.');
+            }
+        }
+
         if ($request->hasFile('image')) {
             if ($struktur_organisasi->image) {
                 Storage::disk('public')->delete($struktur_organisasi->image);

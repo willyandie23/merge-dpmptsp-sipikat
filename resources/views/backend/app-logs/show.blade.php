@@ -51,7 +51,7 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0 font-size-18">Detail Activity Log</h4>
+                    <h4 class="mb-0 font-size-18 text-white">Detail Activity Log</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
@@ -68,7 +68,7 @@
         <div class="col-12">
             <div class="card card-modern">
                 <div class="card-header card-header-modern">
-                    <h4 class="card-title mb-0">Informasi Log</h4>
+                    <h4 class="card-title mb-0 text-white">Informasi Log</h4>
                 </div>
                 <div class="card-body p-4">
                     <div class="row">
@@ -111,6 +111,11 @@
                             </table>
                         </div>
                     </div>
+                    <div class="mb-2">
+                        <a href="{{ route('backend.app-logs.index') }}" class="btn btn-light">
+                            ← Kembali ke Daftar Log
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -122,7 +127,7 @@
             <div class="col-12">
                 <div class="card card-modern">
                     <div class="card-header card-header-modern">
-                        <h4 class="card-title mb-0">Data Sebelumnya (Old Value)</h4>
+                        <h4 class="card-title mb-0 text-white">Data Sebelumnya (Old Value)</h4>
                     </div>
                     <div class="card-body p-4">
                         <div class="json-box">
@@ -140,7 +145,7 @@
             <div class="col-12">
                 <div class="card card-modern">
                     <div class="card-header card-header-modern">
-                        <h4 class="card-title mb-0">Data Baru (New Value)</h4>
+                        <h4 class="card-title mb-0 text-white">Data Baru (New Value)</h4>
                     </div>
                     <div class="card-body p-4">
                         <div class="json-box">
@@ -151,10 +156,4 @@
             </div>
         </div>
     @endif
-
-    <div class="mt-4">
-        <a href="{{ route('backend.app-logs.index') }}" class="btn btn-light">
-            ← Kembali ke Daftar Log
-        </a>
-    </div>
 @endsection

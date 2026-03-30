@@ -107,15 +107,17 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="mb-3 mt-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="is_pejabat" id="is_pejabat"
-                                            value="1" {{ $struktur_organisasi->is_pejabat ? 'checked' : '' }}>
-                                        <label class="form-check-label fw-semibold" for="is_pejabat" id="label-pejabat">
-                                            Pejabat Utama / Kepala Bidang
-                                        </label>
-                                    </div>
+                            <div class="mb-3 mt-4">
+                                <div class="form-check">
+                                    <!-- Hidden input ini WAJIB -->
+                                    <input type="hidden" name="is_pejabat" value="0">
+
+                                    <input class="form-check-input" type="checkbox" name="is_pejabat" id="is_pejabat"
+                                        value="1" {{ old('is_pejabat', $struktur_organisasi->is_pejabat) ? 'checked' : '' }}>
+
+                                    <label class="form-check-label fw-semibold" for="is_pejabat">
+                                        Pejabat Utama / Kepala Bidang
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +166,7 @@
                         @endif
 
                         <div id="warning-pejabat" class="alert alert-danger d-none mt-3">
-                            <strong>Tidak Diperbolehkan!</strong> Bidang ini sudah memiliki Pejabat Utama.
+                            Bidang ini sudah memiliki <strong>Pejabat Utama</strong>.
                             Anda tidak dapat menjadikan data ini sebagai Pejabat Utama.
                         </div>
 

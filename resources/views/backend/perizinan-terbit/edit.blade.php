@@ -93,7 +93,7 @@
         <div class="col-12">
             <div class="card card-modern">
                 <div class="card-header card-header-modern">
-                    <h4 class="card-title mb-0">Edit Data Perizinan Terbit</h4>
+                    <h4 class="card-title mb-0 text-white">Edit Data Perizinan Terbit</h4>
                 </div>
 
                 <div class="card-body p-4">

@@ -79,7 +79,7 @@
         <div class="col-12">
             <div class="card card-modern">
                 <div class="card-header card-header-modern">
-                    <h4 class="card-title mb-0">Form Tambah Bidang</h4>
+                    <h4 class="card-title mb-0 text-white">Form Tambah Bidang</h4>
                 </div>
 
                 <div class="card-body p-4">
@@ -107,7 +107,7 @@
                         </div>
 
                         <div class="mt-4">
-                            <button type="submit" class="btn btn-success px-4">
+                            <button type="submit" class="btn btn-primary px-4">
                                 <i class="mdi mdi-content-save me-1"></i> Simpan Bidang
                             </button>
                             <a href="{{ route('backend.bidang.index') }}" class="btn btn-secondary px-4 ms-2">

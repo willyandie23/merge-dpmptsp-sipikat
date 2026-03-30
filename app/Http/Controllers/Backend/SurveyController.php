@@ -50,39 +50,45 @@ class SurveyController extends Controller
             'month' => 'required|integer|between:1,12',
             'jumlah_laki' => 'required|integer|min:0',
             'jumlah_perempuan' => 'required|integer|min:0',
-            'indikator1' => 'nullable|numeric|min:0',
-            'indikator2' => 'nullable|numeric|min:0',
-            'indikator3' => 'nullable|numeric|min:0',
-            'indikator4' => 'nullable|numeric|min:0',
-            'indikator5' => 'nullable|numeric|min:0',
-            'indikator6' => 'nullable|numeric|min:0',
-            'indikator7' => 'nullable|numeric|min:0',
-            'indikator8' => 'nullable|numeric|min:0',
-            'indikator9' => 'nullable|numeric|min:0',
-        ], [
-            'year.unique' => 'Data untuk tahun dan bulan tersebut sudah ada.'
+            'indikator1' => 'nullable|numeric|min:0|max:4',
+            'indikator2' => 'nullable|numeric|min:0|max:4',
+            'indikator3' => 'nullable|numeric|min:0|max:4',
+            'indikator4' => 'nullable|numeric|min:0|max:4',
+            'indikator5' => 'nullable|numeric|min:0|max:4',
+            'indikator6' => 'nullable|numeric|min:0|max:4',
+            'indikator7' => 'nullable|numeric|min:0|max:4',
+            'indikator8' => 'nullable|numeric|min:0|max:4',
+            'indikator9' => 'nullable|numeric|min:0|max:4',
         ]);
 
-        // Logic: Jika tahun + bulan sudah ada → update, jika belum → create baru
-        $survey = Survey::updateOrCreate(
-            [
-                'year' => $validated['year'],
-                'month' => $validated['month'],
-            ],
-            [
-                'jumlah_laki' => $validated['jumlah_laki'],
-                'jumlah_perempuan' => $validated['jumlah_perempuan'],
-                'indikator1' => $validated['indikator1'] ?? 0,
-                'indikator2' => $validated['indikator2'] ?? 0,
-                'indikator3' => $validated['indikator3'] ?? 0,
-                'indikator4' => $validated['indikator4'] ?? 0,
-                'indikator5' => $validated['indikator5'] ?? 0,
-                'indikator6' => $validated['indikator6'] ?? 0,
-                'indikator7' => $validated['indikator7'] ?? 0,
-                'indikator8' => $validated['indikator8'] ?? 0,
-                'indikator9' => $validated['indikator9'] ?? 0,
-            ]
-        );
+        // Cek apakah data untuk tahun + bulan tersebut sudah ada
+        $exists = Survey::where('year', $validated['year'])
+            ->where('month', $validated['month'])
+            ->exists();
+
+        if ($exists) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', "Data survey untuk Tahun {$validated['year']} Bulan {$validated['month']} sudah ada. Silakan edit data yang sudah ada.");
+        }
+
+        // Jika belum ada, baru simpan
+        Survey::create([
+            'year' => $validated['year'],
+            'month' => $validated['month'],
+            'jumlah_laki' => $validated['jumlah_laki'],
+            'jumlah_perempuan' => $validated['jumlah_perempuan'],
+            'indikator1' => $validated['indikator1'] ?? 0,
+            'indikator2' => $validated['indikator2'] ?? 0,
+            'indikator3' => $validated['indikator3'] ?? 0,
+            'indikator4' => $validated['indikator4'] ?? 0,
+            'indikator5' => $validated['indikator5'] ?? 0,
+            'indikator6' => $validated['indikator6'] ?? 0,
+            'indikator7' => $validated['indikator7'] ?? 0,
+            'indikator8' => $validated['indikator8'] ?? 0,
+            'indikator9' => $validated['indikator9'] ?? 0,
+        ]);
 
         return redirect()
             ->route('backend.survey.index')
@@ -130,8 +136,10 @@ class SurveyController extends Controller
     {
         $survey->delete();
 
-        return redirect()
-            ->route('backend.survey.index')
-            ->with('success', 'Data survey berhasil dihapus.');
+        // Kembalikan response JSON agar JS bisa menangani dengan benar
+        return response()->json([
+            'success' => true,
+            'message' => 'Data survey berhasil dihapus.'
+        ]);
     }
 }

@@ -60,7 +60,7 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0 font-size-18">Tambah Struktur Organisasi</h4>
+                    <h4 class="mb-0 font-size-18 text-white">Tambah Struktur Organisasi</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
@@ -78,7 +78,7 @@
         <div class="col-12">
             <div class="card card-modern">
                 <div class="card-header card-header-modern">
-                    <h4 class="card-title mb-0">Form Tambah Anggota Struktur Organisasi</h4>
+                    <h4 class="card-title mb-0 text-white">Form Tambah Anggota Struktur Organisasi</h4>
                 </div>
 
                 <div class="card-body p-4">
@@ -99,15 +99,17 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="mb-3 mt-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="is_pejabat" id="is_pejabat"
-                                            value="1">
-                                        <label class="form-check-label fw-semibold" for="is_pejabat" id="label-pejabat">
-                                            Ini adalah Pejabat Utama / Kepala Bidang
-                                        </label>
-                                    </div>
+                            <div class="mb-3 mt-4">
+                                <div class="form-check">
+                                    <!-- Hidden input ini WAJIB -->
+                                    <input type="hidden" name="is_pejabat" value="0">
+
+                                    <input class="form-check-input" type="checkbox" name="is_pejabat" id="is_pejabat"
+                                        value="1" {{ old('is_pejabat') ? 'checked' : '' }}>
+
+                                    <label class="form-check-label fw-semibold" for="is_pejabat">
+                                        Ini adalah Pejabat Utama / Kepala Bidang
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -144,12 +146,12 @@
                         </div>
 
                         <div id="warning-pejabat" class="alert alert-danger d-none mt-3">
-                            <strong>Tidak Diperbolehkan!</strong> Bidang ini sudah memiliki Pejabat Utama.
+                            Bidang ini sudah memiliki <strong>Pejabat Utama</strong>.
                             Anda tidak dapat menambahkan Pejabat Utama lagi di bidang yang sama.
                         </div>
 
                         <div class="mt-4">
-                            <button type="submit" class="btn btn-success px-4" id="btn-submit">
+                            <button type="submit" class="btn btn-primary px-4" id="btn-submit">
                                 <i class="mdi mdi-content-save me-1"></i> Simpan Data
                             </button>
                             <a href="{{ route('backend.struktur-organisasi.index') }}" class="btn btn-secondary px-4 ms-2">

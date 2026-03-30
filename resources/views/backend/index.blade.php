@@ -6,7 +6,7 @@
     <link href="{{ URL::asset('build/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}" rel="stylesheet" type="text/css" />
 
     <style>
-        .main-content { padding-top: 100px !important; }
+        .main-content { padding-top: 90px !important; }
         .page-content { margin-top: -4rem !important; }
 
         .section-header {

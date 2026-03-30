@@ -68,7 +68,7 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0 font-size-18">Tambah Data Perizinan Terbit</h4>
+                    <h4 class="mb-0 font-size-18 text-white">Tambah Data Perizinan Terbit</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
@@ -86,10 +86,17 @@
         <div class="col-12">
             <div class="card card-modern">
                 <div class="card-header card-header-modern">
-                    <h4 class="card-title mb-0">Form Input Perizinan Terbit Baru</h4>
+                    <h4 class="card-title mb-0 text-white">Form Input Perizinan Terbit Baru</h4>
                 </div>
 
                 <div class="card-body p-4">
+                    @if (session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                            <i class="mdi mdi-alert-circle-outline me-2"></i>
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                     <form action="{{ route('backend.perizinan-terbit.store') }}" method="POST">
                         @csrf
 

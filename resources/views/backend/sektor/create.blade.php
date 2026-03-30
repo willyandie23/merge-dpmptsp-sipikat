@@ -154,7 +154,7 @@
 
                         <div class="d-flex justify-content-end gap-3">
                             <a href="{{ route('backend.sektor.index') }}" class="btn btn-light">Batal</a>
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-primary">
                                 <i class="mdi mdi-content-save me-1"></i> Simpan Sektor
                             </button>
                         </div>

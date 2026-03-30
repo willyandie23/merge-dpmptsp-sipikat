@@ -27,10 +27,7 @@
             padding: 1.4rem 1.5rem !important;
         }
 
-        .form-label {
-            font-weight: 600;
-            color: #495057;
-        }
+        .form-label { font-weight: 600; color: #495057; }
 
         .form-control, .form-control:focus {
             border-radius: 8px;
@@ -41,12 +38,10 @@
             background: linear-gradient(135deg, #556ee6, #364574) !important;
             border: none;
             padding: 0.6rem 1.5rem !important;
-            box-shadow: 0 4px 12px rgba(85, 110, 230, 0.35) !important;
         }
 
         .btn-gradient:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(85, 110, 230, 0.45) !important;
         }
 
         .icon-preview {
@@ -56,10 +51,13 @@
             min-height: 70px;
         }
 
-        .tips-card {
-            border: 1px solid #556ee6 !important;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+        .used-positions {
+            max-height: 220px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 12px;
         }
     </style>
 @endpush
@@ -69,7 +67,7 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0 font-size-18">Edit Layanan Perizinan Usaha</h4>
+                    <h4 class="mb-0 font-size-18 text-white">Edit Layanan Perizinan Usaha</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
@@ -86,7 +84,7 @@
         <div class="col-lg-8">
             <div class="card card-modern">
                 <div class="card-header card-header-modern">
-                    <h4 class="card-title mb-0">Form Edit Layanan Perizinan</h4>
+                    <h4 class="card-title mb-0 text-white">Form Edit Layanan Perizinan</h4>
                 </div>
                 <div class="card-body p-4">
                     <form action="{{ route('backend.layanan-perizinan.update', $layanan_perizinan) }}" method="POST">
@@ -108,7 +106,7 @@
                                    placeholder="Contoh: mdi mdi-file-document-outline" required>
                             @error('icon') <div class="invalid-feedback">{{ $message }}</div> @enderror
 
-                            <!-- Live Preview -->
+                            <!-- Live Preview Icon -->
                             <div class="text-center mt-4">
                                 <p class="text-muted small mb-2">Preview Icon:</p>
                                 <div id="icon-preview" class="icon-preview">
@@ -121,22 +119,48 @@
                                 <a href="https://pictogrammers.com/library/mdi/" target="_blank" class="text-primary">
                                     Material Design Icons
                                 </a><br>
-                                Cari icon → Copy nama lengkap lalu paste di kolom atas.
+                                Cari icon → Copy nama lengkap (contoh: <code>mdi mdi-office-building</code>) lalu paste di atas.
                             </small>
                         </div>
 
+                        <!-- Posisi Urutan -->
                         <div class="mb-4">
-                            <label class="form-label">Posisi Urutan</label>
+                            <label class="form-label">Posisi Urutan <span class="text-danger">*</span></label>
                             <input type="number" name="position" class="form-control @error('position') is-invalid @enderror"
-                                value="{{ old('position', $layanan_perizinan->position) }}" min="1">
-                            @error('position') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                value="{{ old('position', $layanan_perizinan->position) }}" min="1" required>
+                            @error('position')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
+                        <!-- Daftar Posisi yang Sudah Dipakai -->
+                        <div class="mb-4">
+                            <label class="form-label text-muted">Daftar Posisi Urutan yang Sudah Digunakan:</label>
+                            <div class="used-positions">
+                                @forelse($usedPositions as $pos)
+                                    <div class="d-flex justify-content-between py-1 border-bottom">
+                                        <span>
+                                            <strong>{{ $pos->position }}</strong>
+                                            @if($pos->id == $layanan_perizinan->id)
+                                                <span class="badge bg-primary ms-2">Saat Ini</span>
+                                            @endif
+                                        </span>
+                                        <span class="text-muted text-truncate">{{ $pos->title }}</span>
+                                    </div>
+                                @empty
+                                    <p class="text-muted mb-0">Belum ada data layanan perizinan.</p>
+                                @endforelse
+                            </div>
+                            <small class="text-muted">Masukkan nomor urutan yang belum terdaftar di atas.</small>
+                        </div>
+
+                        <!-- Checkbox Aktif -->
                         <div class="mb-4">
                             <div class="form-check form-switch form-switch-lg">
+                                <input type="hidden" name="is_active" value="0">
                                 <input name="is_active" type="checkbox" class="form-check-input" id="is_active" value="1"
                                        {{ old('is_active', $layanan_perizinan->is_active) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">Aktifkan di halaman depan</label>
+                                <label class="form-check-label" for="is_active">Aktifkan layanan ini di halaman depan</label>
                             </div>
                         </div>
 
@@ -194,7 +218,8 @@
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
-                timer: 3000
+                timer: 3000,
+                timerProgressBar: true
             });
         @endif
     </script>

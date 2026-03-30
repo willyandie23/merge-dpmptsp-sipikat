@@ -194,9 +194,13 @@
                         <div class="mb-4">
                             <label for="description" class="form-label">Deskripsi Komoditas <span
                                     class="text-danger">*</span></label>
-                            <textarea name="description" id="editor"
-                                class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
-                            @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <textarea name="description"
+                                class="form-control ckeditor @error('description') is-invalid @enderror" rows="10">
+            {{ old('description') }}
+        </textarea>
+                            @error('description')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="d-flex justify-content-end gap-3">

@@ -167,6 +167,23 @@
 
 @push('script')
     <script>
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+        @endif
+
         document.querySelectorAll('.delete-peluang').forEach(btn => {
             btn.addEventListener('click', function () {
                 const id = this.dataset.id;

@@ -88,7 +88,7 @@
         <div class="col-lg-8">
             <div class="card card-modern">
                 <div class="card-header card-header-modern">
-                    <h4 class="card-title mb-0">Form Tambah Kecamatan & Populasi</h4>
+                    <h4 class="card-title mb-0 text-white">Form Tambah Kecamatan & Populasi</h4>
                 </div>
                 <div class="card-body p-4">
                     <form action="{{ route('backend.kecamatan.store') }}" method="POST" id="form-kecamatan">
@@ -121,7 +121,7 @@
                             </div>
                         </div>
 
-                        <button type="button" id="add-populasi" class="btn btn-add-row w-100 py-2 mb-4">
+                        <button type="button" id="add-populasi" class="btn btn-add-row w-100 py-2 mb-4 btn-primary">
                             <i class="mdi mdi-plus"></i> Tambah Tahun Populasi
                         </button>
 

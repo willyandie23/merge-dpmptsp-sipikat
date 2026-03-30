@@ -72,7 +72,7 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0 font-size-18">Edit Layanan Utama</h4>
+                    <h4 class="mb-0 font-size-18 text-white">Edit Layanan Utama</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
@@ -89,7 +89,7 @@
         <div class="col-lg-8">
             <div class="card card-modern">
                 <div class="card-header card-header-modern">
-                    <h4 class="card-title mb-0">Form Edit Layanan Utama</h4>
+                    <h4 class="card-title mb-0 text-white">Form Edit Layanan Utama</h4>
                 </div>
                 <div class="card-body p-4">
                     <form action="{{ route('backend.layanan-utama.update', $layanan_utama) }}"
@@ -127,20 +127,45 @@
                             <img id="preview" class="preview-image" style="display:none;" alt="Preview Gambar Baru">
                         </div>
 
-                        <div class="mb-4">
-                            <label class="form-label">Posisi Urutan</label>
-                            <input type="number" name="position" class="form-control @error('position') is-invalid @enderror"
-                                value="{{ old('position', $layanan_utama->position) }}" min="1">
-                            @error('position') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
+                       <!-- Posisi Urutan -->
+<div class="mb-4">
+    <label class="form-label">Posisi Urutan <span class="text-danger">*</span></label>
+    <input type="number" name="position" class="form-control @error('position') is-invalid @enderror"
+        value="{{ old('position', $layanan_utama->position) }}" min="1" required>
+    @error('position')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
 
-                        <div class="mb-4">
-                            <div class="form-check form-switch form-switch-lg">
-                                <input name="is_active" type="checkbox" class="form-check-input" id="is_active" value="1"
-                                       {{ old('is_active', $layanan_utama->is_active) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">Aktifkan layanan ini</label>
-                            </div>
-                        </div>
+<!-- Informasi Posisi yang Sudah Dipakai -->
+<div class="mb-4">
+    <label class="form-label text-muted">Daftar Posisi Urutan yang Sudah Digunakan:</label>
+    <div class="border rounded p-3 bg-light" style="max-height: 200px; overflow-y: auto;">
+        @forelse($usedPositions as $pos)
+            <div class="d-flex justify-content-between py-1 small border-bottom">
+                <span>
+                    <strong>{{ $pos->position }}</strong>
+                    @if($pos->id == $layanan_utama->id)
+                        <span class="badge bg-primary ms-2">Saat Ini</span>
+                    @endif
+                </span>
+                <span class="text-muted">{{ Str::limit($pos->title, 40) }}</span>
+            </div>
+        @empty
+            <p class="text-muted mb-0">Belum ada data.</p>
+        @endforelse
+    </div>
+</div>
+
+<!-- Checkbox Aktif -->
+<div class="mb-4">
+    <div class="form-check form-switch form-switch-lg">
+        <input type="hidden" name="is_active" value="0">
+        <input name="is_active" type="checkbox" class="form-check-input" id="is_active" value="1"
+               {{ old('is_active', $layanan_utama->is_active) ? 'checked' : '' }}>
+        <label class="form-check-label fw-semibold" for="is_active">Aktifkan layanan ini di halaman depan</label>
+    </div>
+</div>
 
                         <div class="d-flex justify-content-end gap-3">
                             <a href="{{ route('backend.layanan-utama.index') }}" class="btn btn-light">Batal</a>

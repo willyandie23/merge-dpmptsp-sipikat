@@ -3,15 +3,20 @@
 
     <div class="h-100">
 
+        <!-- User Widget - Nama & Role Dinamis -->
         <div class="user-wid text-center py-4">
             <div class="user-img">
-                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}" alt=""
+                <img src="{{ URL::asset('build/images/users/avatar-2.png') }}" alt=""
                     class="avatar-md mx-auto rounded-circle">
             </div>
 
             <div class="mt-3">
-                <a href="#" class="text-body fw-medium font-size-16">Patrick Becker</a>
-                <p class="text-muted mt-1 mb-0 font-size-13">UI/UX Designer</p>
+                <a href="#" class="text-body fw-medium font-size-16">
+                    {{ auth()->user()->name }}
+                </a>
+                <p class="text-muted mt-1 mb-0 font-size-13">
+                    {{ auth()->user()->getRoleNames()->first() ?? 'Admin' }}
+                </p>
             </div>
         </div>
 
@@ -122,7 +127,6 @@
                 @if (auth()->user()->hasRole('superadmin'))
                     <li class="menu-title">Super Admin</li>
 
-                    <!-- Manajemen Pengguna -->
                     <li>
                         <a href="{{ route('backend.users.index') }}" class="waves-effect">
                             <i class="mdi mdi-account-multiple"></i>
@@ -130,7 +134,6 @@
                         </a>
                     </li>
 
-                    <!-- App Log -->
                     <li>
                         <a href="{{ route('backend.app-logs.index') }}" class="waves-effect">
                             <i class="mdi mdi-history"></i>
@@ -145,7 +148,7 @@
 </div>
 <!-- ========== Left Sidebar End ========== -->
 
-<!-- Script untuk memperbaiki Active Menu + Collapse -->
+<!-- Script untuk Active Menu + Collapse -->
 @push('script')
     <script>
         $(document).ready(function () {

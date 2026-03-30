@@ -88,7 +88,7 @@
         <div class="col-lg-8">
             <div class="card card-modern">
                 <div class="card-header card-header-modern">
-                    <h4 class="card-title mb-0">Edit Data Kecamatan & Populasi</h4>
+                    <h4 class="card-title mb-0 text-white">Edit Data Kecamatan & Populasi</h4>
                 </div>
                 <div class="card-body p-4">
                     <form action="{{ route('backend.kecamatan.update', $kecamatan) }}" method="POST" id="form-kecamatan">
@@ -119,7 +119,7 @@
                             @endforeach
                         </div>
 
-                        <button type="button" id="add-populasi" class="btn btn-add-row w-100 py-2 mb-4">
+                        <button type="button" id="add-populasi" class="btn btn-add-row w-100 py-2 mb-4 btn-primary">
                             <i class="mdi mdi-plus"></i> Tambah Tahun Populasi Baru
                         </button>
 
@@ -130,6 +130,19 @@
                             </button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card tips-card">
+                <div class="card-header">
+                    <h5>Tips</h5>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Tahun tidak boleh sama dalam satu kecamatan</li>
+                        <li>Kamu bisa tambah lebih dari satu tahun populasi</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -144,17 +157,17 @@
             const container = document.getElementById('populasi-container');
 
             const newRow = `
-                <div class="row populasi-row mb-3">
-                    <div class="col-md-5">
-                        <input type="number" name="populasi[${rowIndex}][year]" class="form-control" placeholder="Tahun" min="2000" max="2100" required>
-                    </div>
-                    <div class="col-md-5">
-                        <input type="number" name="populasi[${rowIndex}][amount]" class="form-control" placeholder="Jumlah Populasi" min="0" required>
-                    </div>
-                    <div class="col-md-2">
-                        <button type="button" class="btn btn-danger btn-sm w-100 remove-row">Hapus</button>
-                    </div>
-                </div>`;
+                    <div class="row populasi-row mb-3">
+                        <div class="col-md-5">
+                            <input type="number" name="populasi[${rowIndex}][year]" class="form-control" placeholder="Tahun" min="2000" max="2100" required>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="number" name="populasi[${rowIndex}][amount]" class="form-control" placeholder="Jumlah Populasi" min="0" required>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-danger btn-sm w-100 remove-row">Hapus</button>
+                        </div>
+                    </div>`;
 
             container.insertAdjacentHTML('beforeend', newRow);
             rowIndex++;

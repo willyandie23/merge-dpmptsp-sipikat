@@ -121,7 +121,7 @@
 
                 <!-- Header Profil -->
                 <div class="profile-header">
-                    <h3 class="mb-1">Profil DPMPTSP</h3>
+                    <h3 class="mb-1 text-white">Profil DPMPTSP</h3>
                     <p class="mb-0 opacity-90">Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu</p>
                 </div>
 
@@ -249,7 +249,7 @@
                         <!-- Tombol Edit -->
                         <div class="text-center mt-5">
                             <a href="{{ route('backend.tentang-dpmptsp.edit', $tentang) }}"
-                               class="btn btn-gradient btn-lg px-5">
+                               class="btn btn-primary btn-lg px-5">
                                 <i class="mdi mdi-pencil me-2"></i> Edit Seluruh Data
                             </a>
                         </div>
@@ -272,3 +272,37 @@
         </div>
     </div>
 @endsection
+
+@push('script')
+    <script>
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+        @endif
+
+        @if (session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: '{{ session('error') }}',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true
+            });
+        @endif
+    </script>
+@endpush

@@ -171,12 +171,14 @@
                             <img id="preview-img" class="img-preview" src="#" alt="Preview">
                         </div>
 
-                        <div class="mb-4">
-                            <div class="form-check form-switch form-switch-lg">
-                                <input name="is_active" type="checkbox" class="form-check-input" id="is_active" value="1" {{ old('is_active', $banner_dashboard->is_active ? 1 : 0) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">Aktifkan banner ini</label>
-                            </div>
-                        </div>
+                       <div class="mb-4">
+    <div class="form-check form-switch form-switch-lg">
+        <input type="hidden" name="is_active" value="0">
+        <input name="is_active" type="checkbox" class="form-check-input" id="is_active" value="1"
+               {{ old('is_active', $banner_dashboard->is_active ? 1 : 0) ? 'checked' : '' }}>
+        <label class="form-check-label" for="is_active">Aktifkan banner ini</label>
+    </div>
+</div>
 
                         <div class="d-flex justify-content-end gap-3">
                             <a href="{{ route('backend.banner-dashboard.index') }}" class="btn btn-light waves-effect">

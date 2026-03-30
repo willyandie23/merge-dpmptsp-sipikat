@@ -73,8 +73,11 @@ class BannerIntegritasController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',   // boleh null
         ]);
+
+        // Pakai request->boolean() agar aman
+        $validated['is_active'] = $request->boolean('is_active', false);
 
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('banner-integritas', 'public');
@@ -85,6 +88,7 @@ class BannerIntegritasController extends Controller
         return redirect()->route('backend.banner-integritas.index')
             ->with('success', 'Banner Integritas berhasil ditambahkan!');
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -122,8 +126,10 @@ class BannerIntegritasController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
         ]);
+
+        $validated['is_active'] = $request->boolean('is_active', false);
 
         if ($request->hasFile('image')) {
             if ($banner_integritas->image) {

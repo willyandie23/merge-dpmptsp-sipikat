@@ -61,7 +61,7 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0 font-size-18">Manajemen Pengguna</h4>
+                    <h4 class="mb-0 font-size-18 text-white">Manajemen Pengguna</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
@@ -77,7 +77,7 @@
         <div class="col-12">
             <div class="card card-modern">
                 <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
-                    <h4 class="card-title mb-0">Daftar Pengguna</h4>
+                    <h4 class="card-title mb-0 text-white">Daftar Pengguna</h4>
                     <a href="{{ route('backend.users.create') }}" class="btn btn-light btn-add">
                         <i class="mdi mdi-plus me-1"></i> Tambah Pengguna Baru
                     </a>

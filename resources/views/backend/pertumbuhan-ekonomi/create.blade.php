@@ -126,7 +126,7 @@
 
                         <div class="d-flex justify-content-end gap-3">
                             <a href="{{ route('backend.pertumbuhan-ekonomi.index') }}" class="btn btn-light">Batal</a>
-                            <button type="submit" class="btn btn-gradient text-white">
+                            <button type="submit" class="btn btn-primary">
                                 <i class="mdi mdi-content-save me-1"></i> Simpan Data
                             </button>
                         </div>

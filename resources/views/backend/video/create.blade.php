@@ -195,11 +195,19 @@
                         </div>
 
                         <div class="mb-4">
-                            <div class="form-check form-switch form-switch-lg">
-                                <input type="checkbox" name="is_active" id="is_active" class="form-check-input" value="1" {{ old('is_active', 1) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">Aktifkan video ini di halaman depan</label>
-                            </div>
-                        </div>
+    <div class="form-check form-switch form-switch-lg">
+        <!-- Hidden Input WAJIB -->
+        <input type="hidden" name="is_active" value="0">
+
+        <input type="checkbox" name="is_active" id="is_active"
+               class="form-check-input" value="1"
+               {{ old('is_active', 1) ? 'checked' : '' }}>
+
+        <label class="form-check-label" for="is_active">
+            Aktifkan video ini di halaman depan
+        </label>
+    </div>
+</div>
 
                         <div class="d-flex justify-content-end gap-3">
                             <a href="{{ route('backend.video.index') }}" class="btn btn-light waves-effect">

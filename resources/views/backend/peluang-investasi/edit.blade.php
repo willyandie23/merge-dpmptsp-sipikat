@@ -78,6 +78,10 @@
             display: inline-flex;
             justify-content: center;
         }
+
+         .ck-editor__editable_inline {
+            min-height: 450px !important;
+        }
     </style>
 @endpush
 
@@ -175,18 +179,21 @@
                         </div>
 
                         <!-- Deskripsi -->
-                        <div class="mb-4">
-                            <label class="form-label">Deskripsi Peluang Investasi <span class="text-danger">*</span></label>
-                            <textarea name="description" id="editor"
-                                class="form-control @error('description') is-invalid @enderror">
-                                {{ old('description', $peluang_investasi->description) }}
-                            </textarea>
-                            @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
+<div class="mb-4">
+    <label class="form-label">Deskripsi Peluang Investasi <span class="text-danger">*</span></label>
+    <textarea name="description"
+              class="form-control ckeditor @error('description') is-invalid @enderror"
+              rows="12">
+        {{ old('description', $peluang_investasi->description) }}
+    </textarea>
+    @error('description')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
 
                         <div class="d-flex justify-content-end gap-3">
                             <a href="{{ route('backend.peluang-investasi.index') }}" class="btn btn-light">Batal</a>
-                            <button type="submit" class="btn btn-gradient text-white">
+                            <button type="submit" class="btn btn-gradient btn-primary">
                                 <i class="mdi mdi-content-save me-1"></i> Update Peluang Investasi
                             </button>
                         </div>

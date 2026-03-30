@@ -73,7 +73,7 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0 font-size-18">Manajemen Perizinan Terbit</h4>
+                    <h4 class="mb-0 font-size-18 text-white">Manajemen Perizinan Terbit</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
@@ -89,7 +89,7 @@
         <div class="col-12">
             <div class="card card-modern">
                 <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
-                    <h4 class="card-title mb-0">Data Perizinan Terbit</h4>
+                    <h4 class="card-title mb-0 text-white">Data Perizinan Terbit</h4>
                     <a href="{{ route('backend.perizinan-terbit.create') }}" class="btn btn-light">
                         <i class="mdi mdi-plus me-1"></i> Tambah Data Baru
                     </a>
@@ -160,6 +160,24 @@
 
 @push('script')
     <script>
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+        @endif
+    </script>
+    <script>
         let surveyData = @json($grouped);   // Note: kita reuse variabel surveyData meski ini perizinan
 
         let currentYear = null;
@@ -186,31 +204,31 @@
             });
 
             const html = `
-                <div class="col-md-3">
-                    <div class="card summary-card p-3 text-center">
-                        <h6 class="text-muted mb-1">OSS RBA</h6>
-                        <span class="summary-number text-primary">${totalOSS.toLocaleString('id-ID')}</span>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card summary-card p-3 text-center">
-                        <h6 class="text-muted mb-1">SiCantik Cloud</h6>
-                        <span class="summary-number text-info">${totalSicantik.toLocaleString('id-ID')}</span>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card summary-card p-3 text-center">
-                        <h6 class="text-muted mb-1">SIMBG</h6>
-                        <span class="summary-number text-success">${totalSIMBG.toLocaleString('id-ID')}</span>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card summary-card p-3 text-center border-primary">
-                        <h6 class="text-muted mb-1">Total Terbit Tahun ${year}</h6>
-                        <span class="summary-number text-danger">${totalTerbit.toLocaleString('id-ID')}</span>
-                    </div>
-                </div>
-            `;
+                        <div class="col-md-3">
+                            <div class="card summary-card p-3 text-center">
+                                <h6 class="text-muted mb-1">OSS RBA</h6>
+                                <span class="summary-number text-primary">${totalOSS.toLocaleString('id-ID')}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card summary-card p-3 text-center">
+                                <h6 class="text-muted mb-1">SiCantik Cloud</h6>
+                                <span class="summary-number text-info">${totalSicantik.toLocaleString('id-ID')}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card summary-card p-3 text-center">
+                                <h6 class="text-muted mb-1">SIMBG</h6>
+                                <span class="summary-number text-success">${totalSIMBG.toLocaleString('id-ID')}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card summary-card p-3 text-center border-primary">
+                                <h6 class="text-muted mb-1">Total Terbit Tahun ${year}</h6>
+                                <span class="summary-number text-danger">${totalTerbit.toLocaleString('id-ID')}</span>
+                            </div>
+                        </div>
+                    `;
 
             document.getElementById('year-summary').innerHTML = html;
             document.getElementById('year-summary').style.display = 'flex';
@@ -224,20 +242,20 @@
                 const hasData = surveyData[year] && surveyData[year][bulan.num] !== undefined;
 
                 const cardHTML = `
-                    <div class="col-md-3 col-lg-2">
-                        <div class="card month-card h-100 text-center ${hasData ? 'border-primary' : ''}"
-                             data-month="${bulan.num}">
-                            <div class="card-body py-4">
-                                <h5 class="mb-1">${bulan.num}</h5>
-                                <p class="mb-0 text-muted">${bulan.nama}</p>
-                                ${hasData ?
+                            <div class="col-md-3 col-lg-2">
+                                <div class="card month-card h-100 text-center ${hasData ? 'border-primary' : ''}"
+                                     data-month="${bulan.num}">
+                                    <div class="card-body py-4">
+                                        <h5 class="mb-1">${bulan.num}</h5>
+                                        <p class="mb-0 text-muted">${bulan.nama}</p>
+                                        ${hasData ?
                         `<span class="badge bg-success mt-2">Ada Data</span>` :
                         `<span class="badge bg-secondary mt-2">Belum Ada</span>`
                     }
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                `;
+                        `;
                 container.insertAdjacentHTML('beforeend', cardHTML);
             });
 
@@ -273,6 +291,7 @@
                 });
                 return;
             }
+            currentSurveyId = data.id;
 
             document.getElementById('detail-title').innerHTML = `Tahun <strong>${currentYear}</strong> — ${bulanList.find(b => b.num === month).nama}`;
             document.getElementById('oss_rba').textContent = Number(data.oss_rba || 0).toLocaleString('id-ID');
@@ -301,6 +320,62 @@
 
             renderYearSummary(currentYear);
             renderMonthCards(currentYear);
+        });
+
+        // === TOMBOL DELETE PERIZINAN TERBIT ===
+        document.addEventListener('click', function (e) {
+            if (e.target && e.target.id === 'btn-delete') {
+                if (!currentSurveyId) {   // note: kamu pakai currentSurveyId meski ini perizinan
+                    Swal.fire('Error', 'ID data tidak ditemukan', 'error');
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Yakin ingin menghapus?',
+                    text: "Data perizinan terbit ini akan dihapus permanen!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch(`{{ route('backend.perizinan-terbit.destroy', ':id') }}`.replace(':id', currentSurveyId), {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Accept': 'application/json'
+                            }
+                        })
+                            .then(response => {
+                                if (response.ok) {
+                                    return response.json().catch(() => ({}));
+                                }
+                                throw new Error('Delete failed');
+                            })
+                            .then(() => {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Terhapus!',
+                                    text: 'Data berhasil dihapus.',
+                                    timer: 1800,
+                                    showConfirmButton: false
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Delete Error:', error);
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal',
+                                    text: 'Terjadi kesalahan saat menghapus data.',
+                                });
+                            });
+                    }
+                });
+            }
         });
     </script>
 @endpush

@@ -26,8 +26,10 @@ class AdminGalleryController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
         ]);
+
+        $validated['is_active'] = $request->boolean('is_active', false);
 
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('gallery', 'public');
@@ -50,8 +52,10 @@ class AdminGalleryController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
         ]);
+
+        $validated['is_active'] = $request->boolean('is_active', false);
 
         if ($request->hasFile('image')) {
             if ($gallery->image) {

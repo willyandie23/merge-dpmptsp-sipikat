@@ -38,27 +38,33 @@
             background: linear-gradient(135deg, #556ee6, #364574) !important;
             border: none;
             padding: 0.6rem 1.5rem !important;
-            box-shadow: 0 4px 12px rgba(85, 110, 230, 0.35) !important;
         }
 
         .btn-gradient:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(85, 110, 230, 0.45) !important;
-        }
-
-        .tips-card {
-            border: 1px solid #556ee6 !important;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
         }
 
         .preview-image {
             max-width: 100%;
-            max-height: 250px;
-            border-radius: 8px;
+            max-height: 280px;
+            border-radius: 12px;
             margin-top: 12px;
+            border: 3px solid #e9ecef;
             display: none;
-            border: 2px solid #e9ecef;
+        }
+
+        .current-image {
+            max-width: 100%;
+            max-height: 280px;
+            border-radius: 12px;
+            border: 3px solid #28a745;
+        }
+
+        .video-preview {
+            margin-top: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            display: none;
         }
     </style>
 @endpush
@@ -68,7 +74,7 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0 font-size-18">Tambah Mekanisme Pengaduan Baru</h4>
+                    <h4 class="mb-0 font-size-18 text-white">Tambah Mekanisme Pengaduan Baru</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
@@ -85,7 +91,7 @@
         <div class="col-lg-8">
             <div class="card card-modern">
                 <div class="card-header card-header-modern">
-                    <h4 class="card-title mb-0">Form Tambah Mekanisme Pengaduan</h4>
+                    <h4 class="card-title mb-0 text-white">Form Tambah Mekanisme Pengaduan</h4>
                 </div>
                 <div class="card-body p-4">
                     <form action="{{ route('backend.mekanisme-pengaduan.store') }}" method="POST" enctype="multipart/form-data">
@@ -104,6 +110,7 @@
                             @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
+                        <!-- Gambar -->
                         <div class="mb-4">
                             <label class="form-label">Gambar (Opsional)</label>
                             <input type="file" id="image" name="image" class="form-control @error('image') is-invalid @enderror"
@@ -111,26 +118,49 @@
                             @error('image') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             <small class="text-muted">Format: JPG, PNG, WEBP. Maks 2MB</small>
 
-                            <!-- Preview Image -->
                             <img id="preview" class="preview-image" alt="Preview Gambar">
                         </div>
 
+                        <!-- URL Tautan + Preview -->
                         <div class="mb-4">
-                            <label class="form-label">URL Tautan (Opsional)</label>
-                            <input type="url" name="url" class="form-control @error('url') is-invalid @enderror"
-                                value="{{ old('url') }}" placeholder="https://...">
+                            <label class="form-label">URL Tautan (YouTube / Vimeo - Opsional)</label>
+                            <input type="url" name="url" id="url" class="form-control @error('url') is-invalid @enderror"
+                                value="{{ old('url') }}" placeholder="https://www.youtube.com/watch?v=...">
                             @error('url') <div class="invalid-feedback">{{ $message }}</div> @enderror
+
+                            <div id="video-preview" class="video-preview mt-3">
+                                <iframe id="video-frame" width="100%" height="280" frameborder="0" allowfullscreen></iframe>
+                            </div>
                         </div>
 
-                        <div class="mb-4">
-                            <label class="form-label">Posisi Urutan</label>
-                            <input type="number" name="position" class="form-control @error('position') is-invalid @enderror"
-                                value="{{ old('position', 99) }}" min="1">
-                            @error('position') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
+                       <div class="mb-4">
+    <label class="form-label">Posisi Urutan <span class="text-danger">*</span></label>
+    <input type="number" name="position" class="form-control @error('position') is-invalid @enderror"
+        value="{{ old('position', 99) }}" min="1" required>
+    @error('position')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
+<!-- Informasi Posisi yang Sudah Dipakai -->
+<div class="mb-4">
+    <label class="form-label text-muted">Daftar Posisi Urutan yang Sudah Digunakan:</label>
+    <div class="border rounded p-3 bg-light" style="max-height: 220px; overflow-y: auto;">
+        @forelse($usedPositions as $pos)
+            <div class="d-flex justify-content-between py-1 border-bottom">
+                <span><strong>{{ $pos->position }}</strong></span>
+                <span class="text-muted">{{ $pos->name }}</span>
+            </div>
+        @empty
+            <p class="text-muted mb-0">Belum ada data mekanisme pengaduan.</p>
+        @endforelse
+    </div>
+    <small class="text-muted">Masukkan nomor urutan yang belum terdaftar di atas.</small>
+</div>
 
                         <div class="mb-4">
                             <div class="form-check form-switch form-switch-lg">
+                                <input type="hidden" name="is_active" value="0">
                                 <input name="is_active" type="checkbox" class="form-check-input" id="is_active" value="1"
                                        {{ old('is_active', true) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="is_active">Aktifkan di halaman depan</label>
@@ -148,6 +178,7 @@
             </div>
         </div>
 
+        <!-- Tips -->
         <div class="col-lg-4">
             <div class="card tips-card">
                 <div class="card-header">
@@ -155,8 +186,8 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-3"><i class="mdi mdi-check-circle text-success me-2"></i>Nama mekanisme harus jelas dan deskriptif</li>
-                        <li class="mb-3"><i class="mdi mdi-check-circle text-success me-2"></i>Gambar akan ditampilkan di halaman publik</li>
+                        <li class="mb-3"><i class="mdi mdi-check-circle text-success me-2"></i>Nama mekanisme harus jelas</li>
+                        <li class="mb-3"><i class="mdi mdi-check-circle text-success me-2"></i>URL YouTube/Vimeo akan otomatis ditampilkan sebagai video</li>
                         <li><i class="mdi mdi-check-circle text-success me-2"></i>Posisi kecil = tampil lebih atas</li>
                     </ul>
                 </div>
@@ -184,7 +215,30 @@
             }
         });
 
-        // Toast
+        // Preview Video URL (YouTube / Vimeo)
+        document.getElementById('url').addEventListener('input', function() {
+            const url = this.value.trim();
+            const previewContainer = document.getElementById('video-preview');
+            const frame = document.getElementById('video-frame');
+
+            if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                let videoId = url.split('v=')[1] || url.split('/').pop();
+                if (videoId) videoId = videoId.split('&')[0];
+                frame.src = `https://www.youtube.com/embed/${videoId}`;
+                previewContainer.style.display = 'block';
+            }
+            else if (url.includes('vimeo.com')) {
+                const videoId = url.split('/').pop();
+                frame.src = `https://player.vimeo.com/video/${videoId}`;
+                previewContainer.style.display = 'block';
+            }
+            else {
+                previewContainer.style.display = 'none';
+                frame.src = '';
+            }
+        });
+
+        // Toast Success
         @if (session('success'))
             Swal.fire({
                 icon: 'success',

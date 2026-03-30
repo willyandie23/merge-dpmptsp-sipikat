@@ -35,8 +35,11 @@ class BannerFaqController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
         ]);
+
+        // Ini yang paling penting
+        $validated['is_active'] = $request->boolean('is_active', false);
 
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('banner-faq', 'public');
@@ -65,8 +68,11 @@ class BannerFaqController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
         ]);
+
+        // Ini yang paling penting
+        $validated['is_active'] = $request->boolean('is_active', false);
 
         if ($request->hasFile('image')) {
             if ($banner_faq->image) {
@@ -80,7 +86,6 @@ class BannerFaqController extends Controller
         return redirect()->route('backend.banner-faq.index')
             ->with('success', 'Banner FAQ berhasil diupdate!');
     }
-
     /**
      * Remove the specified resource from storage.
      */

@@ -127,11 +127,25 @@
 
                         <div class="d-flex justify-content-end gap-3">
                             <a href="{{ route('backend.pertumbuhan-ekonomi.index') }}" class="btn btn-light">Batal</a>
-                            <button type="submit" class="btn btn-gradient text-white">
+                            <button type="submit" class="btn btn-primary">
                                 <i class="mdi mdi-content-save me-1"></i> Update Data
                             </button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Tips Penginputan</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">• Tahun tidak boleh duplikat</li>
+                        <li class="mb-2">• Nilai pertumbuhan dalam persen (contoh: 5.23)</li>
+                        <li>• Maksimal 100%</li>
+                    </ul>
                 </div>
             </div>
         </div>

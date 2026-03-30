@@ -3,34 +3,44 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 window.ClassicEditor = ClassicEditor;
 
-// Inisialisasi otomatis hanya untuk textarea dengan class "ckeditor"
 document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll("textarea.ckeditor").forEach((element) => {
+    document.querySelectorAll("textarea.ckeditor").forEach((textarea) => {
         // Skip kalau sudah diinisialisasi
-        if (
-            element.nextElementSibling &&
-            element.nextElementSibling.classList.contains("ck-editor")
-        ) {
-            return;
-        }
+        if (textarea.dataset.ckeditorInitialized === "true") return;
 
-        ClassicEditor.create(element, {
+        ClassicEditor.create(textarea, {
             toolbar: [
                 "heading",
                 "|",
                 "bold",
                 "italic",
+                "underline",
+                "|",
                 "link",
                 "bulletedList",
                 "numberedList",
                 "blockQuote",
                 "|",
+                "alignment",
+                "|",
+                "imageUpload",
+                "mediaEmbed",
+                "|",
                 "undo",
                 "redo",
             ],
-            height: 350,
-        }).catch((error) => {
-            console.error("CKEditor error:", error);
-        });
+            height: "420px",
+            placeholder: "Tulis konten di sini...",
+        })
+            .then((editor) => {
+                console.log(
+                    "CKEditor berhasil dimuat pada:",
+                    textarea.name || textarea.id,
+                );
+                textarea.dataset.ckeditorInitialized = "true";
+            })
+            .catch((error) => {
+                console.error("CKEditor Error:", error);
+            });
     });
 });

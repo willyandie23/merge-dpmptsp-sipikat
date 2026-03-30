@@ -43,20 +43,29 @@ class PerizinanTerbitController extends Controller
             'simbg' => 'required|integer|min:0',
         ]);
 
+        // Cek apakah data untuk tahun dan bulan ini sudah ada
+        $exists = PerizinanTerbit::where('year', $validated['year'])
+            ->where('month', $validated['month'])
+            ->exists();
+
+        if ($exists) {
+            return redirect()
+                ->back()
+                ->withInput()                    // agar input tetap terisi
+                ->with('error', "Data Perizinan Terbit untuk Tahun {$validated['year']} Bulan {$validated['month']} sudah ada. Silakan edit data yang sudah ada.");
+        }
+
+        // Jika belum ada, simpan data baru
         $total_terbit = $validated['oss_rba'] + $validated['sicantik_cloud'] + $validated['simbg'];
 
-        PerizinanTerbit::updateOrCreate(
-            [
-                'year' => $validated['year'],
-                'month' => $validated['month'],
-            ],
-            [
-                'oss_rba' => $validated['oss_rba'],
-                'sicantik_cloud' => $validated['sicantik_cloud'],
-                'simbg' => $validated['simbg'],
-                'total_terbit' => $total_terbit,
-            ]
-        );
+        PerizinanTerbit::create([
+            'year' => $validated['year'],
+            'month' => $validated['month'],
+            'oss_rba' => $validated['oss_rba'],
+            'sicantik_cloud' => $validated['sicantik_cloud'],
+            'simbg' => $validated['simbg'],
+            'total_terbit' => $total_terbit,
+        ]);
 
         return redirect()
             ->route('backend.perizinan-terbit.index')
@@ -94,8 +103,9 @@ class PerizinanTerbitController extends Controller
     {
         $perizinan_terbit->delete();
 
-        return redirect()
-            ->route('backend.perizinan-terbit.index')
-            ->with('success', 'Data Perizinan Terbit berhasil dihapus.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Perizinan Terbit berhasil dihapus.'
+        ]);
     }
 }

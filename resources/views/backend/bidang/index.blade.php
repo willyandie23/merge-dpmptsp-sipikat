@@ -43,7 +43,7 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0 font-size-18">Manajemen Bidang</h4>
+                    <h4 class="mb-0 font-size-18 text-white">Manajemen Bidang</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
@@ -59,7 +59,7 @@
         <div class="col-12">
             <div class="card card-modern">
                 <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
-                    <h4 class="card-title mb-0">Daftar Bidang</h4>
+                    <h4 class="card-title mb-0 text-white">Daftar Bidang</h4>
                     <a href="{{ route('backend.bidang.create') }}" class="btn btn-light">
                         <i class="mdi mdi-plus me-1"></i> Tambah Bidang Baru
                     </a>
@@ -117,25 +117,47 @@
 
 @push('script')
     <script>
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+        @endif
+
         document.querySelectorAll('.delete-bidang').forEach(btn => {
             btn.addEventListener('click', function () {
                 const id = this.dataset.id;
                 const name = this.dataset.name;
 
                 Swal.fire({
-                    title: 'Yakin hapus?',
-                    text: `Bidang "${name}" akan dihapus permanen!`,
+                    title: 'Yakin hapus bidang ini?',
+                    html: `Bidang <strong>"${name}"</strong> dan <strong>SEMUA</strong> struktur organisasi di dalamnya akan dihapus permanen!`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Ya, hapus!'
+                    confirmButtonText: 'Ya, Hapus Semua!',
+                    cancelButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        // Buat form delete
                         const form = document.createElement('form');
                         form.method = 'POST';
                         form.action = `{{ route('backend.bidang.destroy', ':id') }}`.replace(':id', id);
-                        form.innerHTML = `@csrf @method("DELETE")`;
+                        form.innerHTML = `
+                        @csrf
+                        @method('DELETE')
+                    `;
                         document.body.appendChild(form);
                         form.submit();
                     }

@@ -25,23 +25,34 @@ class LayananPerizinanController extends Controller
      */
     public function create()
     {
-        return view('backend.layanan-perizinan.create');
+        $usedPositions = LayananPerizinan::select('id', 'title', 'position')
+            ->orderBy('position')
+            ->get();
+
+        return view('backend.layanan-perizinan.create', compact('usedPositions'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function edit(LayananPerizinan $layanan_perizinan)
+    {
+        $usedPositions = LayananPerizinan::select('id', 'title', 'position')
+            ->orderBy('position')
+            ->get();
+
+        return view('backend.layanan-perizinan.edit', compact('layanan_perizinan', 'usedPositions'));
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'icon' => 'required|string|max:100',
+            'position' => 'required|integer|min:1|unique:layanan_perizinan,position',
             'is_active' => 'nullable|boolean',
-            'position' => 'nullable|integer|min:1',
+        ], [
+            'position.unique' => 'Posisi urutan :input sudah digunakan oleh layanan lain.'
         ]);
 
         $validated['is_active'] = $request->boolean('is_active', true);
-        $validated['position'] = $validated['position'] ?? 99;
 
         LayananPerizinan::create($validated);
 
@@ -49,28 +60,19 @@ class LayananPerizinanController extends Controller
             ->with('success', 'Layanan Perizinan Usaha berhasil ditambahkan!');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(LayananPerizinan $layanan_perizinan)
-    {
-        return view('backend.layanan-perizinan.edit', compact('layanan_perizinan'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    // Update method juga perlu diperbaiki (sama logikanya)
     public function update(Request $request, LayananPerizinan $layanan_perizinan)
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'icon' => 'required|string|max:100',
+            'position' => 'required|integer|min:1|unique:layanan_perizinan,position,' . $layanan_perizinan->id,
             'is_active' => 'nullable|boolean',
-            'position' => 'nullable|integer|min:1',
+        ], [
+            'position.unique' => 'Posisi urutan :input sudah digunakan oleh layanan lain.'
         ]);
 
         $validated['is_active'] = $request->boolean('is_active', true);
-        $validated['position'] = $validated['position'] ?? 99;
 
         $layanan_perizinan->update($validated);
 

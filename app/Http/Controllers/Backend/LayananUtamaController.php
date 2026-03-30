@@ -20,7 +20,20 @@ class LayananUtamaController extends Controller
 
     public function create()
     {
-        return view('backend.layanan-utama.create');
+        $usedPositions = LayananUtama::select('id', 'title', 'position')
+            ->orderBy('position')
+            ->get();
+
+        return view('backend.layanan-utama.create', compact('usedPositions'));
+    }
+
+    public function edit(LayananUtama $layanan_utama)
+    {
+        $usedPositions = LayananUtama::select('id', 'title', 'position')
+            ->orderBy('position')
+            ->get();
+
+        return view('backend.layanan-utama.edit', compact('layanan_utama', 'usedPositions'));
     }
 
     public function store(Request $request)
@@ -29,18 +42,18 @@ class LayananUtamaController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'position' => 'required|integer|min:1|unique:layanan_utama,position',
             'is_active' => 'nullable|boolean',
-            'position' => 'nullable|integer|min:1',
+        ], [
+            'position.unique' => 'Posisi urutan :input sudah digunakan oleh layanan lain.'
         ]);
 
         $validated['is_active'] = $request->boolean('is_active', true);
-        $validated['position'] = $validated['position'] ?? 99;
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $filename = time() . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('layanan_utama', $filename, 'public');
-            $validated['image'] = $path;
+            $validated['image'] = $image->storeAs('layanan_utama', $filename, 'public');
         }
 
         LayananUtama::create($validated);
@@ -49,34 +62,27 @@ class LayananUtamaController extends Controller
             ->with('success', 'Layanan Utama berhasil ditambahkan!');
     }
 
-    public function edit(LayananUtama $layanan_utama)
-    {
-        return view('backend.layanan-utama.edit', compact('layanan_utama'));
-    }
-
     public function update(Request $request, LayananUtama $layanan_utama)
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'position' => 'required|integer|min:1|unique:layanan_utama,position,' . $layanan_utama->id,
             'is_active' => 'nullable|boolean',
-            'position' => 'nullable|integer|min:1',
+        ], [
+            'position.unique' => 'Posisi urutan :input sudah digunakan oleh layanan lain.'
         ]);
 
         $validated['is_active'] = $request->boolean('is_active', true);
-        $validated['position'] = $validated['position'] ?? 99;
 
         if ($request->hasFile('image')) {
-            // Hapus gambar lama jika ada
             if ($layanan_utama->image) {
                 Storage::disk('public')->delete($layanan_utama->image);
             }
-
             $image = $request->file('image');
             $filename = time() . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('layanan_utama', $filename, 'public');
-            $validated['image'] = $path;
+            $validated['image'] = $image->storeAs('layanan_utama', $filename, 'public');
         }
 
         $layanan_utama->update($validated);
