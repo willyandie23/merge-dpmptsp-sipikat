@@ -73,14 +73,6 @@
                                             Masuk
                                         </button>
                                     </div>
-
-                                    <div class="mt-4 text-center">
-                                        @if (Route::has('password.request'))
-                                            <a href="{{ route('password.request') }}" class="text-muted">
-                                                <i class="mdi mdi-lock me-1"></i> Lupa password?
-                                            </a>
-                                        @endif
-                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -89,7 +81,7 @@
                     <div class="mt-5 text-center">
                         <!-- <p>Belum punya akun? <a href="{{ route('register') }}" class="fw-medium text-primary"> Daftar sekarang</a></p> -->
                         <p>©
-                            <script>document.write(new Date().getFullYear())</script> DPMTSP Sragen. All Rights Reserved.
+                            <script>document.write(new Date().getFullYear())</script> DPMTSP Katingan. All Rights Reserved.
                         </p>
                     </div>
                 </div>
