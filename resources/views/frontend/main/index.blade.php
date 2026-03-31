@@ -171,7 +171,7 @@
 				<div class="swiper-wrapper">
 					@forelse($banners as $banner)
 						<div class="swiper-slide">
-							<div class="dz-slide-item banner-overlay" style="background-image:url({{ asset($banner->image) }});">
+							<div class="dz-slide-item banner-overlay" style="background-image:url({{ asset('storage/' . $banner->image) }});">
 								<div class="silder-content" data-swiper-parallax="-40%">
 									<div class="inner-content">
 										<h1 class="title text-primary">{!! $banner->title !!}</h1>

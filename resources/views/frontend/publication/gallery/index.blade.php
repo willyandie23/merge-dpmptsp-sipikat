@@ -160,10 +160,10 @@
                     style="height: {{ $layout['height'] }};"
                     data-bs-toggle="modal"
                     data-bs-target="#galleryModal"
-                    data-image="{{ $item->image }}"
+                    data-image="{{ asset('storage/' . $item->image) }}"
                     data-title="{{ $item->title }}"
                     data-description="{{ $item->description }}">
-                    <img src="{{ $item->image }}" alt="{{ $item->title }}">
+                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}">
                     <div class="gallery-overlay">
                         <div class="gallery-icon">
                             <i class="fas fa-expand-alt"></i>

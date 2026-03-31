@@ -47,7 +47,7 @@
                     {{-- Gambar Utama --}}
                     @if ($newsItem->image)
                     <div class="dz-media" style="border-radius: 12px; overflow: hidden; max-height: 480px;">
-                        <img src="{{ $newsItem->image }}"
+                        <img src="{{ asset('storage/' . $newsItem->image) }}"
                             alt="{{ $newsItem->title }}"
                             class="w-100"
                             style="object-fit: cover; height: 480px;">
@@ -111,7 +111,7 @@
                             <li class="d-flex gap-3 mb-3 pb-3"
                                 style="border-bottom: 1px solid #f0f0f0;">
                                 @if ($latest->image)
-                                <img src="{{ $latest->image }}"
+                                <img src="{{ asset('storage/' . $latest->image) }}"
                                     alt="{{ $latest->title }}"
                                     style="width:75px; height:58px; object-fit:cover; border-radius:6px; flex-shrink:0;">
                                 @endif
