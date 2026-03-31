@@ -128,8 +128,11 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('backend')->group(f
         ->names('backend.layanan-utama')
         ->parameters(['layanan-utama' => 'layanan_utama']);
     Route::resource('layanan-perizinan', \App\Http\Controllers\Backend\LayananPerizinanController::class)
-    ->names('backend.layanan-perizinan')
-    ->parameters(['layanan-perizinan' => 'layanan_perizinan']);
+        ->names('backend.layanan-perizinan')
+        ->parameters(['layanan-perizinan' => 'layanan_perizinan']);
+    Route::resource('investment', \App\Http\Controllers\Backend\InvestmentController::class)
+        ->names('backend.investment')
+        ->except(['show']);
 });
 
 Route::middleware(['auth', 'role:superadmin'])->prefix('backend')->group(function () {
