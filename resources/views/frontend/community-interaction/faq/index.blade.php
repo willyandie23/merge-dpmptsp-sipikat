@@ -161,7 +161,7 @@
                     <div class="swiper-wrapper">
                         @foreach($banners as $banner)
                             <div class="swiper-slide faq-banner-slide">
-                                <img src="{{ $banner->image }}" alt="{{ $banner->title }}">
+                                <img src="{{ asset('storage/' . $banner->image) }}" alt="{{ $banner->title }}">
                                 <div class="faq-banner-overlay">
                                     <div class="faq-banner-title">{{ $banner->title }}</div>
                                     @if($banner->description)

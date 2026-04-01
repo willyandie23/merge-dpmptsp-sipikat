@@ -160,7 +160,7 @@
                 <div class="field-card-left">
                     <div class="field-card-photo">
                         @if($kepala && $kepala->image)
-                            <img src="{{ $kepala->image }}" alt="{{ $kepala->name }}">
+                            <img src="{{ asset('storage/' . $kepala->image) }}" alt="{{ $kepala->name }}">
                         @endif
                     </div>
                     <div class="field-card-left-label">
@@ -186,7 +186,7 @@
                             <div class="field-member-card">
                                 <div class="field-member-photo">
                                     @if($member->image)
-                                        <img src="{{ $member->image }}" alt="{{ $member->name }}">
+                                        <img src="{{ asset('storage/' . $member->image) }}" alt="{{ $member->name }}">
                                     @endif
                                 </div>
                                 <div class="field-member-body">

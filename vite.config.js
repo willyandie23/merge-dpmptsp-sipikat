@@ -1,59 +1,46 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import { viteStaticCopy } from 'vite-plugin-static-copy'
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default defineConfig({
     build: {
         manifest: true,
-        rtl: true,
-        outDir: 'public/build/',
-        cssCodeSplit: true,
-        // buildDirectory: 'assets',
+        outDir: 'public/build',
         rollupOptions: {
             output: {
-                assetFileNames: (css) => {
-                    if (css.name.split('.').pop() == 'css') {
-                        return 'css/' + `[name]` + '.min.' + 'css';
-                    } else {
-                        return 'icons/' + css.name;
+                assetFileNames: (assetInfo) => {
+                    if (assetInfo.name?.endsWith('.css')) {
+                        return 'css/[name].min.css';
                     }
+                    return '[name].[ext]';
                 },
-                entryFileNames: 'js/' + `[name]` + `.js`,
+                entryFileNames: 'js/[name].js',
             },
         },
     },
     plugins: [
-        laravel(
-            {
-                input: [
-                    'resources/scss/bootstrap.scss',
-                    'resources/scss/icons.scss',
-                    'resources/scss/app.scss',
-                    'resources/js/ckeditor.js',
-                ],
-                refresh: true
-            }
-        ),
+        laravel({
+            input: [
+                'resources/scss/app.scss',
+                'resources/scss/icons.scss',
+                'resources/scss/bootstrap.scss',
+                'resources/js/ckeditor.js',
+            ],
+            refresh: true,
+        }),
         viteStaticCopy({
             targets: [
-                {
-                    src: 'resources/fonts',
-                    dest: ''
-                },
-                {
-                    src: 'resources/images',
-                    dest: ''
-                },
-                {
-                    src: 'resources/js',
-                    dest: ''
-                },
-                {
-                    src: 'resources/libs',
-                    dest: ''
-                },
+                { src: 'resources/fonts', dest: 'fonts' },
+                { src: 'resources/images', dest: 'images' },
+                { src: 'resources/libs', dest: 'libs' },
             ]
         }),
-
     ],
+    css: {
+        preprocessorOptions: {
+            scss: {
+                silenceDeprecations: ['import'],
+            },
+        },
+    },
 });

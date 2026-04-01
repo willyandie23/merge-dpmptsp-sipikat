@@ -63,7 +63,7 @@
                             @if ($item->image)
                             <div class="dz-media" style="height: 380px; overflow: hidden; border-radius: 8px;">
                                 <a href="{{ route('news.show', $item->id) }}">
-                                    <img src="{{ $item->image }}"
+                                    <img src="{{ asset('storage/' . $item->image) }}"
                                         alt="{{ $item->title }}"
                                         style="width:100%; height:380px; object-fit:cover;">
                                 </a>
@@ -105,7 +105,7 @@
                         @if ($item->image)
                         <div class="dz-media" style="height: 100px; overflow:hidden; border-radius:8px;">
                             <a href="{{ route('news.show', $item->id) }}">
-                                <img src="{{ $item->image }}"
+                                <img src="{{ asset('storage/' . $item->image) }}"
                                     alt="{{ $item->title }}"
                                     style="width:100%; height:100px; object-fit:cover;">
                             </a>
@@ -149,7 +149,7 @@
                         @if ($item->image)
                         <div class="dz-media" style="height: 200px; overflow:hidden; border-radius:8px;">
                             <a href="{{ route('news.show', $item->id) }}">
-                                <img src="{{ $item->image }}"
+                                <img src="{{ asset('storage/' . $item->image) }}"
                                     alt="{{ $item->title }}"
                                     style="width:100%; height:200px; object-fit:cover;">
                             </a>
@@ -197,7 +197,7 @@
                         @if ($item->image)
                         <div class="dz-media" style="height: 200px; overflow:hidden; border-radius:8px;">
                             <a href="{{ route('news.show', $item->id) }}">
-                                <img src="{{ $item->image }}"
+                                <img src="{{ asset('storage/' . $item->image) }}"
                                     alt="{{ $item->title }}"
                                     style="width:100%; height:200px; object-fit:cover;">
                             </a>
