@@ -146,6 +146,12 @@ class DashboardController extends Controller
         $totalVideo = Video::count();
         $totalPopulasi = Populasi::sum('amount');   // total jumlah populasi
 
+        // === TOTAL POPULASI KABUPATEN PER TAHUN (SUM SEMUA KECAMATAN) ===
+        $populasiPerTahun = Populasi::selectRaw('year, SUM(amount) as total_amount')
+            ->groupBy('year')
+            ->orderBy('year', 'desc')           // tahun terbaru di atas
+            ->get();
+
         return view('backend.index', compact(
             'layananUtama',
             'layananPerizinan',
@@ -177,7 +183,8 @@ class DashboardController extends Controller
             'totalNews',
             'totalGallery',
             'totalVideo',
-            'totalPopulasi'
+            'totalPopulasi',
+            'populasiPerTahun'
         ));
     }
 }

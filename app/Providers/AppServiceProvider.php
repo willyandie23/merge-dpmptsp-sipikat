@@ -34,14 +34,14 @@ class AppServiceProvider extends ServiceProvider
             $count = Visitor::whereDate('visited_at', $today)
                 ->distinct('ip_address')
                 ->count('ip_address');
-            
+
             Log::info('✅ Visitor Daily dihitung', ['daily' => $count, 'today' => $today]);
             return $count;
         }));
 
         View::share('total', Cache::remember('visitor_total', 300, function () {
             $count = Visitor::distinct('ip_address')->count('ip_address');
-            
+
             Log::info('✅ Visitor Total dihitung', ['total' => $count]);
             return $count;
         }));

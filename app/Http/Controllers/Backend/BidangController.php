@@ -19,16 +19,30 @@ class BidangController extends Controller
 
     public function create()
     {
-        return view('backend.bidang.create');
+        $usedPositions = Bidang::select('id', 'name as title', 'position')
+            ->orderBy('position')
+            ->get();
+
+        return view('backend.bidang.create', compact('usedPositions'));
+    }
+
+    public function edit(Bidang $bidang)
+    {
+        $usedPositions = Bidang::select('id', 'name as title', 'position')
+            ->orderBy('position')
+            ->get();
+
+        return view('backend.bidang.edit', compact('bidang', 'usedPositions'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:bidang,name',
-            'position' => 'required|integer|min:1',
+            'position' => 'required|integer|min:1|unique:bidang,position',   // tambahkan unique
         ], [
-            'name.unique' => 'Nama bidang sudah ada, silakan gunakan nama yang berbeda.'
+            'name.unique' => 'Nama bidang sudah ada, silakan gunakan nama yang berbeda.',
+            'position.unique' => 'Posisi urutan :input sudah digunakan oleh bidang lain.'
         ]);
 
         Bidang::create($validated);
@@ -38,18 +52,14 @@ class BidangController extends Controller
             ->with('success', 'Bidang berhasil ditambahkan.');
     }
 
-    public function edit(Bidang $bidang)
-    {
-        return view('backend.bidang.edit', compact('bidang'));
-    }
-
     public function update(Request $request, Bidang $bidang)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:bidang,name,' . $bidang->id,
-            'position' => 'required|integer|min:1',
+            'position' => 'required|integer|min:1|unique:bidang,position,' . $bidang->id,
         ], [
-            'name.unique' => 'Nama bidang sudah ada, silakan gunakan nama yang berbeda.'
+            'name.unique' => 'Nama bidang sudah ada, silakan gunakan nama yang berbeda.',
+            'position.unique' => 'Posisi urutan :input sudah digunakan oleh bidang lain.'
         ]);
 
         $bidang->update($validated);

@@ -185,7 +185,7 @@
 
             <!-- === TOTAL STATISTIK (News, Gallery, Video, Populasi) === -->
             <div class="mt-4">
-                <div class="d-flex justify-content-between align-items-end mb-3">
+                <div class="d-flex justify-content-between align-items-end mb-2">
                     <h5 class="mb-0 text-dark">Total Konten & Data</h5>
                 </div>
                 <div class="row g-3">
@@ -216,15 +216,55 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-md-3">
-                        <div class="card stat-card h-100 border-0 shadow-sm">
-                            <div class="card-body text-center">
-                                <i class="mdi mdi-account-group font-size-32 text-info mb-2"></i>
-                                <h5 class="fw-bold mb-1">{{ number_format($totalPopulasi ?? 0) }}</h5>
-                                <small class="text-muted">Populasi</small>
-                            </div>
+                    <!-- POPULASI (SLIDESHOW PER TAHUN) - Tetap Pakai Style yang Sama -->
+<div class="col-6 col-md-3">
+    <div class="card stat-card h-100 border-0 shadow-sm">
+        <div class="card-body text-center">
+
+            <i class="mdi mdi-account-group font-size-32 text-info mb-2"></i>
+
+            <div id="populasiCarousel" class="carousel slide carousel-fade"
+                 data-bs-ride="carousel"
+                 data-bs-interval="3500">
+
+                <div class="carousel-inner">
+                    @forelse($populasiPerTahun as $index => $pop)
+                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                            <h5 class="fw-bold mb-1 text-dark">
+                                {{ number_format($pop->total_amount ?? 0) }}
+                            </h5>
+                            <small class="text-muted">
+                                Populasi Tahun {{ $pop->year }}
+                            </small>
                         </div>
-                    </div>
+                    @empty
+                        <div class="carousel-item active">
+                            <h5 class="fw-bold mb-1 text-dark">0</h5>
+                            <small class="text-muted">Populasi</small>
+                        </div>
+                    @endforelse
+                </div>
+            </div>
+{{--
+            <!-- Indikator kecil (opsional, biar tetap rapi) -->
+            @if($populasiPerTahun->count() > 1)
+            <div class="mt-2">
+                <div class="carousel-indicators position-relative" style="bottom: auto; margin: 0 auto; width: 50px;">
+                    @foreach($populasiPerTahun as $index => $pop)
+                        <button type="button"
+                                data-bs-target="#populasiCarousel"
+                                data-bs-slide-to="{{ $index }}"
+                                class="{{ $index === 0 ? 'active' : '' }}"
+                                style="background-color: #6c757d; width: 6px; height: 6px; border-radius: 50%; opacity: 0.6;">
+                        </button>
+                    @endforeach
+                </div>
+            </div>
+            @endif --}}
+
+        </div>
+    </div>
+</div>
                 </div>
             </div>
         </div>

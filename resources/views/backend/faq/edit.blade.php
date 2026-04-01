@@ -98,7 +98,7 @@
         <div class="col-lg-8">
             <div class="card card-modern">
                 <div class="card-header card-header-modern">
-                    <h4 class="card-title mb-0">Form Edit FAQ</h4>
+                    <h4 class="card-title mb-0 text-white">Form Edit FAQ</h4>
                 </div>
                 <div class="card-body p-4">
                     <form action="{{ route('backend.faq.update', $faq) }}" method="POST">

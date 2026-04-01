@@ -121,7 +121,7 @@
         <div class="col-12">
             <div class="card card-modern">
                 <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
-                    <h4 class="card-title mb-0">Daftar FAQ</h4>
+                    <h4 class="card-title mb-0 text-white">Daftar FAQ</h4>
                     <a href="{{ route('backend.faq.create') }}" class="btn btn-light btn-add-banner">
                         <i class="mdi mdi-plus me-1"></i> Tambah FAQ Baru
                     </a>
