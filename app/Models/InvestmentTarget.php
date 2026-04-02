@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\ModelLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class InvestmentTarget extends Model
 {
-    use HasFactory;
+    use HasFactory, ModelLog;
 
     protected $table = 'investment_targets';
 
@@ -18,7 +19,6 @@ class InvestmentTarget extends Model
         'target_amount',
     ];
 
-    // Casting agar tipe data sesuai
     protected $casts = [
         'year' => 'integer',
         'quarter' => 'integer',

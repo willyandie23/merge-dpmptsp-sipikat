@@ -7,7 +7,7 @@
             <div class="container-fluid clearfix">
                 <!-- Website Logo -->
                 <div class="logo-header mostion logo-dark">
-                    <a href="{{ route('home.index') }}"><img src="{{ asset('frontend/images/logo.png') }}" alt=""></a>
+                    <a href="{{ route('home.index') }}"><img src="{{ asset('frontend/images/Logo DPMPTSP.png') }}" alt=""></a>
                 </div>
                 <!-- Nav Toggle Button -->
                 <button class="navbar-toggler collapsed navicon justify-content-end" type="button"
@@ -19,7 +19,7 @@
                 </button>
                 <div class="header-nav navbar-collapse collapse justify-content-center" id="navbarNavDropdown">
                     <div class="logo-header logo-dark">
-                        <a href="{{ route('home.index') }}"><img src="{{ asset('frontend/images/logo.png') }}" alt=""></a>
+                        <a href="{{ route('home.index') }}"><img src="{{ asset('frontend/images/Logo DPMPTSP.png') }}" alt=""></a>
                     </div>
                     <ul class="nav navbar-nav navbar navbar-left">
                         <li class="sub-menu {{ request()->routeIs('home.index') ? 'active' : '' }}">

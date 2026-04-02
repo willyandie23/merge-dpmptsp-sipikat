@@ -18,19 +18,19 @@
                                 {{-- <li><a href="javascript:void(0);"><i class="fas fa-globe"></i></a></li> --}}
                                 
                                 {{-- Facebook --}}
-                                <li><a href="https://www.facebook.com/share/1GbJiNx3dh/?mibextid=wwXIfr" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="https://www.facebook.com/dpmptsp.katingankab" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
                                 
                                 {{-- Instagram --}}
-                                <li><a href="https://www.instagram.com/dpmptsp.katingankab?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                                <li><a href="https://www.instagram.com/dpmptsp.katingankab/" target="_blank"><i class="fab fa-instagram"></i></a></li>
                                 
                                 {{-- X (Twitter) --}}
-                                {{-- <li><a href="javascript:void(0);"><i class="fab fa-twitter"></i></a></li> --}}
+                                <li><a href="https://twitter.com/dpmptspkatingan"><i class="fab fa-twitter"></i></a></li>
                                 
                                 {{-- YouTube --}}
                                 <li><a href="https://youtube.com/@dpmptspkatinganbidangp2ip2m?si=dnGVTtoqH5DXFjQg" target="_blank"><i class="fab fa-youtube"></i></a></li>
                                 
                                 {{-- TikTok --}}
-                                {{-- <li><a href="javascript:void(0);"><i class="fab fa-tiktok"></i></a></li> --}}
+                                <li><a href="https://www.tiktok.com/@dpmptsp.katingankab"><i class="fab fa-tiktok"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                         </div>
 
                         {{-- Tombol WhatsApp --}}
-                        <a href="https://wa.me/6281234567890" target="_blank"
+                        <a href="https://wa.me/628115221321" target="_blank"
                             class="btn d-flex align-items-center justify-content-center gap-2 mt-3"
                             style="background-color: #25D366; color: #fff; border-radius: 8px; padding: 10px 16px; text-decoration: none; font-weight: 600;">
                             <i class="fab fa-whatsapp" style="font-size: 1.4rem;"></i>

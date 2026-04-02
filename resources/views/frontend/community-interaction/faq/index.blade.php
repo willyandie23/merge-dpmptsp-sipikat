@@ -13,11 +13,24 @@
             position: relative;
         }
         .faq-banner-slide img {
-            width: 100%;
-            height: 260px;
-            object-fit: cover;
+            width: 100% !important;
+            height: 300px !important;           /* Ukuran ideal ArchCode */
+            object-fit: cover !important;
             display: block;
         }
+
+        /* Responsive Mobile */
+        @media (max-width: 991px) {
+            .faq-banner-slide img {
+                height: 240px !important;
+            }
+        }
+        @media (max-width: 768px) {
+            .faq-banner-slide img {
+                height: 220px !important;
+            }
+        }
+
         .faq-banner-overlay {
             position: absolute;
             inset: 0;
@@ -92,7 +105,6 @@
             background: var(--rgba-primary-1);
             border-radius: 12px;
             padding: 1.75rem 1.5rem;
-            /* height: 100%; */
         }
         .faq-help-title {
             font-weight: 700;
@@ -148,7 +160,6 @@
         }
     </style>
 @endpush
-
 
 @section('content')
 

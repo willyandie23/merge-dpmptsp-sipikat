@@ -42,6 +42,11 @@
     <link rel="stylesheet" href="{{ asset('frontend/vendor/rangeslider/rangeslider.css') }}">
     <link rel="stylesheet" class="skin" href="{{ asset('frontend/css/skin/skin-1.css') }}">
 
+    {{-- <link rel="stylesheet" href="{{ asset('build/materialdesignicons.css') }}"> --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
     <style>
         .page-wraper {
             overflow-y: hidden;

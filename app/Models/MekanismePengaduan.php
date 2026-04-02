@@ -25,4 +25,9 @@ class MekanismePengaduan extends Model
         'position' => 'integer',
         'is_active' => 'boolean',
     ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', 1);
+    }
 }
