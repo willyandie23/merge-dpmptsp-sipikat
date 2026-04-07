@@ -137,7 +137,7 @@
         <div class="col-12">
             <div class="card card-modern">
                 <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
-                    <h4 class="card-title mb-0 text-white">Struktur Organisasi DPM PTSP</h4>
+                    <h4 class="card-title mb-0 text-white">Struktur Organisasi DPMPTSP</h4>
                     <a href="{{ route('backend.struktur-organisasi.create') }}" class="btn btn-light">
                         <i class="mdi mdi-plus me-1"></i> Tambah Data
                     </a>

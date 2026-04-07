@@ -607,7 +607,7 @@
             if (window.donutTargetChart) window.donutTargetChart.destroy();
             if (window.donutPmaChart) window.donutPmaChart.destroy();
 
-            // Bar Chart
+            // ==================== BAR CHART (tetap sama seperti sebelumnya) ====================
             const barEl = document.getElementById('investmentChart');
             if (barEl) {
                 window.investmentBarChart = new ApexCharts(barEl, {
@@ -619,20 +619,33 @@
                     plotOptions: { bar: { horizontal: false, columnWidth: '55%', endingShape: 'rounded' } },
                     dataLabels: { enabled: false },
                     stroke: { show: true, width: 2, colors: ['transparent'] },
-                    xaxis: { categories: @json($chartData['years'] ?? []), title: { text: 'Tahun' } },
-                    yaxis: { title: { text: 'Nilai Investasi (Rp)' } },
-                    tooltip: { y: { formatter: val => "Rp " + (val || 0).toLocaleString('id-ID') } },
+                    xaxis: {
+                        categories: @json($chartData['years'] ?? []),
+                        title: { text: 'Tahun' },
+                        labels: { rotate: -45, trim: true, style: { fontSize: '12px' } }
+                    },
+                    yaxis: {
+                        title: { text: 'Nilai Investasi (Rp)' },
+                        labels: {
+                            formatter: val => "Rp " + (val || 0).toLocaleString('id-ID')
+                        }
+                    },
+                    tooltip: {
+                        y: { formatter: val => "Rp " + (val || 0).toLocaleString('id-ID') }
+                    },
                     colors: ['#556ee6', '#10b981'],
                     legend: { position: 'top', horizontalAlign: 'left' }
                 }).render();
             }
 
-            // Donut Target vs Realisasi
+            // ==================== DONUT TARGET VS REALISASI ====================
             const donutTargetEl = document.getElementById('donutTargetRealized');
             if (donutTargetEl) {
                 let targetVal = parseFloat(@json($donutTargetRealized['target'] ?? 0));
                 let realizedVal = parseFloat(@json($donutTargetRealized['realized'] ?? 0));
+
                 if (targetVal <= 0 && realizedVal <= 0) { targetVal = 100; realizedVal = 0; }
+
                 const sisaTarget = Math.max(0, targetVal - realizedVal);
                 const capaian = targetVal > 0 ? Math.round((realizedVal / targetVal) * 100) : 0;
 
@@ -641,10 +654,17 @@
                     chart: { height: 340, type: 'donut' },
                     labels: ['Realisasi', 'Sisa Target'],
                     colors: ['#556ee6', '#6c757d'],
+                    tooltip: {
+                        y: {
+                            formatter: function(val) {
+                                return "Rp " + (val || 0).toLocaleString('id-ID');
+                            }
+                        }
+                    },
                     plotOptions: {
                         pie: {
                             donut: {
-                                size: '72%',
+                                size: '65%',
                                 labels: {
                                     show: true,
                                     total: {
@@ -661,7 +681,7 @@
                 }).render();
             }
 
-            // Donut PMA vs PMDN
+            // ==================== DONUT PMA vs PMDN ====================
             const donutPmaEl = document.getElementById('donutPmaPmdn');
             if (donutPmaEl) {
                 const pmaPercent = parseFloat(@json($donutPmaPmdn['pma_percent'] ?? 50));
@@ -673,10 +693,17 @@
                     chart: { height: 340, type: 'donut' },
                     labels: ['PMA', 'PMDN'],
                     colors: ['#10b981', '#556ee6'],
+                    tooltip: {
+                        y: {
+                            formatter: function(val) {
+                                return val.toFixed(1) + ' %';
+                            }
+                        }
+                    },
                     plotOptions: {
                         pie: {
                             donut: {
-                                size: '75%',
+                                size: '65%',
                                 labels: {
                                     show: true,
                                     total: {
@@ -689,7 +716,10 @@
                         }
                     },
                     legend: { position: 'bottom' },
-                    dataLabels: { enabled: false }
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function(val) { return val.toFixed(1) + '%'; }
+                    }
                 }).render();
             }
         });

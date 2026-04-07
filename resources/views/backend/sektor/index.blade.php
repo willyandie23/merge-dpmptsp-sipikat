@@ -155,7 +155,7 @@
                     </div>
 
                     <div class="mt-4 d-flex justify-content-center">
-                        {{ $sektors->links() }}
+                        {{ $sektors->links('pagination::bootstrap-5') }}
                     </div>
                 </div>
             </div>
