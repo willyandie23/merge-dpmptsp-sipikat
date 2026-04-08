@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    DPMPTSP - Video
+@endsection
+
 @push('css')
     <style>
         .video-card {

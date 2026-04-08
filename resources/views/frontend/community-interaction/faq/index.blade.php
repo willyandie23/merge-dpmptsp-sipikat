@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    DPMPTSP - FAQ
+@endsection
+
 @push('css')
     <style>
         .faq-banner-slider {

@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    DPMPTSP - Tentang
+@endsection
+
 @push('css')
     <style>
         .field-title-main {
@@ -42,8 +46,6 @@
         }
     </style>
 @endpush
-
-@section('title', 'Tentang DPMTSP Kabupaten Katingan')
 
 @section('content')
     <div class="container mt-4 mb-4">
@@ -134,5 +136,7 @@
 @endsection
 
 @push('scripts')
-    <script></script>
+    <script>
+
+    </script>
 @endpush

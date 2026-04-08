@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    DPMPTSP - Beranda
+@endsection
+
 @push('css')
 	<style>
 		html, body {
@@ -342,6 +346,16 @@
 			height: 100% !important;
 		}
 
+		/* Detail Card Clickable */
+		.detail-card {
+			cursor: pointer;
+			transition: all .3s ease;
+		}
+		.detail-card:hover {
+			transform: translateY(-6px);
+			box-shadow: 0 15px 30px rgba(0,0,0,0.15) !important;
+		}
+
 		/* Responsive */
 		@media (max-width: 991px) {
 			.video-sections .video-inner { height: 240px !important; }
@@ -391,7 +405,7 @@
 		</div>
 
 		<!-- Video Section -->
-		<section class="page-section video-sections">
+		<section class="page-section video-sections mb-3">
 			<div class="container">
 				<div class="row align-items-center">
 					<!-- Title Column -->
@@ -675,7 +689,11 @@
 				<div class="row g-4">
 					@forelse($komoditasUnggulan as $item)
 						<div class="col-lg-6 col-md-6">
-							<a href="#" class="komoditas-card text-decoration-none">
+							<div class="komoditas-card detail-card text-decoration-none"
+								data-title="{{ $item->title }}"
+								data-image="{{ $item->image ? asset('storage/' . $item->image) : '' }}"
+								data-description="{!! addslashes($item->description ?? '') !!}">
+								
 								<div class="komoditas-card-inner">
 									<!-- Left Box (Gray) -->
 									<div class="left-box">
@@ -685,16 +703,16 @@
 											<div style="width:100%; height:160px; background:#ccc; border-radius:8px;"></div>
 										@endif
 									</div>
-									<!-- Right Box (Primary Color) -->
+									<!-- Right Box (Primary) -->
 									<div class="right-box">
 										{{ $item->title }}
 									</div>
 								</div>
-								<!-- Description -->
+								<!-- Description (tetap pendek di card) -->
 								<div class="komoditas-card-body">
 									{!! Str::limit($item->description, 160) !!}
 								</div>
-							</a>
+							</div>
 						</div>
 					@empty
 						<div class="col-12 text-center py-5">
@@ -830,7 +848,11 @@
 				<div class="row g-4">
 					@forelse($peluangInvestasi as $item)
 						<div class="col-lg-4 col-md-6">
-							<a href="#" class="peluang-card text-decoration-none">
+							<div class="peluang-card detail-card text-decoration-none"
+								data-title="{{ $item->title }}"
+								data-image="{{ $item->image ? asset('storage/' . $item->image) : '' }}"
+								data-description="{!! addslashes($item->description ?? '') !!}">
+								
 								<div class="peluang-card-inner d-flex">
 									<!-- Left Box (Gray) -->
 									<div class="left-box">
@@ -845,10 +867,11 @@
 										{{ $item->title }}
 									</div>
 								</div>
+								<!-- Description (tetap pendek di card) -->
 								<div class="peluang-card-body">
 									{!! Str::limit($item->description, 160) !!}
 								</div>
-							</a>
+							</div>
 						</div>
 					@empty
 						<div class="col-12 text-center py-5">
@@ -859,13 +882,34 @@
 
 			</div>
 		</section>
+
+		<!-- Detail Modal - Komoditas Unggulan & Peluang Investasi -->
+		<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+			<div class="modal-dialog modal-xl modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header border-0 pb-0">
+						<h4 class="modal-title fw-bold text-primary" id="modalTitle"></h4>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body px-4 pb-4">
+						<!-- Gambar -->
+						<div id="modalImageContainer" class="mb-4 text-center rounded-3 overflow-hidden"></div>
+						
+						<!-- Deskripsi Lengkap -->
+						<div id="modalDescription" style="line-height: 1.75; font-size: 15.5px; color: #444;"></div>
+					</div>
+					<div class="modal-footer border-0 pt-0">
+						<button type="button" class="btn btn-secondary px-5" data-bs-dismiss="modal">Tutup</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 @endsection
 
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-
             // Main Banner Swiper
             if (typeof Swiper !== 'undefined') {
                 new Swiper('.main-silder-swiper', {
@@ -931,7 +975,7 @@
                 updatePerizinanOverlay(); // initial
             }
 
-            // === CHART.JS (kode lengkap asli kamu) ===
+            // CHART.JS
             if (typeof Chart !== 'undefined') {
 
                 // Bar Chart Realisasi per Tahun
@@ -1010,6 +1054,49 @@
                     window.location.href = '?year=' + this.value;
                 });
             }
+
+			const detailCards = document.querySelectorAll('.detail-card');
+			const modalElement = document.getElementById('detailModal');
+			
+			if (!modalElement) return;
+
+			const bsModal = new bootstrap.Modal(modalElement);
+			const modalTitle = document.getElementById('modalTitle');
+			const modalImageContainer = document.getElementById('modalImageContainer');
+			const modalDescription = document.getElementById('modalDescription');
+
+			detailCards.forEach(card => {
+				card.addEventListener('click', function () {
+					const title = this.getAttribute('data-title');
+					const imageUrl = this.getAttribute('data-image');
+					let description = this.getAttribute('data-description');
+
+					// Isi judul
+					modalTitle.textContent = title;
+
+					// Isi gambar
+					if (imageUrl) {
+						modalImageContainer.innerHTML = `
+							<img src="${imageUrl}" 
+								class="img-fluid w-100 rounded-3 shadow-sm" 
+								style="max-height: 480px; max-width: 480px; object-fit: contain;" 
+								alt="${title}">
+						`;
+					} else {
+						modalImageContainer.innerHTML = `
+							<div class="bg-light p-5 text-center rounded-3">
+								<p class="mb-0 text-muted">Tidak ada gambar tersedia</p>
+							</div>
+						`;
+					}
+
+					// Isi deskripsi lengkap
+					modalDescription.innerHTML = description || '<p class="text-muted">Tidak ada deskripsi tersedia.</p>';
+
+					// Tampilkan modal
+					bsModal.show();
+				});
+			});
         });
     </script>
 @endpush

@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    DPMPTSP - Survey Kepuasan Masyarakat
+@endsection
+
 @push('css')
     <style>
         .survey-card {

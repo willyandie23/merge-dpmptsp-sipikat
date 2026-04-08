@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    DPMPTSP - Pengaduan
+@endsection
+
 @push('css')
     <style>
         .com-banner-slider {

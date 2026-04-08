@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    DPMPTSP - Sekretariat & Bidang
+@endsection
+
 @push('css')
     <style>
         .field-title-main {

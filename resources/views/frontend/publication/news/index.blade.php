@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    DPMPTSP - Berita
+@endsection
+
 @push('css')
     <style>
         /* Title max 2 baris */

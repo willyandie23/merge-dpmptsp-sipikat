@@ -17,12 +17,10 @@
 
     <!-- Mobile Specific -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>@yield('title', 'DPMPTSP')</title>
 
-    <!-- Title -->
-    <title>DPMPTSP</title>
-
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="icon" href="{{ asset('frontend/images/favicon.png') }}" type="image/x-icon">
 
     <!-- Stylesheet -->
     {{-- <link href="vendor/lightgallery/css/lightgallery.min.css" rel="stylesheet"> --}}

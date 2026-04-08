@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    DPMPTSP - Detail Berita
+@endsection
+
 @push('css')
     <style>
         .widget-post .dz-title-hover:hover {

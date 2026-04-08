@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('title')
+    DPMPTSP - Galeri
+@endsection
+
 @push('css')
     <style>
         .gallery-card {
