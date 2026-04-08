@@ -157,7 +157,7 @@
                     </div>
 
                     <div class="mt-4 d-flex justify-content-center">
-                        {{ $peluangs->links() }}
+                        {{ $peluangs->links('pagination::bootstrap-5') }}
                     </div>
                 </div>
             </div>
