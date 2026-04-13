@@ -123,6 +123,18 @@
                     </a>
                 </li>
 
+                <li>
+    <a href="{{ route('logout') }}" class="waves-effect text-danger"
+       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        <i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i>
+        <span>Logout</span>
+    </a>
+</li>
+
+<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+    @csrf
+</form>
+
                 {{-- ==================== MENU KHUSUS SUPER ADMIN ==================== --}}
                 @if (auth()->user()->hasRole('superadmin'))
                     <li class="menu-title">Super Admin</li>

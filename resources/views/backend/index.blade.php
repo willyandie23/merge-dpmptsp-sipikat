@@ -599,131 +599,96 @@
 @endsection
 
 @push('script')
-    <script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script>
+    <!-- Load ApexCharts dari CDN (lebih stabil untuk kasus ini) -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            if (window.investmentBarChart) window.investmentBarChart.destroy();
-            if (window.donutTargetChart) window.donutTargetChart.destroy();
-            if (window.donutPmaChart) window.donutPmaChart.destroy();
+        if (!window.chartsRendered) {
+            window.chartsRendered = true;
 
-            // ==================== BAR CHART (tetap sama seperti sebelumnya) ====================
-            const barEl = document.getElementById('investmentChart');
-            if (barEl) {
-                window.investmentBarChart = new ApexCharts(barEl, {
-                    series: [
-                        { name: 'Target', data: @json($chartData['target'] ?? []) },
-                        { name: 'Realisasi', data: @json($chartData['realized'] ?? []) }
-                    ],
-                    chart: { height: 400, type: 'bar', toolbar: { show: true } },
-                    plotOptions: { bar: { horizontal: false, columnWidth: '55%', endingShape: 'rounded' } },
-                    dataLabels: { enabled: false },
-                    stroke: { show: true, width: 2, colors: ['transparent'] },
-                    xaxis: {
-                        categories: @json($chartData['years'] ?? []),
-                        title: { text: 'Tahun' },
-                        labels: { rotate: -45, trim: true, style: { fontSize: '12px' } }
-                    },
-                    yaxis: {
-                        title: { text: 'Nilai Investasi (Rp)' },
-                        labels: {
-                            formatter: val => "Rp " + (val || 0).toLocaleString('id-ID')
-                        }
-                    },
-                    tooltip: {
-                        y: { formatter: val => "Rp " + (val || 0).toLocaleString('id-ID') }
-                    },
-                    colors: ['#556ee6', '#10b981'],
-                    legend: { position: 'top', horizontalAlign: 'left' }
-                }).render();
-            }
+            window.addEventListener('load', function() {
 
-            // ==================== DONUT TARGET VS REALISASI ====================
-            const donutTargetEl = document.getElementById('donutTargetRealized');
-            if (donutTargetEl) {
-                let targetVal = parseFloat(@json($donutTargetRealized['target'] ?? 0));
-                let realizedVal = parseFloat(@json($donutTargetRealized['realized'] ?? 0));
+                setTimeout(() => {
 
-                if (targetVal <= 0 && realizedVal <= 0) { targetVal = 100; realizedVal = 0; }
-
-                const sisaTarget = Math.max(0, targetVal - realizedVal);
-                const capaian = targetVal > 0 ? Math.round((realizedVal / targetVal) * 100) : 0;
-
-                window.donutTargetChart = new ApexCharts(donutTargetEl, {
-                    series: [realizedVal, sisaTarget],
-                    chart: { height: 340, type: 'donut' },
-                    labels: ['Realisasi', 'Sisa Target'],
-                    colors: ['#556ee6', '#6c757d'],
-                    tooltip: {
-                        y: {
-                            formatter: function(val) {
-                                return "Rp " + (val || 0).toLocaleString('id-ID');
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: '65%',
-                                labels: {
-                                    show: true,
-                                    total: {
-                                        show: true,
-                                        label: 'Capaian',
-                                        formatter: function() { return capaian + '%'; }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    legend: { position: 'bottom' },
-                    dataLabels: { enabled: false }
-                }).render();
-            }
-
-            // ==================== DONUT PMA vs PMDN ====================
-            const donutPmaEl = document.getElementById('donutPmaPmdn');
-            if (donutPmaEl) {
-                const pmaPercent = parseFloat(@json($donutPmaPmdn['pma_percent'] ?? 50));
-                const pmdnPercent = parseFloat(@json($donutPmaPmdn['pmdn_percent'] ?? 50));
-                const totalPercent = (pmaPercent + pmdnPercent).toFixed(1);
-
-                window.donutPmaChart = new ApexCharts(donutPmaEl, {
-                    series: [pmaPercent, pmdnPercent],
-                    chart: { height: 340, type: 'donut' },
-                    labels: ['PMA', 'PMDN'],
-                    colors: ['#10b981', '#556ee6'],
-                    tooltip: {
-                        y: {
-                            formatter: function(val) {
-                                return val.toFixed(1) + ' %';
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: '65%',
-                                labels: {
-                                    show: true,
-                                    total: {
-                                        show: true,
-                                        label: 'Total',
-                                        formatter: function() { return totalPercent + '%'; }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    legend: { position: 'bottom' },
-                    dataLabels: {
-                        enabled: true,
-                        formatter: function(val) { return val.toFixed(1) + '%'; }
+                    // BAR CHART
+                    const barEl = document.getElementById('investmentChart');
+                    if (barEl) {
+                        if (window.investmentBarChart) try { window.investmentBarChart.destroy(); } catch(e) {}
+                        try {
+                            window.investmentBarChart = new ApexCharts(barEl, {
+                                series: [
+                                    { name: 'Target', data: @json($chartData['target'] ?? []) },
+                                    { name: 'Realisasi', data: @json($chartData['realized'] ?? []) }
+                                ],
+                                chart: { height: 400, type: 'bar', toolbar: { show: true } },
+                                plotOptions: { bar: { horizontal: false, columnWidth: '55%', endingShape: 'rounded' } },
+                                dataLabels: { enabled: false },
+                                stroke: { show: true, width: 2, colors: ['transparent'] },
+                                xaxis: { categories: @json($chartData['years'] ?? []), title: { text: 'Tahun' }, labels: { rotate: -45 } },
+                                yaxis: { title: { text: 'Nilai Investasi (Rp)' }, labels: { formatter: val => "Rp " + (val || 0).toLocaleString('id-ID') } },
+                                tooltip: { y: { formatter: val => "Rp " + (val || 0).toLocaleString('id-ID') } },
+                                colors: ['#556ee6', '#10b981'],
+                                legend: { position: 'top', horizontalAlign: 'left' }
+                            });
+                            window.investmentBarChart.render();
+                        } catch (e) { console.error('Bar Chart Error:', e); }
                     }
-                }).render();
-            }
-        });
-    </script>
 
-    <script src="{{ URL::asset('build/js/app.js') }}"></script>
+                    // DONUT 1: Target vs Realisasi
+                    setTimeout(() => {
+                        const donutTargetEl = document.getElementById('donutTargetRealized');
+                        if (donutTargetEl) {
+                            if (window.donutTargetChart) try { window.donutTargetChart.destroy(); } catch(e) {}
+                            try {
+                                let targetVal = parseFloat(@json($donutTargetRealized['target'] ?? 0));
+                                let realizedVal = parseFloat(@json($donutTargetRealized['realized'] ?? 0));
+                                if (targetVal <= 0 && realizedVal <= 0) { targetVal = 100; realizedVal = 0; }
+                                const sisaTarget = Math.max(0, targetVal - realizedVal);
+                                const capaian = targetVal > 0 ? Math.round((realizedVal / targetVal) * 100) : 0;
+
+                                window.donutTargetChart = new ApexCharts(donutTargetEl, {
+                                    series: [realizedVal, sisaTarget],
+                                    chart: { height: 340, type: 'donut' },
+                                    labels: ['Realisasi', 'Sisa Target'],
+                                    colors: ['#556ee6', '#6c757d'],
+                                    tooltip: { y: { formatter: val => "Rp " + (val || 0).toLocaleString('id-ID') } },
+                                    plotOptions: { pie: { donut: { size: '65%', labels: { show: true, total: { show: true, label: 'Capaian', formatter: () => capaian + '%' } } } } },
+                                    legend: { position: 'bottom' },
+                                    dataLabels: { enabled: false }
+                                });
+                                window.donutTargetChart.render();
+                            } catch (e) { console.error('Donut Target Error:', e); }
+                        }
+                    }, 400);
+
+                    // DONUT 2: PMA vs PMDN
+                    setTimeout(() => {
+                        const donutPmaEl = document.getElementById('donutPmaPmdn');
+                        if (donutPmaEl) {
+                            if (window.donutPmaChart) try { window.donutPmaChart.destroy(); } catch(e) {}
+                            try {
+                                const pmaPercent = parseFloat(@json($donutPmaPmdn['pma_percent'] ?? 50));
+                                const pmdnPercent = parseFloat(@json($donutPmaPmdn['pmdn_percent'] ?? 50));
+                                const totalPercent = (pmaPercent + pmdnPercent).toFixed(1);
+
+                                window.donutPmaChart = new ApexCharts(donutPmaEl, {
+                                    series: [pmaPercent, pmdnPercent],
+                                    chart: { height: 340, type: 'donut' },
+                                    labels: ['PMA', 'PMDN'],
+                                    colors: ['#10b981', '#556ee6'],
+                                    tooltip: { y: { formatter: val => val.toFixed(1) + ' %' } },
+                                    plotOptions: { pie: { donut: { size: '65%', labels: { show: true, total: { show: true, label: 'Total', formatter: () => totalPercent + '%' } } } } },
+                                    legend: { position: 'bottom' },
+                                    dataLabels: { enabled: true, formatter: val => val.toFixed(1) + '%' }
+                                });
+                                window.donutPmaChart.render();
+                            } catch (e) { console.error('Donut PMA/PMDN Error:', e); }
+                        }
+                    }, 900);
+
+                }, 800);
+
+            });
+        }
+    </script>
 @endpush

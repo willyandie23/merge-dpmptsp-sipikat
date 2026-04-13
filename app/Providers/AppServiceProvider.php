@@ -6,6 +6,7 @@ use App\Models\Visitor;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,9 +27,12 @@ class AppServiceProvider extends ServiceProvider
     {
         Carbon::setLocale('id');
 
-        // Log::info('AppServiceProvider boot() DIJALANKAN');
+        // === PENTING: Force HTTPS di Production ===
+        if (app()->environment('production') || request()->isSecure()) {
+            URL::forceScheme('https');
+        }
 
-        // GLOBAL SHARE
+        // GLOBAL SHARE - Visitor
         View::share('daily', Cache::remember('visitor_daily', 300, function () {
             $today = now()->setTimezone('Asia/Jakarta')->format('Y-m-d');
             $count = Visitor::whereDate('visited_at', $today)

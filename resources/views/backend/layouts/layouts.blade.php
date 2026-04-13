@@ -7,8 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesdesign" name="author" />
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ URL::asset('build/images/favicon.ico') }}">
+   <<!-- Favicon - Force Refresh Version -->
+<link rel="icon" href="{{ asset('build/images/favicon.ico') }}?v={{ now()->timestamp }}" type="image/x-icon">
+<link rel="shortcut icon" href="{{ asset('build/images/favicon.ico') }}?v={{ now()->timestamp }}" type="image/x-icon">
+
+<link rel="icon" href="/build/images/favicon.ico?v={{ now()->timestamp }}" type="image/x-icon">
+<link rel="shortcut icon" href="/build/images/favicon.ico?v={{ now()->timestamp }}" type="image/x-icon">
+
+<link rel="icon" href="/favicon.ico?v={{ now()->timestamp }}" type="image/x-icon">
+<link rel="shortcut icon" href="/favicon.ico?v={{ now()->timestamp }}" type="image/x-icon">
 
     @include('layouts.head-css')
 </head>

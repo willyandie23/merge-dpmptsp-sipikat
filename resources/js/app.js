@@ -1,22 +1,34 @@
-/*
-Template Name: Qovex - Admin & Dashboard Template
-Author: Themesbrand
-Version: 2.1.0
-Website: https://themesbrand.com/
-Contact: themesbrand@gmail.com
-File: Main Js File
-*/
+/**
+ * resources/js/app.js
+ * Main JavaScript untuk Backend Template DPMPTSP Katingan
+ */
 
+import $ from 'jquery';
+import * as bootstrap from 'bootstrap';
+import ApexCharts from 'apexcharts';
+import 'metismenu';
 
+// Expose ke global scope (penting agar template lama bisa jalan)
+window.$ = window.jQuery = $;
+window.bootstrap = bootstrap;
+window.ApexCharts = ApexCharts;
+
+// Import MetisMenu (jika kamu sudah install via npm)
+// npm install metismenu --save-dev
+// import 'metismenu';
+
+// =============================================
+// Kode Template Asli kamu (Qovex Style)
+// =============================================
 (function ($) {
-
     'use strict';
 
+    // Metis Menu
     function initMetisMenu() {
-        //metis menu
         $("#side-menu").metisMenu();
     }
 
+    // Left Menu Collapse
     function initLeftMenuCollapse() {
         $('#vertical-menu-btn').on('click', function (event) {
             event.preventDefault();
@@ -29,17 +41,17 @@ File: Main Js File
         });
     }
 
+    // Active Menu
     function initActiveMenu() {
-        // === following js will activate the menu in left side bar based on url ====
         $("#sidebar-menu a").each(function () {
             var pageUrl = window.location.href.split(/[?#]/)[0];
             if (this.href == pageUrl) {
                 $(this).addClass("active");
-                $(this).parent().addClass("mm-active"); // add active to li of the current link
+                $(this).parent().addClass("mm-active");
                 $(this).parent().parent().addClass("mm-show");
-                $(this).parent().parent().prev().addClass("mm-active"); // add active class to an anchor
+                $(this).parent().parent().prev().addClass("mm-active");
                 $(this).parent().parent().parent().addClass("mm-active");
-                $(this).parent().parent().parent().parent().addClass("mm-show"); // add active to li of the current link
+                $(this).parent().parent().parent().parent().addClass("mm-show");
                 $(this).parent().parent().parent().parent().parent().addClass("mm-active");
             }
         });
@@ -60,11 +72,12 @@ File: Main Js File
         });
     }
 
+    // Fullscreen
     function initFullScreen() {
         $('[data-toggle="fullscreen"]').on("click", function (e) {
             e.preventDefault();
             $('body').toggleClass('fullscreen-enable');
-            if (!document.fullscreenElement && /* alternative standard method */ !document.mozFullScreenElement && !document.webkitFullscreenElement) {  // current working methods
+            if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullScreenElement) {
                 if (document.documentElement.requestFullscreen) {
                     document.documentElement.requestFullscreen();
                 } else if (document.documentElement.mozRequestFullScreen) {
@@ -82,19 +95,10 @@ File: Main Js File
                 }
             }
         });
-        document.addEventListener('fullscreenchange', exitHandler);
-        document.addEventListener("webkitfullscreenchange", exitHandler);
-        document.addEventListener("mozfullscreenchange", exitHandler);
-        function exitHandler() {
-            if (!document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
-                console.log('pressed');
-                $('body').removeClass('fullscreen-enable');
-            }
-        }
     }
 
+    // Right Sidebar
     function initRightSidebar() {
-        // right side-bar toggle
         $('.right-bar-toggle').on('click', function (e) {
             $('body').toggleClass('right-bar-enabled');
         });
@@ -103,12 +107,11 @@ File: Main Js File
             if ($(e.target).closest('.right-bar-toggle, .right-bar').length > 0) {
                 return;
             }
-
             $('body').removeClass('right-bar-enabled');
-            return;
         });
     }
 
+    // Dropdown Menu
     function initDropdownMenu() {
         if (document.getElementById("topnav-menu-content")) {
             var elements = document.getElementById("topnav-menu-content").getElementsByTagName("a");
@@ -134,19 +137,20 @@ File: Main Js File
         }
     }
 
+    // Bootstrap Components (Tooltip & Popover)
     function initComponents() {
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
+            return new bootstrap.Tooltip(tooltipTriggerEl);
         });
 
-        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
         var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-            return new bootstrap.Popover(popoverTriggerEl)
+            return new bootstrap.Popover(popoverTriggerEl);
         });
     }
 
-
+    // Preloader
     function initPreloader() {
         $(window).on('load', function () {
             $('#status').fadeOut();
@@ -154,6 +158,7 @@ File: Main Js File
         });
     }
 
+    // Theme Settings (Light/Dark/Rtl)
     function initSettings() {
         if (window.sessionStorage) {
             var alreadyVisited = sessionStorage.getItem("is_visited");
@@ -165,6 +170,7 @@ File: Main Js File
                 updateThemeSetting(alreadyVisited);
             }
         }
+
         $("#light-mode-switch, #dark-mode-switch, #rtl-mode-switch").on("change", function (e) {
             updateThemeSetting(e.target.id);
         });
@@ -175,32 +181,24 @@ File: Main Js File
             $("#dark-mode-switch").prop("checked", false);
             document.body.setAttribute('data-bs-theme', 'light');
             sessionStorage.setItem("is_visited", "light-mode-switch");
-        } else if ($("#dark-mode-switch").prop("checked") == true && id === "dark-mode-switch") {
-            if ($("#rtl-mode-switch").prop("checked") == true) {
-                $("html").attr("dir", 'rtl');
-            } else {
-                $("html").removeAttr("dir");
-            }
+        } 
+        else if ($("#dark-mode-switch").prop("checked") == true && id === "dark-mode-switch") {
             $("#light-mode-switch").prop("checked", false);
             document.body.setAttribute('data-bs-theme', 'dark');
             sessionStorage.setItem("is_visited", "dark-mode-switch");
-        } else if ($("#rtl-mode-switch").prop("checked") == true && id === "rtl-mode-switch") {
+        } 
+        else if ($("#rtl-mode-switch").prop("checked") == true && id === "rtl-mode-switch") {
             $("html").attr("dir", 'rtl');
             $("#light-mode-switch").prop("checked", false);
             $("#dark-mode-switch").prop("checked", false);
-            $("#bootstrap-style").attr('href', 'build/css/bootstrap.min.rtl.css');
-            $("#app-style").attr('href', 'build/css/app.min.rtl.css');
-            $("html").attr("dir", 'rtl');
             sessionStorage.setItem("is_visited", "rtl-mode-switch");
-        } else if ($("#rtl-mode-switch").prop("checked") == false && id === "rtl-mode-switch") {
+        } 
+        else if ($("#rtl-mode-switch").prop("checked") == false && id === "rtl-mode-switch") {
             $("html").removeAttr("dir");
-            $("#bootstrap-style").attr('href', 'build/css/bootstrap.min.css');
-            $("#app-style").attr('href', 'build/css/app.min.css');
         }
-
-
     }
 
+    // Main Init
     function init() {
         initMetisMenu();
         initLeftMenuCollapse();
@@ -212,10 +210,11 @@ File: Main Js File
         initComponents();
         initSettings();
         initPreloader();
-        Waves.init();
+
+        // Waves.init();   // Uncomment jika kamu sudah install waves via npm
     }
 
+    // Jalankan semua fungsi
     init();
 
-})(jQuery)
-
+})(jQuery);

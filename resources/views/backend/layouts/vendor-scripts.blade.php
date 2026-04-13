@@ -1,9 +1,21 @@
-<!-- JAVASCRIPT -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-<script src="{{ URL::asset('build/libs/jquery/jquery.min.js') }}"></script>
-<script src="{{ URL::asset('build/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ URL::asset('build/libs/metismenu/metisMenu.min.js') }}"></script>
-<script src="{{ URL::asset('build/libs/simplebar/simplebar.min.js') }}"></script>
-<script src="{{ URL::asset('build/libs/node-waves/waves.min.js') }}"></script>
-<script src="{{ URL::asset('build/libs/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
+<!-- JS Utama dari Vite -->
+@vite(['resources/js/app.js'])
+
+<!-- Fallback app2.js (karena Vite selalu menghasilkan app2.js) -->
+<script src="{{ URL::asset('build/js/app2.js') }}"></script>
+<!-- Global Bootstrap 5 Initialization -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inisialisasi semua dropdown
+        const dropdowns = document.querySelectorAll('[data-bs-toggle="dropdown"]');
+        dropdowns.forEach(function(dropdown) {
+            new bootstrap.Dropdown(dropdown, {
+                popperConfig: {
+                    strategy: 'fixed'   // biar dropdown tidak kepotong
+                }
+            });
+        });
+    });
+</script>
+
 @stack('script')

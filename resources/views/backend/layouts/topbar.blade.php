@@ -20,9 +20,9 @@
                         <span class="d-none d-xl-inline-block ms-1">
                             {{ auth()->user()->name }}
                         </span>
-                        <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                        {{-- <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i> --}}
                     </button>
-                    <div class="dropdown-menu dropdown-menu-end">
+                    {{-- <div class="dropdown-menu dropdown-menu-end">
                         <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                             onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                             <i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i>
@@ -31,7 +31,7 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
-                    </div>
+                    </div> --}}
                 </div>
 
             </div>
