@@ -4,13 +4,8 @@
 
 @push('css')
 <style>
-    .main-content {
-        padding-top: 100px !important;
-    }
-
-    .page-content {
-        margin-top: -4rem !important;
-    }
+    .main-content { padding-top: 100px !important; }
+    .page-content { margin-top: -4rem !important; }
 
     .page-title-box {
         background: linear-gradient(135deg, #556ee6 0%, #364574 100%) !important;
@@ -28,15 +23,11 @@
     .table th {
         background: #f8f9fa;
         font-weight: 600;
+        vertical-align: middle;
     }
 
-    .badge-pma {
-        background-color: #556ee6 !important;
-    }
-
-    .badge-pmdn {
-        background-color: #10b981 !important;
-    }
+    .badge-pma  { background-color: #556ee6 !important; }
+    .badge-pmdn { background-color: #10b981 !important; }
 
     .section-header {
         border-bottom: 3px solid #556ee6;
@@ -47,12 +38,10 @@
     .total-row {
         background-color: #e9ecef !important;
         font-weight: 700;
-        font-size: 1.05rem;
+        font-size: 1.1rem;
     }
 
-    .total-row td {
-        color: #2c3e50;
-    }
+    .year-group { background-color: #f8f9fa; }
 </style>
 @endpush
 
@@ -77,41 +66,20 @@
     <div class="col-12">
         <div class="card card-modern">
             <div class="card-body p-4">
-                <!-- Notifikasi -->
-                @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                @endif
 
-                @if (session('warning'))
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    {{ session('warning') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                @endif
-
-                @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                @endif
+                @if (session('success')) <div class="alert alert-success">{{ session('success') }}</div> @endif
+                @if (session('warning')) <div class="alert alert-warning">{{ session('warning') }}</div> @endif
+                @if (session('error'))   <div class="alert alert-danger">{{ session('error') }}</div> @endif
 
                 <div class="d-flex justify-content-between align-items-center mb-4 section-header">
-                    <h5 class="mb-0">Data Realisasi Investasi PMA & PMDN</h5>
+                    <h5 class="mb-0">Data Realisasi Investasi PMA & PMDN Tahun {{ $selectedYear }}</h5>
 
-                    <div class="d-flex gap-3 align-items-center">
-                        <!-- Dropdown Filter Tahun -->
-                        <form method="GET" action="{{ route('backend.investment.index') }}"
-                            class="d-flex align-items-center gap-2">
+                    <div class="d-flex gap-3">
+                        <form method="GET" action="{{ route('backend.investment.index') }}" class="d-flex align-items-center gap-2">
                             <label class="form-label mb-0 text-muted">Tahun:</label>
                             <select name="year" class="form-select w-auto" onchange="this.form.submit()">
                                 @foreach($years as $y)
-                                <option value="{{ $y }}" {{ $selectedYear==$y ? 'selected' : '' }}>
-                                    {{ $y }}
-                                </option>
+                                    <option value="{{ $y }}" {{ $selectedYear == $y ? 'selected' : '' }}>{{ $y }}</option>
                                 @endforeach
                             </select>
                         </form>
@@ -124,82 +92,93 @@
 
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover align-middle" id="investmentTable">
-                        <thead>
+                        <thead class="table-light">
                             <tr>
                                 <th>Tahun</th>
                                 <th>Triwulan</th>
                                 <th>Jenis</th>
-                                <th class="text-end">Target (Rp)</th>
+                                <th class="text-end">Target Tahunan (Rp)</th>
                                 <th class="text-end">Realisasi (Rp)</th>
                                 <th class="text-end">% Capaian</th>
                                 <th class="text-end">Tenaga Kerja</th>
-                                <th width="140px">Aksi</th>
+                                <th width="140">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @php $prevYear = null; @endphp
-                            @forelse($data as $index => $item)
-                            @php
-                            $isFirstRowOfYear = ($item->year != $prevYear);
-                            $prevYear = $item->year;
-
-                            $target = $item->target?->target_amount ?? 0;
-                            $persentase = $target > 0 ? round(($item->realized_amount / $target) * 100, 2) : 0;
+                            @php 
+                                $prevYear = null; 
+                                $currentTarget = 0;
                             @endphp
 
-                            <tr>
-                                <td><strong>{{ $item->year }}</strong></td>
-                                <td>Triwulan {{ $item->quarter }}</td>
-                                <td>
-                                    <span
-                                        class="badge {{ $item->type == 'PMA' ? 'badge-pma' : 'badge-pmdn' }} text-white">
-                                        {{ $item->type }}
-                                    </span>
-                                </td>
-                                <td class="text-end target-col">Rp {{ number_format($target, 0, ',', '.') }}</td>
-                                <td class="text-end realization-col fw-bold">Rp {{ number_format($item->realized_amount,
-                                    0, ',', '.') }}</td>
-                                <td class="text-end">
-                                    <span
-                                        class="badge bg-{{ $persentase >= 100 ? 'success' : ($persentase >= 80 ? 'warning' : 'danger') }}">
-                                        {{ $persentase }}%
-                                    </span>
-                                </td>
-                                <td class="text-end labor-col">{{ number_format($item->labor_absorbed, 0, ',', '.') }}
-                                    orang</td>
+                            @forelse($realizations as $item)
+                                @php
+                                    $isFirstRowOfYear = ($item->year != $prevYear);
+                                    if ($isFirstRowOfYear) {
+                                        $currentTarget = $target?->target_amount ?? 0;
+                                    }
+                                    $prevYear = $item->year;
 
-                                <td>
-                                    @if($isFirstRowOfYear)
-                                    <a href="{{ route('backend.investment.edit', $item->year) }}"
-                                        class="btn btn-sm btn-warning mb-1">
-                                        <i class="mdi mdi-pencil"></i> Edit
-                                    </a>
-                                    <button type="button" class="btn btn-sm btn-danger delete-investment"
-                                        data-year="{{ $item->year }}">
-                                        <i class="mdi mdi-delete"></i> Hapus
-                                    </button>
-                                    @else
-                                    <span class="text-muted small">—</span>
-                                    @endif
-                                </td>
-                            </tr>
+                                    // Hitung persentase per baris (BENAR)
+                                    $persentase = $currentTarget > 0 
+                                        ? round(($item->realized_amount / $currentTarget) * 100, 4) 
+                                        : 0;
+                                @endphp
+
+                                <tr class="{{ $isFirstRowOfYear ? 'year-group' : '' }}">
+                                    <td>@if($isFirstRowOfYear)<strong>{{ $item->year }}</strong>@else<span class="text-muted">—</span>@endif</td>
+                                    <td>Triwulan {{ $item->quarter }}</td>
+                                    <td>
+                                        <span class="badge {{ $item->type == 'PMA' ? 'badge-pma' : 'badge-pmdn' }} text-white">
+                                            {{ $item->type }}
+                                        </span>
+                                    </td>
+                                    <td class="text-end">
+                                        @if($isFirstRowOfYear)
+                                            Rp {{ number_format($currentTarget, 0, ',', '.') }}
+                                        @else
+                                            <span class="text-muted">—</span>
+                                        @endif
+                                    </td>
+                                    <td class="text-end realization-col fw-bold">
+                                        Rp {{ number_format($item->realized_amount, 0, ',', '.') }}
+                                    </td>
+                                    <td class="text-end">
+                                        <span class="badge bg-{{ $persentase >= 100 ? 'success' : ($persentase >= 80 ? 'warning' : 'danger') }}">
+                                            {{ $persentase }}%
+                                        </span>
+                                    </td>
+                                    <td class="text-end labor-col">
+                                        {{ number_format($item->labor_absorbed, 0, ',', '.') }} orang
+                                    </td>
+                                    <td>
+                                        @if($isFirstRowOfYear)
+                                            <a href="{{ route('backend.investment.edit', $item->year) }}" class="btn btn-sm btn-warning">
+                                                <i class="mdi mdi-pencil"></i> Edit
+                                            </a>
+                                            <button type="button" class="btn btn-sm btn-danger delete-investment" data-year="{{ $item->year }}">
+                                                <i class="mdi mdi-delete"></i> Hapus
+                                            </button>
+                                        @else
+                                            <span class="text-muted small">—</span>
+                                        @endif
+                                    </td>
+                                </tr>
                             @empty
-                            <tr>
-                                <td colspan="8" class="text-center py-5 text-muted">
-                                    Belum ada data untuk tahun ini.<br>
-                                    <a href="{{ route('backend.investment.create') }}"
-                                        class="btn btn-primary mt-2">Tambah Data Tahun Baru</a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td colspan="8" class="text-center py-5 text-muted">Belum ada data untuk tahun ini.</td>
+                                </tr>
                             @endempty
                         </tbody>
-                        <!-- BARIS TOTAL -->
+
+                        <!-- TOTAL ROW -->
                         <tfoot>
                             <tr class="total-row">
-                                <td colspan="3" class="text-end fw-bold">TOTAL</td>
-                                <td class="text-end fw-bold" id="totalTarget">Rp 0</td>
+                                <td colspan="3" class="text-end fw-bold">Total Tahun {{ $selectedYear }}</td>
+                                <td class="text-end fw-bold">
+                                    Rp {{ number_format($target?->target_amount ?? 0, 0, ',', '.') }}
+                                </td>
                                 <td class="text-end fw-bold" id="totalRealization">Rp 0</td>
-                                <td class="text-end fw-bold" id="totalPercentage">—</td>
+                                <td class="text-end fw-bold" id="totalPercentage">— %</td>
                                 <td class="text-end fw-bold" id="totalLabor">0 orang</td>
                                 <td></td>
                             </tr>
@@ -214,15 +193,14 @@
 
 @push('script')
 <script>
-    // Delete confirm dengan SweetAlert2
     document.querySelectorAll('.delete-investment').forEach(button => {
         button.addEventListener('click', function (e) {
             e.preventDefault();
             const year = this.getAttribute('data-year');
 
             Swal.fire({
-                title: 'Hapus SEMUA data tahun ' + year + '?',
-                text: "Data ini tidak bisa dikembalikan!",
+                title: 'Hapus Semua data tahun ' + year + '?',
+                text: "Data target dan seluruh realisasi triwulan akan dihapus permanen!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -231,10 +209,23 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    // Buat form delete secara dinamis
                     const form = document.createElement('form');
                     form.method = 'POST';
-                    form.action = '{{ route("backend.investment.destroy", ":year") }}'.replace(':year', year);
-                    form.innerHTML = `@csrf @method('DELETE')`;
+                    form.action = `{{ route('backend.investment.destroy', ':year') }}`.replace(':year', year);
+                    
+                    const csrf = document.createElement('input');
+                    csrf.type = 'hidden';
+                    csrf.name = '_token';
+                    csrf.value = '{{ csrf_token() }}';
+                    
+                    const method = document.createElement('input');
+                    method.type = 'hidden';
+                    method.name = '_method';
+                    method.value = 'DELETE';
+
+                    form.appendChild(csrf);
+                    form.appendChild(method);
                     document.body.appendChild(form);
                     form.submit();
                 }
@@ -242,74 +233,39 @@
         });
     });
 
-    // === HITUNG TOTAL OTOMATIS ===
     function calculateTableTotals() {
-        let sumTarget = 0;
         let sumRealization = 0;
         let sumLabor = 0;
-        let totalPersentase = 0;
-        let countValidPersentase = 0;
 
-        document.querySelectorAll('tbody tr').forEach(row => {
-            // Target
-            const targetText = row.querySelector('.target-col');
-            if (targetText) {
-                const targetVal = parseInt(targetText.textContent.replace(/[^0-9]/g, '')) || 0;
-                sumTarget += targetVal;
-            }
-
-            // Realisasi
-            const realizationText = row.querySelector('.realization-col');
-            if (realizationText) {
-                const realizationVal = parseInt(realizationText.textContent.replace(/[^0-9]/g, '')) || 0;
-                sumRealization += realizationVal;
-            }
-
-            // Tenaga Kerja
-            const laborText = row.querySelector('.labor-col');
-            if (laborText) {
-                const laborVal = parseInt(laborText.textContent.replace(/[^0-9]/g, '')) || 0;
-                sumLabor += laborVal;
-            }
-
-            // Hitung persentase (untuk rata-rata)
-            const persenBadge = row.querySelector('.badge.bg-success, .badge.bg-warning, .badge.bg-danger');
-            if (persenBadge) {
-                const persen = parseFloat(persenBadge.textContent) || 0;
-                if (persen > 0) {
-                    totalPersentase += persen;
-                    countValidPersentase++;
-                }
-            }
+        document.querySelectorAll('.realization-col').forEach(el => {
+            const val = parseInt(el.textContent.replace(/[^0-9]/g, '')) || 0;
+            sumRealization += val;
         });
 
-        const avgPersentase = countValidPersentase > 0
-            ? Math.round(totalPersentase / countValidPersentase)
+        document.querySelectorAll('.labor-col').forEach(el => {
+            const val = parseInt(el.textContent.replace(/[^0-9]/g, '')) || 0;
+            sumLabor += val;
+        });
+
+        const targetAmount = {{ $target?->target_amount ?? 0 }};
+        const totalPercentage = targetAmount > 0 
+            ? round((sumRealization / targetAmount) * 100, 2) 
             : 0;
 
-        // Update tampilan total
-        document.getElementById('totalTarget').textContent = 'Rp ' + sumTarget.toLocaleString('id-ID');
         document.getElementById('totalRealization').textContent = 'Rp ' + sumRealization.toLocaleString('id-ID');
         document.getElementById('totalLabor').textContent = sumLabor.toLocaleString('id-ID') + ' orang';
-        document.getElementById('totalPercentage').textContent = avgPersentase + '%';
+        document.getElementById('totalPercentage').textContent = totalPercentage + '%';
     }
 
-    // Jalankan saat halaman selesai load
+    function round(num, decimals) {
+        return Math.round(num * Math.pow(10, decimals)) / Math.pow(10, decimals);
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         calculateTableTotals();
 
-        // Toast success
         @if (session('success'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: '{{ session('success') }}',
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true
-            });
+            Swal.fire({ icon: 'success', title: 'Berhasil!', text: '{{ session('success') }}', toast: true, position: 'top-end', timer: 3000 });
         @endif
     });
 </script>

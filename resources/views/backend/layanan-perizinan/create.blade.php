@@ -87,84 +87,91 @@
                     <h4 class="card-title mb-0 text-white">Form Tambah Layanan Perizinan</h4>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ route('backend.layanan-perizinan.store') }}" method="POST">
-                        @csrf
 
-                        <div class="mb-4">
-                            <label class="form-label">Nama Layanan <span class="text-danger">*</span></label>
-                            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                                value="{{ old('title') }}" required>
-                            @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    @if($currentCount >= 3)
+                        <div class="alert alert-danger">
+                            <strong>Maksimal 3 Layanan Perizinan Usaha!</strong><br>
+                            Anda sudah mencapai batas maksimal. Silakan hapus salah satu terlebih dahulu jika ingin menambahkan yang baru.
                         </div>
+                    @else
+                        <form action="{{ route('backend.layanan-perizinan.store') }}" method="POST">
+                            @csrf
 
-                        <div class="mb-4">
-                            <label class="form-label">Icon (Material Design Icon) <span class="text-danger">*</span></label>
-                            <input type="text" id="icon-input" name="icon"
-                                   class="form-control @error('icon') is-invalid @enderror"
-                                   value="{{ old('icon') }}"
-                                   placeholder="Contoh: mdi mdi-file-document-outline" required>
-                            @error('icon') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <div class="mb-4">
+                                <label class="form-label">Nama Layanan <span class="text-danger">*</span></label>
+                                <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
+                                    value="{{ old('title') }}" required>
+                                @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
 
-                            <!-- Live Preview Icon -->
-                            <div class="text-center mt-4">
-                                <p class="text-muted small mb-2">Preview Icon:</p>
-                                <div id="icon-preview" class="icon-preview">
-                                    <i class="{{ old('icon') }}"></i>
+                            <div class="mb-4">
+                                <label class="form-label">Icon (Material Design Icon) <span class="text-danger">*</span></label>
+                                <input type="text" id="icon-input" name="icon"
+                                       class="form-control @error('icon') is-invalid @enderror"
+                                       value="{{ old('icon') }}"
+                                       placeholder="Contoh: mdi mdi-file-document-outline" required>
+                                @error('icon') <div class="invalid-feedback">{{ $message }}</div> @enderror
+
+                                <div class="text-center mt-4">
+                                    <p class="text-muted small mb-2">Preview Icon:</p>
+                                    <div id="icon-preview" class="icon-preview">
+                                        <i class="{{ old('icon') }}"></i>
+                                    </div>
+                                </div>
+
+                                <small class="text-muted d-block mt-2">
+                                    Buka <a href="https://pictogrammers.com/library/mdi/" target="_blank">Material Design Icons</a><br>
+                                    Copy nama lengkap icon (contoh: <code>mdi mdi-office-building</code>)
+                                </small>
+                            </div>
+
+                            <!-- Field Link Baru -->
+                            <div class="mb-4">
+                                <label class="form-label">Link URL <span class="text-muted">(Opsional)</span></label>
+                                <input type="url" name="link" class="form-control @error('link') is-invalid @enderror"
+                                    value="{{ old('link') }}" placeholder="https://example.com/layanan-izin">
+                                @error('link') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <small class="text-muted">Link ini akan ditampilkan di halaman depan dashboard website.</small>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Posisi Urutan <span class="text-danger">*</span></label>
+                                <input type="number" name="position" class="form-control @error('position') is-invalid @enderror"
+                                    value="{{ old('position') }}" min="1" required>
+                                @error('position') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label text-muted">Daftar Posisi Urutan yang Sudah Digunakan:</label>
+                                <div class="used-positions">
+                                    @forelse($usedPositions as $pos)
+                                        <div class="d-flex justify-content-between py-1 border-bottom">
+                                            <span><strong>{{ $pos->position }}</strong></span>
+                                            <span class="text-muted text-truncate">{{ $pos->title }}</span>
+                                        </div>
+                                    @empty
+                                        <p class="text-muted mb-0">Belum ada data layanan perizinan.</p>
+                                    @endforelse
                                 </div>
                             </div>
 
-                            <small class="text-muted d-block mt-2">
-                                Buka situs
-                                <a href="https://pictogrammers.com/library/mdi/" target="_blank" class="text-primary">
-                                    Material Design Icons
-                                </a><br>
-                                Cari icon → Copy nama lengkap (contoh: <code>mdi mdi-office-building</code>) lalu paste di atas.
-                            </small>
-                        </div>
-
-                        <!-- Posisi Urutan -->
-                        <div class="mb-4">
-                            <label class="form-label">Posisi Urutan <span class="text-danger">*</span></label>
-                            <input type="number" name="position" class="form-control @error('position') is-invalid @enderror"
-                                value="{{ old('position', 99) }}" min="1" required>
-                            @error('position')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Daftar Posisi yang Sudah Dipakai -->
-                        <div class="mb-4">
-                            <label class="form-label text-muted">Daftar Posisi Urutan yang Sudah Digunakan:</label>
-                            <div class="used-positions">
-                                @forelse($usedPositions as $pos)
-                                    <div class="d-flex justify-content-between py-1 border-bottom">
-                                        <span><strong>{{ $pos->position }}</strong></span>
-                                        <span class="text-muted text-truncate">{{ $pos->title }}</span>
-                                    </div>
-                                @empty
-                                    <p class="text-muted mb-0">Belum ada data layanan perizinan.</p>
-                                @endforelse
+                            <div class="mb-4">
+                                <div class="form-check form-switch form-switch-lg">
+                                    <input type="hidden" name="is_active" value="0">
+                                    <input name="is_active" type="checkbox" class="form-check-input" id="is_active" value="1"
+                                           {{ old('is_active', true) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="is_active">Aktifkan layanan ini di halaman depan</label>
+                                </div>
                             </div>
-                            <small class="text-muted">Masukkan nomor urutan yang belum terdaftar di atas.</small>
-                        </div>
 
-                        <!-- Checkbox Aktif -->
-                        <div class="mb-4">
-                            <div class="form-check form-switch form-switch-lg">
-                                <input type="hidden" name="is_active" value="0">
-                                <input name="is_active" type="checkbox" class="form-check-input" id="is_active" value="1"
-                                       {{ old('is_active', true) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">Aktifkan layanan ini di halaman depan</label>
+                            <div class="d-flex justify-content-end gap-3">
+                                <a href="{{ route('backend.layanan-perizinan.index') }}" class="btn btn-light">Batal</a>
+                                <button type="submit" class="btn btn-gradient text-white">
+                                    <i class="mdi mdi-content-save me-1"></i> Simpan Layanan
+                                </button>
                             </div>
-                        </div>
-
-                        <div class="d-flex justify-content-end gap-3">
-                            <a href="{{ route('backend.layanan-perizinan.index') }}" class="btn btn-light">Batal</a>
-                            <button type="submit" class="btn btn-gradient text-white">
-                                <i class="mdi mdi-content-save me-1"></i> Simpan Layanan
-                            </button>
-                        </div>
-                    </form>
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>
@@ -176,9 +183,9 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-3"><i class="mdi mdi-check-circle text-success me-2"></i>Buka situs Material Design Icons</li>
-                        <li class="mb-3"><i class="mdi mdi-check-circle text-success me-2"></i>Cari icon yang diinginkan</li>
-                        <li><i class="mdi mdi-check-circle text-success me-2"></i>Copy nama icon lengkap lalu paste di kolom Icon</li>
+                        <li class="mb-3"><i class="mdi mdi-check-circle text-success me-2"></i>Maksimal hanya 3 layanan perizinan</li>
+                        <li class="mb-3"><i class="mdi mdi-check-circle text-success me-2"></i>Link opsional untuk mengarah ke halaman detail</li>
+                        <li><i class="mdi mdi-check-circle text-success me-2"></i>Icon menggunakan Material Design Icons</li>
                     </ul>
                 </div>
             </div>
@@ -194,12 +201,11 @@
 
         iconInput.addEventListener('input', function() {
             const iconClass = this.value.trim();
-            iconPreview.innerHTML = iconClass
-                ? `<i class="${iconClass}"></i>`
+            iconPreview.innerHTML = iconClass 
+                ? `<i class="${iconClass}"></i>` 
                 : `<i class="mdi mdi-help-circle-outline text-muted"></i>`;
         });
 
-        // Initial preview
         if (iconInput.value.trim()) {
             iconPreview.innerHTML = `<i class="${iconInput.value.trim()}"></i>`;
         }
@@ -211,9 +217,8 @@
                 text: '{{ session('success') }}',
                 toast: true,
                 position: 'top-end',
-                showConfirmButton: false,
                 timer: 3000,
-                timerProgressBar: true
+                showConfirmButton: false
             });
         @endif
     </script>

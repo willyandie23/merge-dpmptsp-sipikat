@@ -15,6 +15,7 @@ class LayananPerizinan extends Model
     protected $fillable = [
         'title',
         'icon',
+        'link',
         'is_active',
         'position',
     ];

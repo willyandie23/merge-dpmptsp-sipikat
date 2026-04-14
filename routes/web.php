@@ -133,6 +133,10 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('backend')->group(f
     Route::resource('investment', \App\Http\Controllers\Backend\InvestmentController::class)
         ->names('backend.investment')
         ->except(['show']);
+    Route::resource('perbup', \App\Http\Controllers\Backend\PerbupController::class)
+        ->names('backend.perbup')
+        ->parameters(['perbup' => 'perbup'])
+        ->except(['show', 'destroy']);
 });
 
 Route::middleware(['auth', 'role:superadmin'])->prefix('backend')->group(function () {

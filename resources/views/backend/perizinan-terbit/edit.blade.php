@@ -19,9 +19,10 @@
             border-radius: 10px;
         }
 
-        .page-title-box h4,
-        .page-title-box .breadcrumb {
-            color: white !important;
+        .card-modern {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1) !important;
         }
 
         .card-header-modern {
@@ -29,13 +30,6 @@
             color: white !important;
             border-bottom: none;
             padding: 1.4rem 1.5rem !important;
-        }
-
-        .card-modern {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1) !important;
-            margin-bottom: 2rem !important;
         }
 
         .form-control,
@@ -75,7 +69,7 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0 font-size-18">Edit Data Perizinan Terbit</h4>
+                    <h4 class="mb-0 font-size-18 text-white">Edit Data Perizinan Terbit</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
@@ -99,16 +93,19 @@
                 <div class="card-body p-4">
                     <div class="info-box mb-4">
                         <strong>Tahun:</strong> {{ $perizinan_terbit->year }} |
-                        <strong>Bulan:</strong>
-                        {{ \Carbon\Carbon::create()->month($perizinan_terbit->month)->translatedFormat('F') }}
+                        <strong>Triwulan:</strong> {{ $perizinan_terbit->triwulan }}
                     </div>
 
                     <form action="{{ route('backend.perizinan-terbit.update', $perizinan_terbit) }}" method="POST">
                         @csrf
                         @method('PUT')
 
+                        <!-- Hidden field untuk year dan triwulan (tidak boleh diubah) -->
+                        <input type="hidden" name="year" value="{{ $perizinan_terbit->year }}">
+                        <input type="hidden" name="triwulan" value="{{ $perizinan_terbit->triwulan }}">
+
                         <h5 class="section-title">Jumlah Perizinan Terbit</h5>
-                        <div class="row">
+                        <div class="row g-3">
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label class="form-label">OSS RBA</label>
@@ -132,11 +129,11 @@
                             </div>
                         </div>
 
-                        <div class="mt-4">
-                            <button type="submit" class="btn btn-warning px-4">
+                        <div class="mt-5">
+                            <button type="submit" class="btn btn-warning px-5">
                                 <i class="mdi mdi-content-save me-1"></i> Update Data
                             </button>
-                            <a href="{{ route('backend.perizinan-terbit.index') }}" class="btn btn-secondary px-4 ms-2">
+                            <a href="{{ route('backend.perizinan-terbit.index') }}" class="btn btn-secondary px-5 ms-3">
                                 <i class="mdi mdi-arrow-left me-1"></i> Kembali
                             </a>
                         </div>

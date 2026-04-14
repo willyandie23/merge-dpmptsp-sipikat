@@ -14,7 +14,7 @@ class Survey extends Model
 
     protected $fillable = [
         'year',
-        'month',
+        'triwulan',           // ← diganti dari month
         'jumlah_laki',
         'jumlah_perempuan',
         'indikator1',
@@ -29,18 +29,18 @@ class Survey extends Model
     ];
 
     protected $casts = [
-        'year' => 'integer',
-        'month' => 'integer',
-        'jumlah_laki' => 'integer',
-        'jumlah_perempuan' => 'integer',
-        'indikator1' => 'decimal:2',
-        'indikator2' => 'decimal:2',
-        'indikator3' => 'decimal:2',
-        'indikator4' => 'decimal:2',
-        'indikator5' => 'decimal:2',
-        'indikator6' => 'decimal:2',
-        'indikator7' => 'decimal:2',
-        'indikator8' => 'decimal:2',
-        'indikator9' => 'decimal:2',
+        'year'            => 'integer',
+        'triwulan'        => 'integer',
+        'jumlah_laki'     => 'integer',
+        'jumlah_perempuan'=> 'integer',
+        'indikator1'      => 'decimal:2',
+        'indikator2'      => 'decimal:2',
+        'indikator3'      => 'decimal:2',
+        'indikator4'      => 'decimal:2',
+        'indikator5'      => 'decimal:2',
+        'indikator6'      => 'decimal:2',
+        'indikator7'      => 'decimal:2',
+        'indikator8'      => 'decimal:2',
+        'indikator9'      => 'decimal:2',
     ];
 }

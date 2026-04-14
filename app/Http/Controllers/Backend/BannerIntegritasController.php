@@ -7,6 +7,36 @@ use App\Models\BannerIntegritas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * @OA\Schema(
+ *     schema="BannerIntegritas",
+ *     type="object",
+ *     title="Banner Integritas",
+ *     description="Model Banner untuk halaman Integritas (Admin)",
+ *     @OA\Property(property="id", type="integer", format="int64", example=1),
+ *     @OA\Property(property="title", type="string", example="Integritas Pelayanan Publik"),
+ *     @OA\Property(
+ *         property="description",
+ *         type="string",
+ *         nullable=true,
+ *         example="Deskripsi mengenai integritas pelayanan"
+ *     ),
+ *     @OA\Property(property="image", type="string", example="banner-integritas/xyz789.jpg"),
+ *     @OA\Property(property="is_active", type="boolean", example=true),
+ *     @OA\Property(
+ *         property="created_at",
+ *         type="string",
+ *         format="date-time",
+ *         example="2026-04-13T10:00:00.000000Z"
+ *     ),
+ *     @OA\Property(
+ *         property="updated_at",
+ *         type="string",
+ *         format="date-time",
+ *         example="2026-04-13T10:00:00.000000Z"
+ *     )
+ * )
+ */
 class BannerIntegritasController extends Controller
 {
     /**
@@ -14,7 +44,7 @@ class BannerIntegritasController extends Controller
      *
      * @OA\Get(
      *     path="/backend/banner-integritas",
-     *     tags={"Banner Integritas (Admin)"},
+     *     tags={"Banner Integritas"},
      *     summary="Get list of integritas banners",
      *     description="Retrieve all integritas banners with pagination",
      *     security={{"bearerAuth":{}}},
@@ -48,7 +78,7 @@ class BannerIntegritasController extends Controller
      *
      * @OA\Post(
      *     path="/backend/banner-integritas",
-     *     tags={"Banner Integritas (Admin)"},
+     *     tags={"Banner Integritas"},
      *     summary="Create new integritas banner",
      *     @OA\RequestBody(
      *         required=true,
@@ -103,7 +133,7 @@ class BannerIntegritasController extends Controller
      *
      * @OA\Put(
      *     path="/backend/banner-integritas/{banner_integritas}",
-     *     tags={"Banner Integritas (Admin)"},
+     *     tags={"Banner Integritas"},
      *     summary="Update existing integritas banner",
      *     @OA\Parameter(name="banner_integritas", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\RequestBody(
@@ -149,7 +179,7 @@ class BannerIntegritasController extends Controller
      *
      * @OA\Delete(
      *     path="/backend/banner-integritas/{banner_integritas}",
-     *     tags={"Banner Integritas (Admin)"},
+     *     tags={"Banner Integritas"},
      *     summary="Delete an integritas banner",
      *     @OA\Parameter(name="banner_integritas", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\Response(response=204, description="Banner deleted")

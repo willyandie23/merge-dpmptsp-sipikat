@@ -14,24 +14,37 @@ class InvestmentTarget extends Model
 
     protected $fillable = [
         'year',
-        'quarter',
-        'type',
         'target_amount',
     ];
 
     protected $casts = [
-        'year' => 'integer',
-        'quarter' => 'integer',
+        'year'          => 'integer',
         'target_amount' => 'integer',
     ];
 
     /**
-     * Relasi ke Realisasi
+     * Relasi ke Realisasi (satu target tahunan punya banyak realisasi PMA & PMDN)
      */
     public function realizations()
     {
-        return $this->hasMany(InvestmentRealization::class, 'year', 'year')
-            ->whereColumn('investment_realizations.type', 'investment_targets.type')
-            ->whereColumn('investment_realizations.quarter', 'investment_targets.quarter');
+        return $this->hasMany(InvestmentRealization::class, 'year', 'year');
+    }
+
+    /**
+     * Optional: Helper untuk mendapatkan total realisasi tahun ini
+     */
+    public function getTotalRealizationAttribute()
+    {
+        return $this->realizations()->sum('realized_amount');
+    }
+
+    /**
+     * Optional: Helper untuk mendapatkan persentase capaian
+     */
+    public function getAchievementPercentageAttribute()
+    {
+        if ($this->target_amount == 0) return 0;
+        
+        return round(($this->total_realization / $this->target_amount) * 100, 2);
     }
 }

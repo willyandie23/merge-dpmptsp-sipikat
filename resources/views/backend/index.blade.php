@@ -270,7 +270,7 @@
         </div>
     </div>
 
-    <!-- Grafik Bar -->
+        <!-- Grafik Bar -->
     <div class="row mt-5">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-end mb-4 section-header">
@@ -278,21 +278,9 @@
                     <h5 class="mb-1 text-dark">Grafik Realisasi Investasi</h5>
                     <p class="text-muted mb-0">Perbandingan Target dan Realisasi per Tahun</p>
                 </div>
-                <div class="d-flex align-items-center gap-3">
-                    <form method="GET" class="d-flex align-items-center gap-2">
-                        <label class="form-label mb-0 text-muted">Triwulan:</label>
-                        <select name="quarter" class="form-select w-auto" onchange="this.form.submit()">
-                            <option value="" {{ empty($selectedQuarter) ? 'selected' : '' }}>Semua Triwulan</option>
-                            <option value="1" {{ $selectedQuarter == 1 ? 'selected' : '' }}>Triwulan 1</option>
-                            <option value="2" {{ $selectedQuarter == 2 ? 'selected' : '' }}>Triwulan 2</option>
-                            <option value="3" {{ $selectedQuarter == 3 ? 'selected' : '' }}>Triwulan 3</option>
-                            <option value="4" {{ $selectedQuarter == 4 ? 'selected' : '' }}>Triwulan 4</option>
-                        </select>
-                    </form>
-                    <a href="{{ route('backend.investment.index') }}" class="btn btn-primary">
-                        <i class="mdi mdi-chart-line me-1"></i> Kelola Data
-                    </a>
-                </div>
+                <a href="{{ route('backend.investment.index') }}" class="btn btn-primary">
+                    <i class="mdi mdi-chart-line me-1"></i> Kelola Data Investasi
+                </a>
             </div>
 
             <div class="card">
@@ -393,10 +381,6 @@
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-3">
-                        <span class="text-muted">Target PMA</span>
-                        <span class="fw-bold">Rp {{ number_format($pmaTarget ?? 0, 0, ',', '.') }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between mb-3">
                         <span class="text-muted">Realisasi PMA</span>
                         <span class="fw-bold text-success">Rp {{ number_format($pmaRealized ?? 0, 0, ',', '.') }}</span>
                     </div>
@@ -421,10 +405,6 @@
                     <h5 class="mb-0 text-primary"><i class="mdi mdi-arrow-up-bold"></i> PMDN</h5>
                 </div>
                 <div class="card-body">
-                    <div class="d-flex justify-content-between mb-3">
-                        <span class="text-muted">Target PMDN</span>
-                        <span class="fw-bold">Rp {{ number_format($pmdnTarget ?? 0, 0, ',', '.') }}</span>
-                    </div>
                     <div class="d-flex justify-content-between mb-3">
                         <span class="text-muted">Realisasi PMDN</span>
                         <span class="fw-bold text-success">Rp {{ number_format($pmdnRealized ?? 0, 0, ',', '.') }}</span>

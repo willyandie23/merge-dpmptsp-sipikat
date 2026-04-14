@@ -21,19 +21,25 @@ class InvestmentRealization extends Model
     ];
 
     protected $casts = [
-        'year' => 'integer',
-        'quarter' => 'integer',
+        'year'            => 'integer',
+        'quarter'         => 'integer',
         'realized_amount' => 'integer',
-        'labor_absorbed' => 'integer',
+        'labor_absorbed'  => 'integer',
     ];
 
     /**
-     * Relasi ke Target
+     * Relasi ke Target Tahunan (sekarang target tidak punya type lagi)
      */
     public function target()
     {
-        return $this->belongsTo(InvestmentTarget::class, 'year', 'year')
-            ->whereColumn('investment_targets.quarter', 'investment_realizations.quarter')
-            ->whereColumn('investment_targets.type', 'investment_realizations.type');
+        return $this->belongsTo(InvestmentTarget::class, 'year', 'year');
+    }
+
+    /**
+     * Optional: Helper untuk menampilkan nama jenis dengan lebih bagus
+     */
+    public function getTypeNameAttribute()
+    {
+        return $this->type === 'PMA' ? 'Penanaman Modal Asing (PMA)' : 'Penanaman Modal Dalam Negeri (PMDN)';
     }
 }

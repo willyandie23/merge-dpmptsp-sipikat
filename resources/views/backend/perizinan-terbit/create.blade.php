@@ -19,9 +19,10 @@
             border-radius: 10px;
         }
 
-        .page-title-box h4,
-        .page-title-box .breadcrumb {
-            color: white !important;
+        .card-modern {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1) !important;
         }
 
         .card-header-modern {
@@ -29,13 +30,6 @@
             color: white !important;
             border-bottom: none;
             padding: 1.4rem 1.5rem !important;
-        }
-
-        .card-modern {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1) !important;
-            margin-bottom: 2rem !important;
         }
 
         .form-control,
@@ -86,46 +80,49 @@
         <div class="col-12">
             <div class="card card-modern">
                 <div class="card-header card-header-modern">
-                    <h4 class="card-title mb-0 text-white">Form Input Perizinan Terbit Baru</h4>
+                    <h4 class="card-title mb-0 text-white">Form Input Data Perizinan Terbit Baru</h4>
                 </div>
 
                 <div class="card-body p-4">
                     @if (session('error'))
-                        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
-                            <i class="mdi mdi-alert-circle-outline me-2"></i>
-                            {{ session('error') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="mdi mdi-alert-circle me-2"></i> {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
                     @endif
+
                     <form action="{{ route('backend.perizinan-terbit.store') }}" method="POST">
                         @csrf
 
                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="mb-3">
+                            <div class="col-md-6">
+                                <div class="mb-4">
                                     <label class="form-label">Tahun <span class="text-danger">*</span></label>
                                     <input type="number" name="year" class="form-control" min="2000" max="2100"
-                                        placeholder="Contoh: 2025" value="{{ old('year') }}" required>
+                                        value="{{ old('year') }}" placeholder="Contoh: 2026" required>
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    <label class="form-label">Bulan <span class="text-danger">*</span></label>
-                                    <select name="month" class="form-select" required>
-                                        <option value="">-- Pilih Bulan --</option>
-                                        @foreach([1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'] as $num => $nama)
-                                            <option value="{{ $num }}" {{ old('month') == $num ? 'selected' : '' }}>
-                                                {{ $num }} - {{ $nama }}
-                                            </option>
-                                        @endforeach
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label class="form-label">Triwulan <span class="text-danger">*</span></label>
+                                    <select name="triwulan" class="form-select" required>
+                                        <option value="">-- Pilih Triwulan --</option>
+                                        <option value="1" {{ old('triwulan') == 1 ? 'selected' : '' }}>Triwulan 1 (Januari -
+                                            Maret)</option>
+                                        <option value="2" {{ old('triwulan') == 2 ? 'selected' : '' }}>Triwulan 2 (April -
+                                            Juni)</option>
+                                        <option value="3" {{ old('triwulan') == 3 ? 'selected' : '' }}>Triwulan 3 (Juli -
+                                            September)</option>
+                                        <option value="4" {{ old('triwulan') == 4 ? 'selected' : '' }}>Triwulan 4 (Oktober -
+                                            Desember)</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
 
                         <h5 class="section-title mt-4">Jumlah Perizinan Terbit</h5>
-                        <div class="row">
+                        <div class="row g-3">
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label class="form-label">OSS RBA</label>
@@ -149,11 +146,11 @@
                             </div>
                         </div>
 
-                        <div class="mt-4">
-                            <button type="submit" class="btn btn-success px-4">
+                        <div class="mt-5">
+                            <button type="submit" class="btn btn-success px-5">
                                 <i class="mdi mdi-content-save me-1"></i> Simpan Data
                             </button>
-                            <a href="{{ route('backend.perizinan-terbit.index') }}" class="btn btn-secondary px-4 ms-2">
+                            <a href="{{ route('backend.perizinan-terbit.index') }}" class="btn btn-secondary px-5 ms-3">
                                 <i class="mdi mdi-arrow-left me-1"></i> Kembali
                             </a>
                         </div>

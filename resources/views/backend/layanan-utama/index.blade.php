@@ -43,6 +43,12 @@
             padding: 0.6rem 1.5rem !important;
             box-shadow: 0 4px 12px rgba(85, 110, 230, 0.35) !important;
         }
+
+        .max-limit-alert {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
     </style>
 @endpush
 
@@ -68,12 +74,26 @@
             <div class="card card-modern">
                 <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
                     <h4 class="card-title mb-0 text-white">Daftar Layanan Utama</h4>
-                    <a href="{{ route('backend.layanan-utama.create') }}" class="btn btn-light btn-add">
-                        <i class="mdi mdi-plus me-1"></i> Tambah Layanan Utama
-                    </a>
+
+                    @if($layanan->total() < 3)
+                        <a href="{{ route('backend.layanan-utama.create') }}" class="btn btn-light btn-add">
+                            <i class="mdi mdi-plus me-1"></i> Tambah Layanan Utama
+                        </a>
+                    @else
+                        <span class="badge bg-warning text-dark px-3 py-2">
+                            <i class="mdi mdi-information-outline me-1"></i> Maksimal 3 Layanan Utama
+                        </span>
+                    @endif
                 </div>
 
                 <div class="card-body p-4">
+                    @if (session('error'))
+                        <div class="alert max-limit-alert alert-dismissible fade show" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    @endif
+
                     @if ($layanan->count() > 0)
                         <div class="row">
                             @foreach ($layanan as $item)
@@ -94,6 +114,11 @@
                                             <p class="card-text text-muted small">
                                                 {{ Str::limit(strip_tags($item->description ?? ''), 90) }}
                                             </p>
+                                            @if($item->link)
+                                                <a href="{{ $item->link }}" target="_blank" class="text-primary small">
+                                                    <i class="mdi mdi-link"></i> Lihat Link
+                                                </a>
+                                            @endif
                                         </div>
                                         <div class="card-footer d-flex justify-content-between align-items-center bg-white">
                                             <span class="badge bg-{{ $item->is_active ? 'success' : 'secondary' }}">
@@ -122,7 +147,7 @@
                         <div class="text-center py-5">
                             <i class="mdi mdi-image-multiple font-size-48 mb-3 opacity-50"></i>
                             <h5>Belum ada Layanan Utama</h5>
-                            <p class="text-muted">Silakan tambahkan layanan utama baru.</p>
+                            <p class="text-muted">Silakan tambahkan layanan utama baru (maksimal 3).</p>
                         </div>
                     @endif
                 </div>
@@ -133,6 +158,7 @@
 
 @push('script')
     <script>
+        // Delete confirmation
         document.querySelectorAll('.delete-btn').forEach(btn => {
             btn.addEventListener('click', function () {
                 const id = this.getAttribute('data-id');

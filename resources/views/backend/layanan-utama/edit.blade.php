@@ -112,6 +112,14 @@
                         </div>
 
                         <div class="mb-4">
+    <label class="form-label">Link URL <span class="text-muted">(Opsional)</span></label>
+    <input type="url" name="link" class="form-control @error('link') is-invalid @enderror"
+        value="{{ old('link', $layanan_utama->link) }}" placeholder="https://example.com">
+    @error('link') <div class="invalid-feedback">{{ $message }}</div> @enderror
+    <small class="text-muted">Link ini akan ditampilkan di halaman depan (dashboard website).</small>
+</div>
+
+                        <div class="mb-4">
                             <label class="form-label">Gambar Saat Ini</label><br>
                             @if ($layanan_utama->image)
                                 <img src="{{ asset('storage/' . $layanan_utama->image) }}"

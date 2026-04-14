@@ -12,29 +12,32 @@ class Sektor extends Model
 
     protected $table = 'sektor';
 
-    protected $fillable = ['name', 'kecamatan_id'];
+    protected $fillable = [
+        'name',
+        // 'kecamatan_id' → dihapus karena sekarang independent
+    ];
 
-    public function kecamatan()
-    {
-        return $this->belongsTo(Kecamatan::class);
-    }
-
-    public function produkDomestik()
-    {
-        return $this->hasMany(ProdukDomestik::class);
-    }
-
+    // Relasi ke Peluang Investasi (tetap hasMany)
     public function peluangInvestasi()
     {
-        return $this->hasMany(PeluangInvestasi::class);
+        return $this->hasMany(PeluangInvestasi::class, 'id_sektor');
     }
 
-    // Accessor untuk Produk Domestik Terbaru
+    // Relasi ke Kecamatan dihapus (karena tidak tergantung lagi)
+    // public function kecamatan() { ... } → dihapus
+
+    // Accessor untuk Produk Domestik (tetap dipertahankan)
     public function getCurrentProdukDomestikAttribute()
     {
         $latest = $this->produkDomestik()->latest('year')->first();
         return $latest
             ? "Produk Domestik {$latest->year}: Rp " . number_format((float) $latest->amount, 2)
             : 'Belum ada data produk domestik';
+    }
+
+    // Relasi ke Produk Domestik (jika masih ada)
+    public function produkDomestik()
+    {
+        return $this->hasMany(ProdukDomestik::class);
     }
 }

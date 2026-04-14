@@ -96,6 +96,7 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('backend.bidang.index') }}">Data Bidang</a></li>
                         <li><a href="{{ route('backend.struktur-organisasi.index') }}">Pegawai & Pejabat</a></li>
+                        <li><a href="{{ route('backend.perbup.index') }}">Peraturan Bupati</a></li>
                     </ul>
                 </li>
 

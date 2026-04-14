@@ -6,7 +6,12 @@ namespace App\Http\Controllers\API;
  * @OA\Info(
  *     title="Website DPMPTSP Kab. Katingan API",
  *     version="1.0.0",
- *     description="API untuk Website DPMPTSP Kabupaten Katingan. Digunakan untuk mengelola autentikasi pengguna, data pengguna, dan intregasi data.",
+ *     description="API untuk Website DPMPTSP Kabupaten Katingan. Digunakan untuk mengelola autentikasi pengguna, data pengguna, dan integrasi data.",
+ * )
+ *
+ * @OA\Server(
+ *     url="https://dpmptsp.katingankab.go.id",
+ *     description="Production Server - DPMPTSP Katingan"
  * )
  *
  * @OA\Server(
@@ -32,5 +37,5 @@ namespace App\Http\Controllers\API;
  */
 class OpenApi
 {
-    // File Anotasi
+    // File Anotasi Global
 }

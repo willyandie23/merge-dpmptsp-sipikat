@@ -4,7 +4,6 @@
 
 @push('css')
     <style>
-        /* CSS persis dari index Banner Dashboard */
         .main-content {
             padding-top: 100px !important;
         }
@@ -20,9 +19,10 @@
             border-radius: 10px;
         }
 
-        .page-title-box h4,
-        .page-title-box .breadcrumb {
-            color: white !important;
+        .card-modern {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1) !important;
         }
 
         .card-header-modern {
@@ -32,51 +32,16 @@
             padding: 1.4rem 1.5rem !important;
         }
 
-        .card-header-modern h4 {
-            color: white !important;
-            margin: 0 !important;
-        }
-
-        .btn-add-banner {
+        .btn-add {
             padding: 0.6rem 1.5rem !important;
-            font-size: 1rem !important;
-            min-width: 180px;
             box-shadow: 0 4px 12px rgba(85, 110, 230, 0.35) !important;
-            transition: all 0.3s ease;
-        }
-
-        .btn-add-banner:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(85, 110, 230, 0.45) !important;
-        }
-
-        .card-modern {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1) !important;
-            margin-bottom: 2rem !important;
-        }
-
-        .table-hover tbody tr:hover {
-            background-color: rgba(85, 110, 230, 0.06) !important;
         }
 
         .img-thumbnail-modern {
             border-radius: 10px;
             transition: transform 0.3s;
-        }
-
-        .img-thumbnail-modern:hover {
-            transform: scale(1.1);
-        }
-
-        .aksi-column {
-            text-align: center !important;
-        }
-
-        .btn-group {
-            display: inline-flex;
-            justify-content: center;
+            max-height: 80px;
+            object-fit: cover;
         }
     </style>
 @endpush
@@ -86,7 +51,7 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0 font-size-18">Manajemen Peluang Investasi</h4>
+                    <h4 class="mb-0 font-size-18 text-white">Manajemen Peluang Investasi</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
@@ -102,7 +67,7 @@
         <div class="col-12">
             <div class="card card-modern">
                 <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
-                    <h4 class="card-title mb-0">Daftar Peluang Investasi</h4>
+                    <h4 class="card-title mb-0 text-white">Daftar Peluang Investasi</h4>
                     <a href="{{ route('backend.peluang-investasi.create') }}" class="btn btn-light btn-add">
                         <i class="mdi mdi-plus me-1"></i> Tambah Peluang Investasi
                     </a>
@@ -113,12 +78,12 @@
                         <table class="table table-hover table-centered">
                             <thead class="table-light">
                                 <tr>
-                                    <th>No</th>
+                                    <th width="5%">No</th>
                                     <th>Gambar</th>
                                     <th>Judul</th>
                                     <th>Kecamatan</th>
                                     <th>Sektor</th>
-                                    <th>Aksi</th>
+                                    <th width="15%">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -128,12 +93,12 @@
                                         <td>
                                             @if($peluang->image)
                                                 <img src="{{ Storage::url($peluang->image) }}" class="img-thumbnail-modern"
-                                                    width="80" alt="{{ $peluang->title }}">
+                                                    alt="{{ $peluang->title }}">
                                             @else
-                                                -
+                                                <span class="text-muted">-</span>
                                             @endif
                                         </td>
-                                        <td>{{ $peluang->title }}</td>
+                                        <td><strong>{{ $peluang->title }}</strong></td>
                                         <td>{{ $peluang->kecamatan->name ?? '-' }}</td>
                                         <td>{{ $peluang->sektor->name ?? '-' }}</td>
                                         <td class="aksi-column">
@@ -149,7 +114,10 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="text-center py-5">Belum ada data peluang investasi</td>
+                                        <td colspan="6" class="text-center py-5">
+                                            <i class="mdi mdi-briefcase-outline font-size-48 text-muted mb-3 d-block"></i>
+                                            Belum ada data peluang investasi
+                                        </td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -174,13 +142,8 @@
                 text: '{{ session('success') }}',
                 toast: true,
                 position: 'top-end',
-                showConfirmButton: false,
                 timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
+                showConfirmButton: false
             });
         @endif
 
@@ -191,18 +154,18 @@
 
                 Swal.fire({
                     title: 'Yakin hapus?',
-                    text: `Peluang "${title}" akan dihapus permanen!`,
+                    text: `Peluang "${title}" akan dihapus permanen beserta gambarnya!`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Ya, hapus!'
+                    confirmButtonText: 'Ya, Hapus!'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         const form = document.createElement('form');
                         form.method = 'POST';
                         form.action = `{{ route('backend.peluang-investasi.destroy', ':id') }}`.replace(':id', id);
-                        form.innerHTML = '@csrf @method("DELETE")';
+                        form.innerHTML = `@csrf @method('DELETE')`;
                         document.body.appendChild(form);
                         form.submit();
                     }

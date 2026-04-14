@@ -4,14 +4,8 @@
 
 @push('css')
     <style>
-        /* CSS persis dari index Banner Dashboard */
-        .main-content {
-            padding-top: 100px !important;
-        }
-
-        .page-content {
-            margin-top: -4rem !important;
-        }
+        .main-content { padding-top: 100px !important; }
+        .page-content { margin-top: -4rem !important; }
 
         .page-title-box {
             background: linear-gradient(135deg, #556ee6 0%, #364574 100%) !important;
@@ -20,9 +14,10 @@
             border-radius: 10px;
         }
 
-        .page-title-box h4,
-        .page-title-box .breadcrumb {
-            color: white !important;
+        .card-modern {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1) !important;
         }
 
         .card-header-modern {
@@ -32,51 +27,13 @@
             padding: 1.4rem 1.5rem !important;
         }
 
-        .card-header-modern h4 {
-            color: white !important;
-            margin: 0 !important;
-        }
-
-        .btn-add-banner {
+        .btn-add {
             padding: 0.6rem 1.5rem !important;
-            font-size: 1rem !important;
-            min-width: 180px;
             box-shadow: 0 4px 12px rgba(85, 110, 230, 0.35) !important;
-            transition: all 0.3s ease;
         }
 
-        .btn-add-banner:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(85, 110, 230, 0.45) !important;
-        }
-
-        .card-modern {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1) !important;
-            margin-bottom: 2rem !important;
-        }
-
-        .table-hover tbody tr:hover {
-            background-color: rgba(85, 110, 230, 0.06) !important;
-        }
-
-        .img-thumbnail-modern {
-            border-radius: 10px;
-            transition: transform 0.3s;
-        }
-
-        .img-thumbnail-modern:hover {
-            transform: scale(1.1);
-        }
-
-        .aksi-column {
-            text-align: center !important;
-        }
-
-        .btn-group {
-            display: inline-flex;
-            justify-content: center;
+        .table th, .table td {
+            vertical-align: middle;
         }
     </style>
 @endpush
@@ -86,7 +43,7 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0 font-size-18">Manajemen Sektor Usaha</h4>
+                    <h4 class="mb-0 font-size-18 text-white">Manajemen Sektor Usaha</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
@@ -102,7 +59,7 @@
         <div class="col-12">
             <div class="card card-modern">
                 <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
-                    <h4 class="card-title mb-0">Daftar Sektor</h4>
+                    <h4 class="card-title mb-0 text-white">Daftar Sektor</h4>
                     <a href="{{ route('backend.sektor.create') }}" class="btn btn-light btn-add">
                         <i class="mdi mdi-plus me-1"></i> Tambah Sektor Baru
                     </a>
@@ -113,30 +70,36 @@
                         <table class="table table-hover table-centered">
                             <thead class="table-light">
                                 <tr>
-                                    <th>No</th>
+                                    <th width="5%">No</th>
                                     <th>Nama Sektor</th>
-                                    <th>Kecamatan</th>
                                     <th>Produk Domestik Terbaru</th>
                                     <th>Tahun</th>
                                     <th>Total PDRB (Rp)</th>
-                                    <th>Aksi</th>
+                                    <th width="15%">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse ($sektors as $sektor)
                                     <tr>
                                         <td>{{ $loop->iteration + ($sektors->currentPage() - 1) * $sektors->perPage() }}</td>
-                                        <td>{{ $sektor->name }}</td>
-                                        <td>{{ $sektor->kecamatan->name ?? '-' }}</td>
+                                        <td><strong>{{ $sektor->name }}</strong></td>
                                         <td>
-                                            @php $latest = $sektor->produkDomestik->sortByDesc('year')->first(); @endphp
-                                            @if($latest) Rp {{ number_format($latest->amount, 2) }} @else - @endif
+                                            @php 
+                                                $latest = $sektor->produkDomestik->sortByDesc('year')->first(); 
+                                            @endphp
+                                            @if($latest)
+                                                Rp {{ number_format($latest->amount, 0, ',', '.') }}
+                                            @else
+                                                <span class="text-muted">-</span>
+                                            @endif
                                         </td>
                                         <td>{{ $latest->year ?? '-' }}</td>
-                                        <td>Rp {{ number_format($sektor->produkDomestik->sum('amount'), 2) }}</td>
                                         <td>
-                                            <a href="{{ route('backend.sektor.edit', $sektor) }}"
-                                                class="btn btn-sm btn-warning">
+                                            Rp {{ number_format($sektor->produkDomestik->sum('amount'), 0, ',', '.') }}
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('backend.sektor.edit', $sektor) }}" 
+                                               class="btn btn-sm btn-warning">
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
                                             <button type="button" class="btn btn-sm btn-danger delete-sektor"
@@ -147,7 +110,10 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="7" class="text-center py-5">Belum ada data sektor</td>
+                                        <td colspan="6" class="text-center py-5">
+                                            <i class="mdi mdi-folder-outline font-size-48 text-muted mb-3 d-block"></i>
+                                            Belum ada data sektor
+                                        </td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -172,13 +138,8 @@
                 text: '{{ session('success') }}',
                 toast: true,
                 position: 'top-end',
-                showConfirmButton: false,
                 timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
+                showConfirmButton: false
             });
         @endif
 
@@ -189,18 +150,18 @@
 
                 Swal.fire({
                     title: 'Yakin hapus?',
-                    text: `Sektor "${name}" akan dihapus!`,
+                    text: `Sektor "${name}" akan dihapus permanen beserta data produk domestiknya!`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Ya, hapus!'
+                    confirmButtonText: 'Ya, Hapus!'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         const form = document.createElement('form');
                         form.method = 'POST';
                         form.action = `{{ route('backend.sektor.destroy', ':id') }}`.replace(':id', id);
-                        form.innerHTML = '@csrf @method("DELETE")';
+                        form.innerHTML = `@csrf @method('DELETE')`;
                         document.body.appendChild(form);
                         form.submit();
                     }

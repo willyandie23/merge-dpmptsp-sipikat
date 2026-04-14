@@ -8,6 +8,36 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
+/**
+ * @OA\Schema(
+ *     schema="BannerDashboard",
+ *     type="object",
+ *     title="Banner Dashboard",
+ *     description="Model Banner untuk halaman Dashboard Admin",
+ *     @OA\Property(property="id", type="integer", format="int64", example=1),
+ *     @OA\Property(property="title", type="string", example="Promo Layanan Baru"),
+ *     @OA\Property(
+ *         property="description",
+ *         type="string",
+ *         nullable=true,
+ *         example="Deskripsi promo layanan terbaru"
+ *     ),
+ *     @OA\Property(property="image", type="string", example="banners/abc123.jpg"),
+ *     @OA\Property(property="is_active", type="boolean", example=true),
+ *     @OA\Property(
+ *         property="created_at",
+ *         type="string",
+ *         format="date-time",
+ *         example="2026-04-13T10:00:00.000000Z"
+ *     ),
+ *     @OA\Property(
+ *         property="updated_at",
+ *         type="string",
+ *         format="date-time",
+ *         example="2026-04-13T10:00:00.000000Z"
+ *     )
+ * )
+ */
 class BannerDashboardController extends Controller
 {
     /**
@@ -15,7 +45,7 @@ class BannerDashboardController extends Controller
      *
      * @OA\Get(
      *     path="/backend/banner-dashboard",
-     *     tags={"Banner Dashboard (Admin)"},
+     *     tags={"Banner Dashboard"},
      *     summary="Get list of dashboard banners",
      *     description="Retrieve all dashboard banners with pagination",
      *     security={{"bearerAuth":{}}},
@@ -49,7 +79,7 @@ class BannerDashboardController extends Controller
      *
      * @OA\Post(
      *     path="/backend/banner-dashboard",
-     *     tags={"Banner Dashboard (Admin)"},
+     *     tags={"Banner Dashboard"},
      *     summary="Create new dashboard banner",
      *     @OA\RequestBody(
      *         required=true,
@@ -103,7 +133,7 @@ class BannerDashboardController extends Controller
      *
      * @OA\Put(
      *     path="/backend/banner-dashboard/{banner_dashboard}",
-     *     tags={"Banner Dashboard (Admin)"},
+     *     tags={"Banner Dashboard"},
      *     summary="Update existing banner",
      *     @OA\Parameter(name="banner_dashboard", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\RequestBody(
@@ -149,7 +179,7 @@ class BannerDashboardController extends Controller
      *
      * @OA\Delete(
      *     path="/backend/banner-dashboard/{banner_dashboard}",
-     *     tags={"Banner Dashboard (Admin)"},
+     *     tags={"Banner Dashboard"},
      *     summary="Delete a banner",
      *     @OA\Parameter(name="banner_dashboard", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\Response(response=204, description="Banner deleted")

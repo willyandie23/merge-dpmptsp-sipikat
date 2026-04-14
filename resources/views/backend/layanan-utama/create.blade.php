@@ -92,76 +92,89 @@
                     <h4 class="card-title mb-0 text-white">Form Tambah Layanan Utama</h4>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ route('backend.layanan-utama.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
 
-                        <div class="mb-4">
-                            <label class="form-label">Judul Layanan <span class="text-danger">*</span></label>
-                            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                                value="{{ old('title') }}" required>
-                            @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    @if($currentCount >= 3)
+                        <div class="alert alert-danger">
+                            <strong>Maksimal 3 Layanan Utama!</strong><br>
+                            Anda sudah mencapai batas maksimal layanan utama. 
+                            Silakan hapus salah satu terlebih dahulu jika ingin menambahkan yang baru.
                         </div>
+                    @else
+                        <form action="{{ route('backend.layanan-utama.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
 
-                        <div class="mb-4">
-                            <label class="form-label">Deskripsi</label>
-                            <textarea name="description" id="editor-description"
-                                class="form-control ckeditor">{{ old('description') }}</textarea>
-                            @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
+                            <div class="mb-4">
+                                <label class="form-label">Judul Layanan <span class="text-danger">*</span></label>
+                                <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
+                                    value="{{ old('title') }}" required>
+                                @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
 
-                        <div class="mb-4">
-                            <label class="form-label">Gambar <span class="text-muted">(Opsional)</span></label>
-                            <input type="file" id="image" name="image" class="form-control @error('image') is-invalid @enderror"
-                                accept="image/jpeg,image/png,image/jpg,image/webp">
-                            @error('image') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                            <small class="text-muted">Format: JPG, PNG, WEBP. Maksimal 2MB</small>
+                            <div class="mb-4">
+                                <label class="form-label">Deskripsi</label>
+                                <textarea name="description" id="editor-description" class="form-control ckeditor">{{ old('description') }}</textarea>
+                                @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
 
-                            <img id="preview" class="preview-image" style="display:none;" alt="Preview Gambar">
-                        </div>
+                            <!-- Field Link Baru -->
+                            <div class="mb-4">
+                                <label class="form-label">Link URL <span class="text-muted">(Opsional)</span></label>
+                                <input type="url" name="link" class="form-control @error('link') is-invalid @enderror"
+                                    value="{{ old('link') }}" placeholder="https://example.com">
+                                @error('link') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <small class="text-muted">Link ini akan ditampilkan di halaman depan (dashboard website).</small>
+                            </div>
 
-                       <!-- Posisi Urutan -->
-<div class="mb-4">
-    <label class="form-label">Posisi Urutan <span class="text-danger">*</span></label>
-    <input type="number" name="position" class="form-control @error('position') is-invalid @enderror"
-        value="{{ old('position', 99) }}" min="1" required>
-    @error('position')
-        <div class="invalid-feedback">{{ $message }}</div>
-    @enderror
-</div>
+                            <div class="mb-4">
+                                <label class="form-label">Gambar <span class="text-muted">(Opsional)</span></label>
+                                <input type="file" id="image" name="image" class="form-control @error('image') is-invalid @enderror"
+                                    accept="image/jpeg,image/png,image/jpg,image/webp">
+                                @error('image') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <small class="text-muted">Format: JPG, PNG, WEBP. Maksimal 2MB</small>
+                                <img id="preview" class="preview-image" style="display:none;" alt="Preview Gambar">
+                            </div>
 
-<!-- Informasi Posisi yang Sudah Dipakai -->
-<div class="mb-4">
-    <label class="form-label text-muted">Daftar Posisi Urutan yang Sudah Digunakan:</label>
-    <div class="border rounded p-3 bg-light" style="max-height: 200px; overflow-y: auto;">
-        @forelse($usedPositions as $pos)
-            <div class="d-flex justify-content-between py-1 small border-bottom">
-                <span><strong>{{ $pos->position }}</strong></span>
-                <span class="text-muted">{{ Str::limit($pos->title, 40) }}</span>
-            </div>
-        @empty
-            <p class="text-muted mb-0">Belum ada data layanan utama.</p>
-        @endforelse
-    </div>
-    <small class="text-muted">Masukkan nomor yang belum terdaftar di atas.</small>
-</div>
+                            <!-- Posisi Urutan -->
+                            <div class="mb-4">
+                                <label class="form-label">Posisi Urutan <span class="text-danger">*</span></label>
+                                <input type="number" name="position" class="form-control @error('position') is-invalid @enderror"
+                                    value="{{ old('position') }}" min="1" required>
+                                @error('position') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
 
-<!-- Checkbox Aktif -->
-<div class="mb-4">
-    <div class="form-check form-switch form-switch-lg">
-        <input type="hidden" name="is_active" value="0">
-        <input name="is_active" type="checkbox" class="form-check-input" id="is_active" value="1"
-               {{ old('is_active', true) ? 'checked' : '' }}>
-        <label class="form-check-label fw-semibold" for="is_active">Aktifkan layanan ini di halaman depan</label>
-    </div>
-</div>
+                            <!-- Daftar Posisi yang Sudah Dipakai -->
+                            <div class="mb-4">
+                                <label class="form-label text-muted">Daftar Posisi Urutan yang Sudah Digunakan:</label>
+                                <div class="border rounded p-3 bg-light" style="max-height: 200px; overflow-y: auto;">
+                                    @forelse($usedPositions as $pos)
+                                        <div class="d-flex justify-content-between py-1 small border-bottom">
+                                            <span><strong>{{ $pos->position }}</strong></span>
+                                            <span class="text-muted">{{ Str::limit($pos->title, 40) }}</span>
+                                        </div>
+                                    @empty
+                                        <p class="text-muted mb-0">Belum ada data layanan utama.</p>
+                                    @endforelse
+                                </div>
+                            </div>
 
-                        <div class="d-flex justify-content-end gap-3">
-                            <a href="{{ route('backend.layanan-utama.index') }}" class="btn btn-light">Batal</a>
-                            <button type="submit" class="btn btn-gradient text-white">
-                                <i class="mdi mdi-content-save me-1"></i> Simpan Layanan
-                            </button>
-                        </div>
-                    </form>
+                            <!-- Checkbox Aktif -->
+                            <div class="mb-4">
+                                <div class="form-check form-switch form-switch-lg">
+                                    <input type="hidden" name="is_active" value="0">
+                                    <input name="is_active" type="checkbox" class="form-check-input" id="is_active" value="1"
+                                           {{ old('is_active', true) ? 'checked' : '' }}>
+                                    <label class="form-check-label fw-semibold" for="is_active">Aktifkan layanan ini di halaman depan</label>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end gap-3">
+                                <a href="{{ route('backend.layanan-utama.index') }}" class="btn btn-light">Batal</a>
+                                <button type="submit" class="btn btn-gradient text-white">
+                                    <i class="mdi mdi-content-save me-1"></i> Simpan Layanan
+                                </button>
+                            </div>
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>
@@ -173,8 +186,8 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-3"><i class="mdi mdi-check-circle text-success me-2"></i>Gambar akan ditampilkan di halaman depan</li>
-                        <li class="mb-3"><i class="mdi mdi-check-circle text-success me-2"></i>Deskripsi menggunakan CKEditor (bisa format teks)</li>
+                        <li class="mb-3"><i class="mdi mdi-check-circle text-success me-2"></i>Maksimal hanya 3 layanan utama</li>
+                        <li class="mb-3"><i class="mdi mdi-check-circle text-success me-2"></i>Field "Link" akan ditampilkan di dashboard website</li>
                         <li><i class="mdi mdi-check-circle text-success me-2"></i>Posisi menentukan urutan tampilan</li>
                     </ul>
                 </div>
@@ -189,7 +202,6 @@
         document.getElementById('image').addEventListener('change', function(e) {
             const preview = document.getElementById('preview');
             const file = e.target.files[0];
-
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(event) {
@@ -201,15 +213,7 @@
         });
 
         @if (session('success'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: '{{ session('success') }}',
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
+            Swal.fire({ icon: 'success', title: 'Berhasil!', text: '{{ session('success') }}', toast: true, position: 'top-end', timer: 3000, showConfirmButton: false });
         @endif
     </script>
 @endpush

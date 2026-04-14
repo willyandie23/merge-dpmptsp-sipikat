@@ -14,7 +14,7 @@ class PerizinanTerbit extends Model
 
     protected $fillable = [
         'year',
-        'month',
+        'triwulan',           // ← diganti dari 'month'
         'oss_rba',
         'sicantik_cloud',
         'simbg',
@@ -23,7 +23,7 @@ class PerizinanTerbit extends Model
 
     protected $casts = [
         'year' => 'integer',
-        'month' => 'integer',
+        'triwulan' => 'integer',     // ← diganti
         'oss_rba' => 'integer',
         'sicantik_cloud' => 'integer',
         'simbg' => 'integer',

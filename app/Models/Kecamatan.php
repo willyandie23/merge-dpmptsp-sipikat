@@ -14,24 +14,22 @@ class Kecamatan extends Model
 
     protected $fillable = [
         'name',
-        'populasi_id',        // lebih baik pakai ini (bukan id_populasi)
+        'populasi_id',   // tetap
     ];
 
     // Relasi Populasi
     public function populasi()
     {
-        return $this->hasMany(Populasi::class);   // ← hasMany (bukan belongsTo lagi)
+        return $this->hasMany(Populasi::class);
     }
 
-    public function sektors()
-    {
-        return $this->hasMany(Sektor::class);
-    }
+    // Relasi ke Sektor dihapus karena Sektor sekarang independent
+    // public function sektors() { ... } → dihapus
 
-    // Relasi Peluang Investasi
+    // Relasi ke Peluang Investasi tetap ada
     public function peluangInvestasi()
     {
-        return $this->hasMany(PeluangInvestasi::class, 'kecamatan_id');
+        return $this->hasMany(PeluangInvestasi::class, 'id_kecamatan');
     }
 
     public function getCurrentPopulasiAttribute()

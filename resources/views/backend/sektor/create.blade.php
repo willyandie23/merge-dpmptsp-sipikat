@@ -4,7 +4,6 @@
 
 @push('css')
     <style>
-        /* CSS persis dari index Banner Dashboard */
         .main-content {
             padding-top: 100px !important;
         }
@@ -20,9 +19,10 @@
             border-radius: 10px;
         }
 
-        .page-title-box h4,
-        .page-title-box .breadcrumb {
-            color: white !important;
+        .card-modern {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1) !important;
         }
 
         .card-header-modern {
@@ -32,51 +32,8 @@
             padding: 1.4rem 1.5rem !important;
         }
 
-        .card-header-modern h4 {
-            color: white !important;
-            margin: 0 !important;
-        }
-
-        .btn-add-banner {
-            padding: 0.6rem 1.5rem !important;
-            font-size: 1rem !important;
-            min-width: 180px;
-            box-shadow: 0 4px 12px rgba(85, 110, 230, 0.35) !important;
-            transition: all 0.3s ease;
-        }
-
-        .btn-add-banner:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(85, 110, 230, 0.45) !important;
-        }
-
-        .card-modern {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1) !important;
-            margin-bottom: 2rem !important;
-        }
-
-        .table-hover tbody tr:hover {
-            background-color: rgba(85, 110, 230, 0.06) !important;
-        }
-
-        .img-thumbnail-modern {
-            border-radius: 10px;
-            transition: transform 0.3s;
-        }
-
-        .img-thumbnail-modern:hover {
-            transform: scale(1.1);
-        }
-
-        .aksi-column {
-            text-align: center !important;
-        }
-
-        .btn-group {
-            display: inline-flex;
-            justify-content: center;
+        .form-label {
+            font-weight: 600;
         }
     </style>
 @endpush
@@ -86,12 +43,12 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0 font-size-18">Tambah Sektor Baru</h4>
+                    <h4 class="mb-0 font-size-18 text-white">Tambah Sektor Baru</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ route('backend.index') }}">Dashboard</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('backend.sektor.index') }}">Sektor</a></li>
-                            <li class="breadcrumb-item active">Tambah Baru</li>
+                            <li class="breadcrumb-item active">Tambah</li>
                         </ol>
                     </div>
                 </div>
@@ -103,30 +60,16 @@
         <div class="col-lg-8">
             <div class="card card-modern">
                 <div class="card-header card-header-modern">
-                    <h4 class="card-title mb-0">Form Tambah Sektor & Data Produk Domestik</h4>
+                    <h4 class="card-title mb-0 text-white">Form Tambah Sektor & Data Produk Domestik</h4>
                 </div>
                 <div class="card-body p-4">
                     <form action="{{ route('backend.sektor.store') }}" method="POST" id="form-sektor">
                         @csrf
 
                         <div class="mb-4">
-                            <label class="form-label">Pilih Kecamatan <span class="text-danger">*</span></label>
-                            <select name="kecamatan_id" class="form-control @error('kecamatan_id') is-invalid @enderror"
-                                required>
-                                <option value="">-- Pilih Kecamatan --</option>
-                                @foreach($kecamatans as $kec)
-                                    <option value="{{ $kec->id }}" {{ old('kecamatan_id') == $kec->id ? 'selected' : '' }}>
-                                        {{ $kec->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('kecamatan_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
-
-                        <div class="mb-4">
                             <label class="form-label">Nama Sektor <span class="text-danger">*</span></label>
                             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                                value="{{ old('name') }}" placeholder="Contoh: Pertanian, Pariwisata" required>
+                                value="{{ old('name') }}" placeholder="Contoh: Pertanian, Industri, Pariwisata" required>
                             @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
@@ -140,7 +83,7 @@
                                 </div>
                                 <div class="col-md-5">
                                     <input type="text" name="produk_domestik[0][amount]" class="form-control amount-input"
-                                        placeholder="Nilai (contoh: 1500000)" required>
+                                        placeholder="Nilai (contoh: 1500000000)" required>
                                 </div>
                                 <div class="col-md-2">
                                     <button type="button" class="btn btn-danger btn-sm w-100 remove-row">Hapus</button>
@@ -154,7 +97,7 @@
 
                         <div class="d-flex justify-content-end gap-3">
                             <a href="{{ route('backend.sektor.index') }}" class="btn btn-light">Batal</a>
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary text-white">
                                 <i class="mdi mdi-content-save me-1"></i> Simpan Sektor
                             </button>
                         </div>
@@ -169,10 +112,12 @@
                     <h5>Tips Penginputan</h5>
                 </div>
                 <div class="card-body">
-                    <ul class="list-unstyled">
-                        <li class="mb-2">• Tahun tidak boleh sama dalam satu sektor</li>
-                        <li class="mb-2">• Nilai diisi tanpa tanda koma atau titik (akan diformat otomatis)</li>
-                        <li>• Minimal 1 data produk domestik</li>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-3"><i class="mdi mdi-check-circle text-success me-2"></i>Nama sektor harus unik</li>
+                        <li class="mb-3"><i class="mdi mdi-check-circle text-success me-2"></i>Tahun tidak boleh duplikat
+                            dalam satu sektor</li>
+                        <li><i class="mdi mdi-check-circle text-success me-2"></i>Nilai akan otomatis diformat dengan titik
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -190,18 +135,14 @@
 
         function attachFormatting() {
             document.querySelectorAll('.amount-input').forEach(input => {
-                input.removeEventListener('input', input._handler || function () { });
-                input._handler = function (e) {
+                input.addEventListener('input', function (e) {
                     e.target.value = formatRibuan(e.target.value);
-                };
-                input.addEventListener('input', input._handler);
+                });
             });
         }
 
-        // Attach ke input awal
         attachFormatting();
 
-        // Tambah baris baru
         document.getElementById('add-produk').addEventListener('click', function () {
             const container = document.getElementById('produk-container');
             const newRow = `
@@ -212,7 +153,7 @@
                         </div>
                         <div class="col-md-5">
                             <input type="text" name="produk_domestik[${rowIndex}][amount]" class="form-control amount-input"
-                                   placeholder="Nilai (contoh: 1500000)" required>
+                                   placeholder="Nilai (contoh: 1500000000)" required>
                         </div>
                         <div class="col-md-2">
                             <button type="button" class="btn btn-danger btn-sm w-100 remove-row">Hapus</button>
@@ -223,13 +164,12 @@
             attachFormatting();
         });
 
-        // Hapus baris
         document.addEventListener('click', function (e) {
             if (e.target.classList.contains('remove-row')) {
                 if (document.querySelectorAll('.produk-row').length > 1) {
                     e.target.closest('.produk-row').remove();
                 } else {
-                    Swal.fire('Minimal 1 data produk domestik', '', 'warning');
+                    Swal.fire('Minimal harus ada 1 data produk domestik!', '', 'warning');
                 }
             }
         });

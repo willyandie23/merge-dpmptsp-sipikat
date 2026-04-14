@@ -123,6 +123,14 @@
                             </small>
                         </div>
 
+                        <div class="mb-4">
+    <label class="form-label">Link URL <span class="text-muted">(Opsional)</span></label>
+    <input type="url" name="link" class="form-control @error('link') is-invalid @enderror"
+        value="{{ old('link', $layanan_perizinan->link) }}" placeholder="https://example.com/layanan-izin">
+    @error('link') <div class="invalid-feedback">{{ $message }}</div> @enderror
+    <small class="text-muted">Link ini akan ditampilkan di halaman depan dashboard website.</small>
+</div>
+
                         <!-- Posisi Urutan -->
                         <div class="mb-4">
                             <label class="form-label">Posisi Urutan <span class="text-danger">*</span></label>

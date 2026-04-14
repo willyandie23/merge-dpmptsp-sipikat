@@ -16,6 +16,7 @@ class LayananUtama extends Model
         'title',
         'description',
         'image',
+        'link',
         'is_active',
         'position',
     ];

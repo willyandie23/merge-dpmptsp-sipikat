@@ -4,13 +4,8 @@
 
 @push('css')
     <style>
-        .main-content {
-            padding-top: 100px !important;
-        }
-
-        .page-content {
-            margin-top: -4rem !important;
-        }
+        .main-content { padding-top: 100px !important; }
+        .page-content { margin-top: -4rem !important; }
 
         .page-title-box {
             background: linear-gradient(135deg, #556ee6 0%, #364574 100%) !important;
@@ -33,13 +28,19 @@
         }
 
         .icon-preview {
-            font-size: 36px;
+            font-size: 42px;
             color: #556ee6;
         }
 
         .btn-add {
             padding: 0.6rem 1.5rem !important;
             box-shadow: 0 4px 12px rgba(85, 110, 230, 0.35) !important;
+        }
+
+        .max-limit-alert {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
         }
     </style>
 @endpush
@@ -66,12 +67,26 @@
             <div class="card card-modern">
                 <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
                     <h4 class="card-title mb-0 text-white">Daftar Layanan Perizinan Usaha</h4>
-                    <a href="{{ route('backend.layanan-perizinan.create') }}" class="btn btn-light btn-add">
-                        <i class="mdi mdi-plus me-1"></i> Tambah Layanan Baru
-                    </a>
+                    
+                    @if($layanan->total() < 3)
+                        <a href="{{ route('backend.layanan-perizinan.create') }}" class="btn btn-light btn-add">
+                            <i class="mdi mdi-plus me-1"></i> Tambah Layanan Baru
+                        </a>
+                    @else
+                        <span class="badge bg-warning text-dark px-3 py-2">
+                            <i class="mdi mdi-information-outline me-1"></i> Maksimal 3 Layanan Perizinan
+                        </span>
+                    @endif
                 </div>
 
                 <div class="card-body p-4">
+                    @if (session('error'))
+                        <div class="alert max-limit-alert alert-dismissible fade show" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    @endif
+
                     @if ($layanan->count() > 0)
                         <div class="row">
                             @foreach ($layanan as $item)
@@ -82,9 +97,13 @@
                                                 <i class="{{ $item->icon }} icon-preview"></i>
                                             </div>
                                             <h5 class="card-title">{{ $item->title }}</h5>
+                                            @if($item->link)
+                                                <a href="{{ $item->link }}" target="_blank" class="btn btn-sm btn-outline-primary mt-2">
+                                                    <i class="mdi mdi-link"></i> Link
+                                                </a>
+                                            @endif
                                         </div>
-                                        <div
-                                            class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+                                        <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
                                             <span class="badge bg-{{ $item->is_active ? 'success' : 'secondary' }}">
                                                 {{ $item->is_active ? 'Aktif' : 'Nonaktif' }}
                                             </span>
@@ -111,7 +130,7 @@
                         <div class="text-center py-5">
                             <i class="mdi mdi-file-document-multiple font-size-48 mb-3 d-block opacity-50"></i>
                             <h5>Belum ada data Layanan Perizinan Usaha</h5>
-                            <p class="text-muted">Silakan tambahkan layanan baru.</p>
+                            <p class="text-muted">Silakan tambahkan maksimal 3 layanan.</p>
                         </div>
                     @endif
                 </div>
@@ -122,7 +141,6 @@
 
 @push('script')
     <script>
-        // Delete confirmation
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', function () {
                 const id = this.getAttribute('data-id');
@@ -149,5 +167,17 @@
                 });
             });
         });
+
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                toast: true,
+                position: 'top-end',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        @endif
     </script>
 @endpush
